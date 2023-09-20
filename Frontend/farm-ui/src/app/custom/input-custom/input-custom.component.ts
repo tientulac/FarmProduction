@@ -11,14 +11,16 @@ export class InputCustomComponent {
   @Input() VALUE: any = null;
   @Input() FIELD: any = '';
   @Input() ENTITY: any = null;
+  @Input() DISABLED: any = null;
+  @Input() MIN: any = null;
+  @Input() MAX: any = null;
+  @Input() MAXLENGTH: any = null;
+  @Input() REQUIRED: any = null;
   @Output() inputChange = new EventEmitter<string>();
+
   VALID: boolean = false;
 
   changeValueInput() {
-    this.VALID = false;
-    if (this.VALUE) {
-      this.VALID = true;
-    }
     this.ENTITY[this.FIELD] = this.VALUE;
     this.inputChange.emit(this.ENTITY);
   }
