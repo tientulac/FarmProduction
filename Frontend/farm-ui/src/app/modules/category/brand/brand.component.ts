@@ -11,16 +11,21 @@ import { BaseService } from 'src/app/services/base.service';
 })
 export class BrandComponent extends BaseComponent<BrandEntity> {
 
+  Field_Validation = {
+    Code: true,
+    Name: true
+  };
+
   constructor(
   ) {
     super(AppInjector.get(BaseService<BrandEntity>));
     this.Entity = new BrandEntity();
     this.Entities = new Array<BrandEntity>();;
     this.URL = 'brand';
-    this.getList();
+    // this.getList();
   }
 
   submit() {
-    console.log(this.Entity);
+    console.log(this.Field_Validation);
   }
 }

@@ -10,18 +10,24 @@ export class InputCustomComponent {
   @Input() PLACEHOLDER: string = '';
   @Input() VALUE: any = null;
   @Input() FIELD: any = '';
+  @Input() LABEL: any = '';
   @Input() ENTITY: any = null;
-  @Input() DISABLED: any = null;
+
+  @Output() changeInput = new EventEmitter<any>();
+
+  @Input() DISABLED: boolean = false;
+  @Input() REQUIRED: boolean = false;
   @Input() MIN: any = null;
   @Input() MAX: any = null;
   @Input() MAXLENGTH: any = null;
-  @Input() REQUIRED: any = null;
-  @Output() inputChange = new EventEmitter<string>();
 
-  VALID: boolean = false;
+  VALID: boolean = true;
 
   changeValueInput() {
+    if (this.REQUIRED) {
+      this.VALID = this.VALUE ? true : false;
+    }
     this.ENTITY[this.FIELD] = this.VALUE;
-    this.inputChange.emit(this.ENTITY);
+    this.changeInput.emit(this.VALID);
   }
 }

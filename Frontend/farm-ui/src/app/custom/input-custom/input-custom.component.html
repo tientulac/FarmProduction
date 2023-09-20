@@ -1,2 +1,8 @@
-<input nz-input [placeholder]="PLACEHOLDER" [(ngModel)]="VALUE" [type]="TYPE" (keyup)="changeValueInput()" />
-<p>{{VALID ? 1 : 'Không được bỏ trống'}}</p>
+<nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="REQUIRED">{{LABEL}}</nz-form-label>
+<input nz-input 
+    [placeholder]="PLACEHOLDER" 
+    [(ngModel)]="VALUE" 
+    [type]="TYPE" 
+    [readonly]="DISABLED"
+    (keyup)="changeValueInput()" />
+<p class="invalid-mess" *ngIf="REQUIRED && !VALID">Không được bỏ trống</p>

@@ -7,6 +7,7 @@ import { BaseService } from 'src/app/services/base.service';
   styleUrls: ['./base.component.scss']
 })
 export class BaseComponent<T> {
+
   Entity!: T;
   Entities!: T[];
   URL: string = '';
