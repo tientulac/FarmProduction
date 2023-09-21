@@ -11,10 +11,7 @@ import { BaseService } from 'src/app/services/base.service';
 })
 export class BrandComponent extends BaseComponent<BrandEntity> {
 
-  Field_Validation = {
-    Code: true,
-    Name: true
-  };
+  listName: any;
 
   constructor(
   ) {
@@ -22,10 +19,19 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     this.Entity = new BrandEntity();
     this.Entities = new Array<BrandEntity>();;
     this.URL = 'brand';
+    this.field_Validation = {
+      Code: false,
+      Name: false
+    };
+    this.listName = [
+      { id: 1, name: 'TienNN'},
+      { id: 2, name: 'TienNN2'},
+    ];
     // this.getList();
   }
 
-  submit() {
-    console.log(this.Field_Validation);
+  onSubmit() {
+    console.log(this.Entity);
+    if (!this.isSubmit) alert('Dữ liệu nhập chưa hợp lệ'); return false;
   }
 }

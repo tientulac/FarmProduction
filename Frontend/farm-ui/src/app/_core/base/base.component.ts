@@ -11,6 +11,8 @@ export class BaseComponent<T> {
   Entity!: T;
   Entities!: T[];
   URL: string = '';
+  field_Validation: any = {};
+  isSubmit: boolean = false;
 
   constructor(
     public baseService: BaseService<T>
@@ -39,5 +41,10 @@ export class BaseComponent<T> {
         this.Entity = res.Data;
       }
     );
+  }
+
+  validateCustom() {
+    let values = Object.keys(this.field_Validation).map(key => this.field_Validation[key]);
+    this.isSubmit = values.every(x => x == true);
   }
 }

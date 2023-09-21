@@ -1,8 +1,11 @@
 <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="REQUIRED">{{LABEL}}</nz-form-label>
 <input nz-input 
+    [nzStatus]="!VALID ? 'error' : ''"
     [placeholder]="PLACEHOLDER" 
     [(ngModel)]="VALUE" 
     [type]="TYPE" 
     [readonly]="DISABLED"
     (keyup)="changeValueInput()" />
-<p class="invalid-mess" *ngIf="REQUIRED && !VALID">Không được bỏ trống</p>
+<div class="invalid-mess" *ngIf="!VALID_REQUIRED">Không được bỏ trống</div>
+<div class="invalid-mess" *ngIf="!VALID_MIN_LENGTH">Tối thiểu nhập {{MINLENGTH}} ký tự</div>
+<div class="invalid-mess" *ngIf="!VALID_MAX_LENGTH">Tối đa nhập {{MAXLENGTH}} ký tự</div>
