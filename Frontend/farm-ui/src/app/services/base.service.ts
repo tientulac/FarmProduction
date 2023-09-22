@@ -39,5 +39,11 @@ export class BaseService<T> {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }
+
+    delete(url: string): Observable<ReponseAPI<T>> {
+        return this.http.delete<ReponseAPI<T>>(this.appConfig.API + url, {
+            headers: this.setHeader(),
+        }).pipe(map((res) => { return res; }));
+    }
 }
 

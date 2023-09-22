@@ -1,11 +1,12 @@
 <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="REQUIRED">{{LABEL}}</nz-form-label><br>
 <nz-select nzShowSearch nzAllowClear nz-input [nzStatus]="!VALID ? 'error' : ''" [nzPlaceHolder]="PLACEHOLDER"
-    [(ngModel)]="VALUE" *ngIf="TYPE == 'NORMAL'" [nzDisabled]="DISABLED" (ngModelChange)="changeValueSelect()">
+    [class]="CLASSNAME" [(ngModel)]="VALUE" *ngIf="TYPE == 'NORMAL'" [nzDisabled]="DISABLED"
+    (ngModelChange)="changeValueSelect()">
     <nz-option *ngFor="let option of LISTOPTION" [nzLabel]="option[LABEL_SELECT]"
         [nzValue]="option[VALUE_SELECT]"></nz-option>
 </nz-select>
 <nz-select nzShowSearch nzAllowClear nz-input [nzStatus]="!VALID ? 'error' : ''" [nzPlaceHolder]="PLACEHOLDER"
-    [(ngModel)]="VALUE" *ngIf="TYPE == 'MULTIPLE'" nzMode="multiple" [nzDisabled]="DISABLED"
+    [class]="CLASSNAME" [(ngModel)]="VALUE" *ngIf="TYPE == 'MULTIPLE'" nzMode="multiple" [nzDisabled]="DISABLED"
     (ngModelChange)="changeValueSelect()">
     <nz-option *ngFor="let option of LISTOPTION" [nzLabel]="option[LABEL_SELECT]"
         [nzValue]="option[VALUE_SELECT]"></nz-option>

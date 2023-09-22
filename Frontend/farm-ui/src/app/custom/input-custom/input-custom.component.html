@@ -1,5 +1,6 @@
 <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="REQUIRED">{{LABEL}}</nz-form-label>
 <input nz-input 
+    [class]="CLASSNAME"
     [nzStatus]="!VALID ? 'error' : ''"
     [placeholder]="PLACEHOLDER" 
     [(ngModel)]="VALUE" 

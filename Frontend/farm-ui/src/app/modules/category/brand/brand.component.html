@@ -1,15 +1,20 @@
 <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="12">
-        <app-input-custom [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
-            (changeInput)="field_Validation.Code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true"
-            [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'Code'">
+        <app-input-custom [CLASSNAME]="(!field_Validation.Code && onSubmitting) ? 'invalid-form' : ''" [LABEL]="'Mã'"
+            [MINLENGTH]="3" [MAXLENGTH]="10" (changeInput)="field_Validation.Code = $event; validateCustom()"
+            [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'Code'">
         </app-input-custom>
     </div>
     <div nz-col [nzSpan]="12">
-        <app-select-custom [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
+        <app-select-custom [CLASSNAME]="(!field_Validation.Name && onSubmitting) ? 'invalid-form' : ''"
+            [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
             (changeSelect)="field_Validation.Name = $event; validateCustom()" [PLACEHOLDER]="'Chọn tên'"
             [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'Id'" [TYPE]="'MULTIPLE'"></app-select-custom>
     </div>
 </div>
 
 <button (click)="onSubmit()">Submit</button>
+<button (click)="isDisplayDelete = true">Delete</button>
+
+<app-delete-modal [ID]="Entity.Id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"></app-delete-modal>
+

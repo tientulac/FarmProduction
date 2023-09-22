@@ -11,6 +11,7 @@ export class SelectCustomComponent {
   @Input() VALUE: any = null;
   @Input() FIELD: any = '';
   @Input() LABEL: any = '';
+  @Input() CLASSNAME: any = '';
   @Input() ENTITY: any = null;
   @Input() LABEL_SELECT: any = null;
   @Input() VALUE_SELECT: any = null;

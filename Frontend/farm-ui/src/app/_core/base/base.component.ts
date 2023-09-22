@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { BaseService } from 'src/app/services/base.service';
 
 @Component({
@@ -13,9 +14,12 @@ export class BaseComponent<T> {
   URL: string = '';
   field_Validation: any = {};
   isSubmit: boolean = false;
+  onSubmitting: boolean = false;
+  isDisplayDelete: boolean = false;
 
   constructor(
-    public baseService: BaseService<T>
+    public baseService: BaseService<T>,
+    public modal: NzModalService
   ) {
   }
 
@@ -46,5 +50,10 @@ export class BaseComponent<T> {
   validateCustom() {
     let values = Object.keys(this.field_Validation).map(key => this.field_Validation[key]);
     this.isSubmit = values.every(x => x == true);
+  }
+
+  handleCancel() {
+    this.modal.closeAll();
+    this.isDisplayDelete = false;
   }
 }

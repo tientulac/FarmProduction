@@ -11,6 +11,7 @@ export class InputCustomComponent {
   @Input() VALUE: any = null;
   @Input() FIELD: any = '';
   @Input() LABEL: any = '';
+  @Input() CLASSNAME: any = '';
   @Input() ENTITY: any = null;
 
   @Output() changeInput = new EventEmitter<any>();
