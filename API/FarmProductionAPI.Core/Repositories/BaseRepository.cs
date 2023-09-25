@@ -10,64 +10,55 @@ namespace FarmProductionAPI.Core.Repositories
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
 
-        protected readonly DataContext _dataContext;
-        protected IQueryable<TEntity> AggregateRoots;
+        protected readonly DataContext _dbContext;
+        protected IQueryable<TEntity> _queryAble;
 
         public BaseRepository(DataContext dataContext)
         {
-            _dataContext = dataContext;
-            AggregateRoots = dataContext.Set<TEntity>()
+            _dbContext = dataContext;
+            _queryAble = dataContext.Set<TEntity>()
                 .AsQueryable();
         }
 
-
-
         public virtual async Task<TEntity> GetById(Guid id)
         {
-            return await AggregateRoots.FirstOrDefaultAsync(x => x.Id == id);
+            return await _queryAble.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual IQueryable<TEntity> GetAll()
         {
-            return AggregateRoots.AsQueryable();
+            return _queryAble.AsQueryable();
         }
 
         public virtual async Task<TEntity> Add(TEntity entity)
         {
-            var insertedItem = _dataContext.Set<TEntity>()
+            var insertedItem = _dbContext.Set<TEntity>()
                 .Add(entity)
                 .Entity;
 
-            await _dataContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return insertedItem;
         }
 
         public virtual async Task<TEntity> Update(TEntity entity)
         {
-            var updatedItem = _dataContext.Set<TEntity>()
+            var updatedItem = _dbContext.Set<TEntity>()
                 .Update(entity).Entity;
 
-            await _dataContext.SaveChangesAsync();
-
+            await _dbContext.SaveChangesAsync();
             return updatedItem;
         }
 
         public virtual async Task Remove(TEntity entity)
         {
-            _dataContext.Set<TEntity>()
+            _dbContext.Set<TEntity>()
                 .Remove(entity);
-
-            await _dataContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
 
         public virtual async Task<PaginatedList<TEntity>> GetAll(PagingAndSortingModel pagingAndSortingModel)
         {
-            var itemsQuerys = QueryHelper.BuildOrderExpression(AggregateRoots, pagingAndSortingModel);
-            // itemsQuery = QueryHelper.BuildFilterExpressions(itemsQuery, pagingAndSortingModel);
-
-            var itemsQuery = AggregateRoots.OfType<TEntity>()
-                .AsQueryable();
-
+            var itemsQuerys = QueryHelper.BuildOrderExpression(_queryAble, pagingAndSortingModel);
             return await PaginatedList<TEntity>.CreateAsync(itemsQuerys, pagingAndSortingModel.PageIndex, pagingAndSortingModel.PageSize);
         }
     }

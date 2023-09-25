@@ -3229,24 +3229,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tien.nguyen3\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Private\\FarmProduction\\API\\FarmProductionAPI.Core\\FarmProductionAPI.Core.csproj",
+      "projectUniqueName": "D:\\DoAnWeb\\FarmProduction\\FarmProduction\\API\\FarmProductionAPI.Core\\FarmProductionAPI.Core.csproj",
       "projectName": "FarmProductionAPI.Core",
-      "projectPath": "D:\\Private\\FarmProduction\\API\\FarmProductionAPI.Core\\FarmProductionAPI.Core.csproj",
-      "packagesPath": "C:\\Users\\tien.nguyen3\\.nuget\\packages\\",
-      "outputPath": "D:\\Private\\FarmProduction\\API\\FarmProductionAPI.Core\\obj\\",
+      "projectPath": "D:\\DoAnWeb\\FarmProduction\\FarmProduction\\API\\FarmProductionAPI.Core\\FarmProductionAPI.Core.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "D:\\DoAnWeb\\FarmProduction\\FarmProduction\\API\\FarmProductionAPI.Core\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\tien.nguyen3\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3260,8 +3255,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Private\\FarmProduction\\API\\FarmProductionAPI.Domain\\FarmProductionAPI.Domain.csproj": {
-              "projectPath": "D:\\Private\\FarmProduction\\API\\FarmProductionAPI.Domain\\FarmProductionAPI.Domain.csproj"
+            "D:\\DoAnWeb\\FarmProduction\\FarmProduction\\API\\FarmProductionAPI.Domain\\FarmProductionAPI.Domain.csproj": {
+              "projectPath": "D:\\DoAnWeb\\FarmProduction\\FarmProduction\\API\\FarmProductionAPI.Domain\\FarmProductionAPI.Domain.csproj"
             }
           }
         }

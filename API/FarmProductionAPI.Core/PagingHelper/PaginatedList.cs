@@ -21,20 +21,6 @@ namespace FarmProductionAPI.Core.PagingHelper
 
         public List<T> Items { get; set; }
 
-
-        public PaginatedList<TResult> Map<TResult>(Func<T, TResult> selector)
-        {
-            return new PaginatedList<TResult>(Items.Select(selector), TotalCount, PageIndex, PageSize);
-        }
-
-        public async Task<PaginatedList<TResult>> MapAsync<TResult>(Func<T, Task<TResult>> selector)
-        {
-            var mappedItems = new List<TResult>();
-            foreach (var task in Items.Select(selector)) mappedItems.Add(await task);
-
-            return new PaginatedList<TResult>(mappedItems, TotalCount, PageIndex, PageSize);
-        }
-
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();

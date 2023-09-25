@@ -14,13 +14,13 @@ namespace FarmProductionAPI.Core
         }
 
 
-        public static IQueryable<T> BuildOrderExpression<T>(IQueryable<T> accountsQuery, PagingAndSortingModel pagingAndSortingModel)
+        public static IQueryable<T> BuildOrderExpression<T>(IQueryable<T> queryAble, PagingAndSortingModel pagingAndSortingModel)
         {
             // get orderby property
             var property = typeof(T).GetProperties()
                 .FirstOrDefault(x => x.GetCustomAttributes(typeof(OrderableAttribute), false)
                     .Any() && x.Name.Equals(pagingAndSortingModel.OrderColumn, StringComparison.InvariantCultureIgnoreCase));
-            return accountsQuery;
+            return queryAble;
         }
     }
 }

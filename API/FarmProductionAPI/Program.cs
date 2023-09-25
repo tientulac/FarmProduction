@@ -1,5 +1,7 @@
 using FarmProductionAPI;
+using FarmProductionAPI.Core.Repositories;
 using FarmProductionAPI.Domain;
+using FarmProductionAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,12 +9,15 @@ var configBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.Developm
 var configuration = configBuilder.Build();
 var sqlServerSetting = configuration.GetSection(nameof(SqlServerSetting)).Get<SqlServerSetting>();
 
+// DEPENDENCY INJECTION
 builder.Services.AddDbContext<DataContext>(
                 options =>
                 {
-                    options.UseSqlServer(sqlServerSetting?.ConnectionString, builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                    options.UseSqlServer(sqlServerSetting?.ConnectionString, builder => builder.MigrationsAssembly("FarmProductionAPI"));
                 });
 
+builder.Services.AddTransient<IRepository<Brand>, BaseRepository<Brand>>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
 builder.Services.AddControllers();

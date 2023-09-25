@@ -19,7 +19,6 @@ namespace FarmProductionAPI.Domain
         }
 
         public DbSet<Brand> Brands { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // filter deleted item

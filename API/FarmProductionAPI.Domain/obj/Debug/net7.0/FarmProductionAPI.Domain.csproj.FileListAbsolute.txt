@@ -12,3 +12,17 @@ D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\ref\Farm
 D:\Private\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.runtimeconfig.json
 D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.AssemblyReference.cache
 D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.genruntimeconfig.cache
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.deps.json
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.runtimeconfig.json
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.dll
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.pdb
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.AssemblyReference.cache
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfoInputs.cache
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfo.cs
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.CoreCompileInputs.cache
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.dll
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\refint\FarmProductionAPI.Domain.dll
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.pdb
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.genruntimeconfig.cache
+D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\ref\FarmProductionAPI.Domain.dll
