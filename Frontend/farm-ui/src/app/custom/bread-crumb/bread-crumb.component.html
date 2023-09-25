@@ -1,0 +1,6 @@
+<ol class="breadcrumb float-sm-left">
+    <li *ngFor="let item of breadCrumbs" [class]="item.className">
+        <a [routerLink]="[item.routerLink]" [class.disabled]="!item.active ? true : null"><i [class]="item.icon"></i>
+            &nbsp;{{item.name}}</a>
+    </li>
+</ol>

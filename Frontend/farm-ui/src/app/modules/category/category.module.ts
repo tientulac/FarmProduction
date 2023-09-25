@@ -6,13 +6,17 @@ import { InputCustomComponent } from "src/app/custom/input-custom/input-custom.c
 import { UtilityModule } from "src/app/_core/ultility.module";
 import { SelectCustomComponent } from "src/app/custom/select-custom/select-custom.component";
 import { DeleteModalComponent } from "src/app/custom/modal-custom/delete-modal/delete-modal.component";
+import { BreadCrumbComponent } from "src/app/custom/bread-crumb/bread-crumb.component";
+import { GroupButtonComponent } from "src/app/custom/group-button/group-button.component";
 
 @NgModule({
     declarations: [
         BrandComponent,
         InputCustomComponent,
         SelectCustomComponent,
-        DeleteModalComponent
+        DeleteModalComponent,
+        BreadCrumbComponent,
+        GroupButtonComponent
     ],
     imports: [
         CategoryRoutingModule,

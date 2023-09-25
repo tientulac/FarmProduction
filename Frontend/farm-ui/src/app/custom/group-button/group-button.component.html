@@ -1,0 +1,26 @@
+<section class="content-header">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <app-bread-crumb></app-bread-crumb>
+        </div>
+        <div class="col-md-6">
+            <button *ngIf="GROUP_BUTTON.ADD" nz-button [nzType]="'primary'" class="group-btn"
+                (click)="openModal('ADD', '')">
+                <span><i class="fas fa-plus"></i> &nbsp;Thêm mới</span>
+            </button>
+            <button *ngIf="GROUP_BUTTON.SEARCH" nz-button [nzType]="'primary'" class="group-btn" (click)="search()">
+                <span><i class="fa fa-search" aria-hidden="true"></i> &nbsp;Tìm kiếm</span>
+            </button>
+            <button *ngIf="GROUP_BUTTON.RELOAD" nz-button [nzType]="'primary'" class="group-btn" (click)="reload()">
+                <span><i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;Tải lại</span>
+            </button>
+            <button *ngIf="GROUP_BUTTON.FILTER" nz-button [nzType]="'primary'" class="group-btn" (click)="filter()">
+                <span><i class="fa fa-filter" aria-hidden="true"></i> &nbsp;Ẩn/ Hiện bộ lọc</span>
+            </button>
+            <button *ngIf="GROUP_BUTTON.EXCEL" nz-button [nzType]="'primary'" style="float: right; margin-right: 5px;"
+                (click)="export()">
+                <span><i class="fas fa-file-excel" aria-hidden="true"></i> &nbsp;Xuất Excel</span>
+            </button>
+        </div>
+    </div>
+</section>

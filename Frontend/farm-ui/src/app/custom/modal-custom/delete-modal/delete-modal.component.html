@@ -1,10 +1,10 @@
-<nz-modal [(nzVisible)]="SHOWDELETE" [nzTitle]="'Xóa bản ghi'" (nzOnCancel)="SHOWDELETE = false">
+<nz-modal *ngIf="SHOWDELETE" [(nzVisible)]="SHOWDELETE" [nzTitle]="'Xóa bản ghi'" (nzOnCancel)="closeModal()">
     <ng-container *nzModalContent>
         <h5 class="text-center">Bạn có chắc muốn xóa bản ghi này ?</h5>
         <i class="trash-icon fa fa-trash" aria-hidden="true"></i>
     </ng-container>
     <div *nzModalFooter>
-        <button nz-button nzType="default" (click)="SHOWDELETE = false">Đóng</button>
+        <button nz-button nzType="default" (click)="closeModal()">Đóng</button>
         <button nz-button nzType="primary" (click)="confirm()">Xác nhận</button>
     </div>
 </nz-modal>

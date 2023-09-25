@@ -1,0 +1,15 @@
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\bin\Debug\net7.0\FarmProductionAPI.Core.deps.json
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\bin\Debug\net7.0\FarmProductionAPI.Core.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\bin\Debug\net7.0\FarmProductionAPI.Core.pdb
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.AssemblyInfoInputs.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.AssemblyInfo.cs
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.csproj.CoreCompileInputs.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\refint\FarmProductionAPI.Core.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.pdb
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\ref\FarmProductionAPI.Core.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\bin\Debug\net7.0\FarmProductionAPI.Domain.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\bin\Debug\net7.0\FarmProductionAPI.Domain.pdb
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.csproj.AssemblyReference.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Core\obj\Debug\net7.0\FarmProductionAPI.Core.csproj.CopyComplete

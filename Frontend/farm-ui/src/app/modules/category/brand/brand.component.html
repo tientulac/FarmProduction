@@ -1,20 +1,81 @@
-<div nz-row [nzGutter]="24">
-    <div nz-col [nzSpan]="12">
-        <app-input-custom [CLASSNAME]="(!field_Validation.Code && onSubmitting) ? 'invalid-form' : ''" [LABEL]="'Mã'"
-            [MINLENGTH]="3" [MAXLENGTH]="10" (changeInput)="field_Validation.Code = $event; validateCustom()"
-            [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'Code'">
-        </app-input-custom>
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, '')" (searchEvent)="search()"
+    (filterEvent)="isFilter = !isFilter"></app-group-button>
+
+<nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [CLASSNAME]="(!field_Validation.Code && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
+                    (changeInput)="field_Validation.Code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'"
+                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'Code'">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-select-custom [CLASSNAME]="(!field_Validation.Name && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
+                    (changeSelect)="field_Validation.Name = $event; validateCustom()" [PLACEHOLDER]="'Chọn tên'"
+                    [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'Id'" [TYPE]="'MULTIPLE'"></app-select-custom>
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical">
+                    <div [nzGutter]="24">
+                        <nz-form-item>
+                            <nz-form-label>Đối tượng tuyển sinh</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="doi_tuong_tuyen_sinh_search" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div nz-col [nzSpan]="12">
-        <app-select-custom [CLASSNAME]="(!field_Validation.Name && onSubmitting) ? 'invalid-form' : ''"
-            [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
-            (changeSelect)="field_Validation.Name = $event; validateCustom()" [PLACEHOLDER]="'Chọn tên'"
-            [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'Id'" [TYPE]="'MULTIPLE'"></app-select-custom>
+</section>
+
+<section class="content cus-body">
+    <div class="card">
+        <div class="card-body">
+            <nz-table #basicTable [nzData]="Entities">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i =index">
+                        <td>{{i+1}}</td>
+                        <td>{{data.Code}}</td>
+                        <td>{{data.Name}}</td>
+                        <td>
+                            <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true"
+                                    nzTheme="outline"></span></a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
     </div>
-</div>
+</section>
 
-<button (click)="onSubmit()">Submit</button>
-<button (click)="isDisplayDelete = true">Delete</button>
-
-<app-delete-modal [ID]="Entity.Id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"></app-delete-modal>
-
+<app-delete-modal [ID]="Entity.Id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>

@@ -1,0 +1,14 @@
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.deps.json
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.pdb
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfoInputs.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfo.cs
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.CoreCompileInputs.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\refint\FarmProductionAPI.Domain.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.pdb
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\ref\FarmProductionAPI.Domain.dll
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.runtimeconfig.json
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.AssemblyReference.cache
+D:\Private\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.genruntimeconfig.cache

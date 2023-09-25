@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { BaseService } from 'src/app/services/base.service';
 
@@ -16,11 +17,29 @@ export class BaseComponent<T> {
   isSubmit: boolean = false;
   onSubmitting: boolean = false;
   isDisplayDelete: boolean = false;
+  isFilter: boolean = false;
+  isInsert: boolean = false;
+  GROUP_BUTTON = {
+    EXCEL: false,
+    FILTER: false,
+    RELOAD: false,
+    SEARCH: false,
+    ADD: false
+  }
 
   constructor(
     public baseService: BaseService<T>,
-    public modal: NzModalService
+    public modal: NzModalService,
+    public title: Title
   ) {
+  }
+
+  search() {
+    this.baseService.search(this.URL).subscribe(
+      (res) => {
+        this.Entity = res.Data;
+      }
+    );
   }
 
   getList() {
@@ -52,8 +71,9 @@ export class BaseComponent<T> {
     this.isSubmit = values.every(x => x == true);
   }
 
-  handleCancel() {
-    this.modal.closeAll();
+  
+  handleCancel(): void {
     this.isDisplayDelete = false;
+    this.isInsert = false;
   }
 }

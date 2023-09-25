@@ -1,3 +1,5 @@
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+
 .invalid-mess {
     color: red;
     font-size: 13px;
@@ -5,4 +7,17 @@
 
 .invalid-form {
     border: solid 0.5px red;
+}
+
+.ant-layout-content {
+    height: calc(100vh - 135px);
+}
+
+.group-btn {
+    float: right;
+    margin-right: 5px;
+}
+
+.group-btn:first-child {
+    margin-right: 0px !important;
 }
