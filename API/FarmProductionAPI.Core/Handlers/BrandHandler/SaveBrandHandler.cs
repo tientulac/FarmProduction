@@ -9,7 +9,7 @@ using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.BrandHandler
 {
-    public class CreateBrandHandler : ICommandHandler<SaveBrandCommand, ResponseResultAPI<BrandDTO>>
+    public class SaveBrandHandler : ICommandHandler<SaveBrandCommand, ResponseResultAPI<BrandDTO>>
     {
         private readonly IMapper _mapper;
 
@@ -19,7 +19,7 @@ namespace FarmProductionAPI.Core.Handlers.BrandHandler
 
         private readonly IRepository<Brand> _repository;
 
-        public CreateBrandHandler(IMapper mapper, ILogger logger, IRepository<Brand> repository, IUnitOfWork unitOfWork)
+        public SaveBrandHandler(IMapper mapper, ILogger logger, IRepository<Brand> repository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _logger = logger;

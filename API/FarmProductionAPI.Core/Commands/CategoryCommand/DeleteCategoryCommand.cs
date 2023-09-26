@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Commands.BrandCommand
+namespace FarmProductionAPI.Core.Commands.CategoryCommand
 {
-    public record DeleteBrandCommand : ICommand<ResponseResultAPI<BrandDTO>> { 
+    public record DeleteCategoryCommand : ICommand<ResponseResultAPI<CategoryDTO>>
+    {
         public Guid? Id { get; set; }
     };
 }

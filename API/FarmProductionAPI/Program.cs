@@ -19,6 +19,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(IFarmProductionInfrastructureMarker));
 builder.Services.AddAutoMapper(typeof(Program));
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("http://example.com",
+                                              "http://www.contoso.com");
+                      });
+});
 
 // DEPENDENCY INJECTION
 builder.Services.AddDbContext<DataContext>(
@@ -33,6 +43,7 @@ builder.Services.InstallServicesInAssembly<IFarmProductionInfrastructureMarker> 
 
 var app = builder.Build();
 app.ConfigureServicesInAssembly<IFarmProductionInfrastructureMarker>();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
