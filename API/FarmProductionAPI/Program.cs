@@ -1,13 +1,24 @@
 using FarmProductionAPI;
+using FarmProductionAPI.Core;
 using FarmProductionAPI.Core.Repositories;
 using FarmProductionAPI.Domain;
 using FarmProductionAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
 var configuration = configBuilder.Build();
 var sqlServerSetting = configuration.GetSection(nameof(SqlServerSetting)).Get<SqlServerSetting>();
+builder.Host.UseSerilog((hostContext, services, configuration) => {
+    configuration.ReadFrom.Services(services).Enrich.FromLogContext();
+});
+// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(IFarmProductionInfrastructureMarker));
+builder.Services.AddAutoMapper(typeof(Program));
 
 // DEPENDENCY INJECTION
 builder.Services.AddDbContext<DataContext>(
@@ -17,15 +28,11 @@ builder.Services.AddDbContext<DataContext>(
                 });
 
 builder.Services.AddTransient<IRepository<Brand>, BaseRepository<Brand>>();
-builder.Services.AddAutoMapper(typeof(Program));
-
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.InstallServicesInAssembly<IFarmProductionInfrastructureMarker> (configuration);
 
 var app = builder.Build();
+app.ConfigureServicesInAssembly<IFarmProductionInfrastructureMarker>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

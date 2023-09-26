@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Commands.BrandCommand
+namespace FarmProductionAPI.Domain.Enums
 {
-    internal class UpdateBrandCommand
+    public enum ProductStatus
     {
+        New,
+        OutLimited,
+        Selling
     }
 }

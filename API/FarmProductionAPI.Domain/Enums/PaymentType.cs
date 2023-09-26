@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Handlers.BrandHandler
+namespace FarmProductionAPI.Domain.Enums
 {
-    internal class GetBrandHandler
+    public enum PaymentType
     {
+        Money,
+        Card
     }
 }

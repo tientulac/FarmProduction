@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Queries
+namespace FarmProductionAPI.Core
 {
-    internal class GetBrandQuery
+    public interface IFarmProductionInfrastructureMarker
     {
     }
 }

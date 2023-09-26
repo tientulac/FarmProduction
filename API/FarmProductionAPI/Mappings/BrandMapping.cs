@@ -1,19 +1,15 @@
 ﻿using AutoMapper;
+using FarmProductionAPI.Core.Commands.BrandCommand;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Domain.Mappings
+namespace FarmProductionAPI.Mappings
 {
     public class BrandMapping : Profile
     {
         public BrandMapping()
         {
+            CreateMap<SaveBrandCommand, Brand>();
             CreateMap<Brand, BrandDTO>();
         }
     }

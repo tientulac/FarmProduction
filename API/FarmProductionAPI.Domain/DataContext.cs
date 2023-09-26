@@ -19,6 +19,15 @@ namespace FarmProductionAPI.Domain
         }
 
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // filter deleted item
@@ -40,12 +49,69 @@ namespace FarmProductionAPI.Domain
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.Id);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(x => x.Code)
                       .HasMaxLength(50);
             });
-          
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Category");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("Order");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.ToTable("OrderItem");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.ToTable("Product");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<ProductAttribute>(entity =>
+            {
+                entity.ToTable("ProductAttribute");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<ProductImage>(entity =>
+            {
+                entity.ToTable("ProductImage");
+
+                entity.HasKey(e => e.Id);
+            });
+
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<UserAccount>(entity =>
+            {
+                entity.ToTable("UserAccount");
+
+                entity.HasKey(e => e.Id);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
     }

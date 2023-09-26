@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Commands.BrandCommand
+namespace FarmProductionAPI.Domain.Enums
 {
-    internal class CreateBrandCommand
+    public enum OrderType
     {
+        Online,
+        Offline
     }
 }
