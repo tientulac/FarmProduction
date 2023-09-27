@@ -8,8 +8,5 @@ using System.Threading.Tasks;
 
 namespace FarmProductionAPI.Core.Commands.CategoryCommand
 {
-    public record DeleteCategoryCommand : ICommand<ResponseResultAPI<CategoryDTO>>
-    {
-        public Guid? Id { get; set; }
-    };
+    public record DeleteCategoryCommand(Guid? Id) : ICommand<ResponseResultAPI<CategoryDTO>>;
 }

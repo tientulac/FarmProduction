@@ -1,4 +1,5 @@
-﻿using FarmProductionAPI.Core.Commands.ProductCommand;
+﻿using FarmProductionAPI.Core.Commands.CategoryCommand;
+using FarmProductionAPI.Core.Commands.ProductCommand;
 using FarmProductionAPI.Core.Queries.ProductQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
@@ -17,6 +18,27 @@ namespace FarmProductionAPI.Controllers
         public ProductController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<ResponseResultAPI<List<ProductDTO>>> GetListProduct([FromQuery] GetListProductQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<ResponseResultAPI<ProductDTO>> Save([FromBody] SaveProductCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result;
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ResponseResultAPI<ProductDTO>> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new DeleteProductCommand(id));
+            return result;
         }
     }
 }

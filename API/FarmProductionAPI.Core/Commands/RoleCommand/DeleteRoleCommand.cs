@@ -1,13 +1,12 @@
 ﻿using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmProductionAPI.Core.Commands.CategoryCommand
+namespace FarmProductionAPI.Core.Commands.RoleCommand
 {
-    public record GetListCategoryCommand : IRequest<ResponseResultAPI<List<CategoryDTO>>>;
+    public record DeleteRoleCommand(Guid? Id) : ICommand<ResponseResultAPI<RoleDTO>>;
 }

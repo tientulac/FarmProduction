@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.Response;
 
 namespace FarmProductionAPI.Core.Commands.ProductCommand
 {
-    internal class DeleteProductCommand
-    {
-    }
+    public record DeleteProductCommand(Guid? Id) : ICommand<ResponseResultAPI<ProductDTO>>;
+
 }

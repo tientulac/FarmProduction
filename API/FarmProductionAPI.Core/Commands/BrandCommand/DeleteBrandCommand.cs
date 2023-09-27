@@ -8,7 +8,5 @@ using System.Threading.Tasks;
 
 namespace FarmProductionAPI.Core.Commands.BrandCommand
 {
-    public record DeleteBrandCommand : ICommand<ResponseResultAPI<BrandDTO>> { 
-        public Guid? Id { get; set; }
-    };
+    public record DeleteBrandCommand(Guid? Id) : ICommand<ResponseResultAPI<BrandDTO>>;
 }

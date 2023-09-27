@@ -25,5 +25,6 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? Address { get; set; }
         public RoleDTO? Role { get; set; }
         public List<OrderDTO>? Orders { get; set; }
+        public string? Token { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+﻿using FarmProductionAPI.Core.Commands.OrderCommand;
+using FarmProductionAPI.Core.Queries.OrderQuery;
+using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.Response;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FarmProductionAPI.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Produces("application/json")]
+    public class OrderController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public OrderController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<ResponseResultAPI<List<OrderDTO>>> GetListOrder([FromQuery] GetListOrderQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<ResponseResultAPI<OrderDTO>> Save([FromBody] SaveOrderCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result;
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ResponseResultAPI<OrderDTO>> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new DeleteOrderCommand(id));
+            return result;
+        }
+    }
+}

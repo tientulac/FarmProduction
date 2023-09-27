@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.Response;
+using MediatR;
 
 namespace FarmProductionAPI.Core.Queries.ProductQuery
 {
-    internal class GetListProductQuery
-    {
-    }
+    public record GetListProductQuery : IRequest<ResponseResultAPI<List<ProductDTO>>>;
 }

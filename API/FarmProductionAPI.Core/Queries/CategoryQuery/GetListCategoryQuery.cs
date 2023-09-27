@@ -4,7 +4,5 @@ using MediatR;
 
 namespace FarmProductionAPI.Core.Queries.CategoryQuery
 {
-    public record GetListCategoryQuery : IRequest<ResponseResultAPI<List<CategoryDTO>>>
-    {
-    }
+    public record GetListCategoryQuery : IRequest<ResponseResultAPI<List<CategoryDTO>>>;
 }

@@ -33,10 +33,10 @@ namespace FarmProductionAPI.Controllers
             return result;
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<ResponseResultAPI<BrandDTO>> Delete(Guid? id, CancellationToken cancellationToken)
+        [HttpDelete("{id:guid}")]
+        public async Task<ResponseResultAPI<BrandDTO>> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new DeleteBrandCommand { Id = id });
+            var result = await _mediator.Send(new DeleteBrandCommand(id));
             return result;
         }
     }

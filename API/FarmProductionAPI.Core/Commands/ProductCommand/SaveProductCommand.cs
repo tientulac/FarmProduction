@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.Enums;
+using FarmProductionAPI.Domain.Response;
+using OneOf;
 
-namespace FarmProductionAPI.Core.Commands.ProductCommand
+namespace FarmProductionAPI.Core.Commands.CategoryCommand
 {
-    internal class SaveProductCommand
+    public class SaveProductCommand : ICommand<ResponseResultAPI<ProductDTO>>
     {
+        public Guid? Id { get; set; }
+        public string? Code { get; set; }
+        public string? Name { get; set; }
+        public string? Image { get; set; }
+        public Guid? BrandId { get; set; }
+        public Guid? CategoryId { get; set; }
+        public ProductStatus? Status { get; set; }
     }
 }
