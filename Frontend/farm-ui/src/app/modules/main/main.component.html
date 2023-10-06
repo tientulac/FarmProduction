@@ -2,24 +2,29 @@
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="User" nzIcon="user">
+            <li nz-submenu nzTitle="Master Data" nzIcon="appstore">
                 <ul>
+                    <li nz-menu-item>
+                        <a routerLink="category/catalog">Category</a>
+                    </li>
                     <li nz-menu-item>
                         <a routerLink="category/brand">Brand</a>
                     </li>
-                    <li nz-menu-item>Bill</li>
-                    <li nz-menu-item>Alex</li>
                 </ul>
             </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
+            <li nz-submenu nzTitle="Product" nzIcon="file">
                 <ul>
                     <li nz-menu-item>Team 1</li>
                     <li nz-menu-item>Team 2</li>
                 </ul>
             </li>
             <li nz-menu-item>
-                <span nz-icon nzType="file"></span>
-                <span>File</span>
+                <span nz-icon nzType="user"></span>
+                <span>Role</span>
+            </li>
+            <li nz-menu-item>
+                <span nz-icon nzType="team"></span>
+                <span>User</span>
             </li>
         </ul>
     </nz-sider>

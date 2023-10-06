@@ -10,7 +10,7 @@ import { BaseService } from 'src/app/services/base.service';
 })
 export class BaseComponent<T> {
 
-  Entity!: T;
+  Entity!: T | null;
   Entities!: T[];
   URL: string = '';
   field_Validation: any = {};
@@ -37,7 +37,7 @@ export class BaseComponent<T> {
   search() {
     this.baseService.search(this.URL).subscribe(
       (res) => {
-        this.Entity = res.Data;
+        this.Entity = res.data;
       }
     );
   }
@@ -45,7 +45,7 @@ export class BaseComponent<T> {
   getList() {
     this.baseService.getAll(this.URL).subscribe(
       (res) => {
-        this.Entities = res.Data;
+        this.Entities = res.data;
       }
     );
   }
@@ -53,7 +53,7 @@ export class BaseComponent<T> {
   save() {
     this.baseService.save(this.URL).subscribe(
       (res) => {
-        this.Entity = res.Data;
+        this.Entity = res.data;
       }
     );
   }
@@ -61,7 +61,7 @@ export class BaseComponent<T> {
   getById() {
     this.baseService.getById(this.URL).subscribe(
       (res) => {
-        this.Entity = res.Data;
+        this.Entity = res.data;
       }
     );
   }
@@ -75,5 +75,6 @@ export class BaseComponent<T> {
   handleCancel(): void {
     this.isDisplayDelete = false;
     this.isInsert = false;
+    this.getList();
   }
 }

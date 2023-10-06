@@ -3,6 +3,8 @@ using FarmProductionAPI.Core.Queries.UserAccountQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -54,6 +56,7 @@ namespace FarmProductionAPI.Controllers
             {
                 result.Data.Token = GenerateToken(result.Data);
             }
+            var a = User;
             return result;
         }
 

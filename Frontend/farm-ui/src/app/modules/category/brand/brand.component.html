@@ -1,4 +1,4 @@
-<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, '')" (searchEvent)="search()"
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, null)" (searchEvent)="search()"
     (filterEvent)="isFilter = !isFilter"></app-group-button>
 
 <nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
@@ -6,18 +6,18 @@
     <ng-container *nzModalContent>
         <div nz-row [nzGutter]="24">
             <div nz-col [nzSpan]="12">
-                <app-input-custom [CLASSNAME]="(!field_Validation.Code && onSubmitting) ? 'invalid-form' : ''"
+                <app-input-custom [CLASSNAME]="(!field_Validation.code && onSubmitting) ? 'invalid-form' : ''"
                     [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
-                    (changeInput)="field_Validation.Code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'"
-                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'Code'">
+                    (changeInput)="field_Validation.code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'"
+                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code">
                 </app-input-custom>
             </div>
-            <div nz-col [nzSpan]="12">
+            <!-- <div nz-col [nzSpan]="12">
                 <app-select-custom [CLASSNAME]="(!field_Validation.Name && onSubmitting) ? 'invalid-form' : ''"
                     [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
                     (changeSelect)="field_Validation.Name = $event; validateCustom()" [PLACEHOLDER]="'Chọn tên'"
                     [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'Id'" [TYPE]="'MULTIPLE'"></app-select-custom>
-            </div>
+            </div> -->
         </div>
     </ng-container>
 </nz-modal>
@@ -54,14 +54,20 @@
                         <th>STT</th>
                         <th>Mã</th>
                         <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày sửa</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of basicTable.data; let i =index">
                         <td>{{i+1}}</td>
-                        <td>{{data.Code}}</td>
-                        <td>{{data.Name}}</td>
+                        <td>{{data.code}}</td>
+                        <td>{{data.name}}</td>
+                        <td><img [src]="data.image" alt=""></td>
+                        <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
                         <td>
                             <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
                                     nzTheme="outline"></span></a>
@@ -77,5 +83,5 @@
     </div>
 </section>
 
-<app-delete-modal [ID]="Entity.Id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"
+<app-delete-modal [ID]="Entity?.id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"
     (handleCancelEvent)="handleCancel()"></app-delete-modal>

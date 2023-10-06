@@ -5,6 +5,7 @@ using FarmProductionAPI.Core.Repositories;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
                 var user = new UserAccount();
                 if (!string.IsNullOrEmpty(request.UserName) && !string.IsNullOrEmpty(request.Hashpassword))
                 {
-                    user = await _repository.GetFirstByConditionAsync(x => x.UserName == request.UserName && x.Hashpassword == request.Hashpassword, db => db);
+                    user = await _repository.GetFirstByConditionAsync(x => x.UserName == request.UserName && x.Hashpassword == request.Hashpassword, db => db.Include(x => x.Role));
                     if (user is null)
                     {
                         return new ResponseResultAPI<UserAccountDTO>()

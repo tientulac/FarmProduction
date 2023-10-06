@@ -1,5 +1,5 @@
 {
     "production": false,
     "dev": true,
-    "API": "https://localhost:44320/api/"
+    "API": "https://localhost:44350/api/"
 }

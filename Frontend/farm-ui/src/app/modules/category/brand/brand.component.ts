@@ -27,8 +27,8 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     this.URL = 'brand';
     this.title.setTitle('Thương hiệu');
     this.field_Validation = {
-      Code: false,
-      Name: false
+      code: false,
+      name: false
     };
 
     this.GROUP_BUTTON.ADD = true;
@@ -40,7 +40,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       { id: 1, name: 'TienNN' },
       { id: 2, name: 'TienNN2' },
     ];
-    // this.getList();
+    this.getList();
   }
 
   onSubmit() {
@@ -48,11 +48,11 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     if (!this.isSubmit) alert('Dữ liệu nhập chưa hợp lệ'); return false;
   }
 
-  openModal(type: any, data: any) {
+  openModal(type: any, data: BrandEntity | null) {
     this.isInsert = true;
-    data = new BrandEntity();
     if (type === 'EDIT') {
       this.Entity = data;
+      console.log(this.Entity);
     }
   }
 }
