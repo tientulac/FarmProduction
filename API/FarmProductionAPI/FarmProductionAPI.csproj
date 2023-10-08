@@ -34,4 +34,8 @@
     <ProjectReference Include="..\FarmProductionAPI.Domain\FarmProductionAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadedFiles\" />
+  </ItemGroup>
+
 </Project>
