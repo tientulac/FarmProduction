@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { BaseService } from 'src/app/services/base.service';
+import { UploadImageService } from 'src/app/services/upload-image.service';
 
 @Component({
   selector: 'app-base',
@@ -19,6 +21,8 @@ export class BaseComponent<T> {
   isDisplayDelete: boolean = false;
   isFilter: boolean = false;
   isInsert: boolean = false;
+  uploadFileName: any = '';
+
   GROUP_BUTTON = {
     EXCEL: false,
     FILTER: false,
@@ -30,9 +34,15 @@ export class BaseComponent<T> {
   constructor(
     public baseService: BaseService<T>,
     public modal: NzModalService,
-    public title: Title
+    public title: Title,
+    public uploadImageService: UploadImageService
   ) {
   }
+
+
+  filesUpload: NzUploadFile[] = [];
+
+  listFileUpload = [...this.filesUpload];
 
   search() {
     this.baseService.search(this.URL).subscribe(
@@ -71,7 +81,6 @@ export class BaseComponent<T> {
     this.isSubmit = values.every(x => x == true);
   }
 
-  
   handleCancel(): void {
     this.isDisplayDelete = false;
     this.isInsert = false;

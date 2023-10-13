@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FarmProductionAPI.Core
-build_property.ProjectDir = D:\Private\FarmProduction\API\FarmProductionAPI.Core\
+build_property.ProjectDir = D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Core\

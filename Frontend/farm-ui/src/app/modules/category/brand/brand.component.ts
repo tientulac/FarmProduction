@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { BrandEntity } from 'src/app/entities/Brand.Entity';
 import { BaseService } from 'src/app/services/base.service';
+import { UploadImageService } from 'src/app/services/upload-image.service';
 
 @Component({
   selector: 'app-brand',
@@ -21,6 +23,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       AppInjector.get(BaseService<BrandEntity>),
       AppInjector.get(NzModalService),
       AppInjector.get(Title),
+      AppInjector.get(UploadImageService),
     );
     this.Entity = new BrandEntity();
     this.Entities = new Array<BrandEntity>();;
@@ -43,16 +46,35 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     this.getList();
   }
 
-  onSubmit() {
+  async onSubmit(): Promise<boolean> {
     this.onSubmitting = true;
-    if (!this.isSubmit) alert('Dữ liệu nhập chưa hợp lệ'); return false;
+    if (!this.isSubmit) {
+      alert('Dữ liệu nhập chưa hợp lệ');
+      return false;
+    }
+    return true;
   }
 
   openModal(type: any, data: BrandEntity | null) {
     this.isInsert = true;
+    this.Entity = new BrandEntity();
     if (type === 'EDIT') {
       this.Entity = data;
-      console.log(this.Entity);
     }
   }
+
+  handleUpload = (item: any) => {
+    const formData = new FormData();
+    formData.append(item.name, item.file as any, this.uploadFileName);
+    this.uploadImageService.upload(formData).subscribe(
+      (res: any) => {
+        item.onSuccess(item.file);
+      }
+    );
+  };
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.uploadFileName = `brand_${(new Date()).getTime()}`;
+    return true;
+  };
 }

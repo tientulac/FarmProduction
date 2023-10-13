@@ -12,6 +12,25 @@
                     [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code">
                 </app-input-custom>
             </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [CLASSNAME]="(!field_Validation.name && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL]="'Tên'" (changeInput)="field_Validation.name = $event; validateCustom()"
+                    [PLACEHOLDER]="'Nhập tên'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'name'"
+                    [(VALUE)]="Entity.name">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <br>
+                <div class="clearfix">
+                    <nz-upload [nzBeforeUpload]="beforeUpload" [nzCustomRequest]="handleUpload" nzListType="picture"
+                        [nzLimit]="1" [(nzFileList)]="listFileUpload">
+                        <button nz-button>
+                            <span nz-icon nzType="upload"></span>
+                            Tải ảnh lên
+                        </button>
+                    </nz-upload>
+                </div>
+            </div>
             <!-- <div nz-col [nzSpan]="12">
                 <app-select-custom [CLASSNAME]="(!field_Validation.Name && onSubmitting) ? 'invalid-form' : ''"
                     [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="listName" [LABEL]="'Tên'"
