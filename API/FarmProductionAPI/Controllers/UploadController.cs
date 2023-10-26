@@ -33,7 +33,7 @@ namespace FarmProductionAPI.Controllers
                     {
                         Code = "200",
                         Data = true,
-                        Message = path + $"\\{file.FileName}"
+                        Message = path + $"\\{file.FileName}.jpg"
                     };
                 }
                 else

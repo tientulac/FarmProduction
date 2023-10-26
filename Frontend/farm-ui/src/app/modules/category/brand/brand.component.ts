@@ -5,6 +5,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { BrandEntity } from 'src/app/entities/Brand.Entity';
+import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 
@@ -30,7 +31,6 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     this.URL = 'brand';
     this.title.setTitle('Thương hiệu');
     this.field_Validation = {
-      code: false,
       name: false
     };
 
@@ -52,6 +52,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       alert('Dữ liệu nhập chưa hợp lệ');
       return false;
     }
+    console.log(this.Entity);
     return true;
   }
 
@@ -67,14 +68,20 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     const formData = new FormData();
     formData.append(item.name, item.file as any, this.uploadFileName);
     this.uploadImageService.upload(formData).subscribe(
-      (res: any) => {
+      (res: ReponseAPI<File>) => {
         item.onSuccess(item.file);
+        if (res.code == "200") {
+          this.Entity!.image = res.message;
+        }
+        else {
+          alert(res.message);
+        }
       }
     );
   };
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.uploadFileName = `brand_${(new Date()).getTime()}`;
+    this.uploadFileName = `brand_${this.Entity?.code}`;
     return true;
   };
 }

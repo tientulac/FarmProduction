@@ -27,6 +27,7 @@ namespace FarmProductionAPI.Domain
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<Producer> Producers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,15 +59,21 @@ namespace FarmProductionAPI.Domain
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Category");
-
                 entity.HasKey(e => e.Id);
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("Order");
-
+                entity.ToTable("Orders");
                 entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.UserAccount)
+                .WithMany()
+                .HasForeignKey(o => o.UserAccountId);
+
+                entity.HasOne(e => e.SellerAccount)
+                .WithMany()
+                .HasForeignKey(o => o.SellerAccountId);
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -108,6 +115,13 @@ namespace FarmProductionAPI.Domain
             modelBuilder.Entity<UserAccount>(entity =>
             {
                 entity.ToTable("UserAccount");
+
+                entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<Producer>(entity =>
+            {
+                entity.ToTable("Producer");
 
                 entity.HasKey(e => e.Id);
             });

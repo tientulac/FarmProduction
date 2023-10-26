@@ -15,7 +15,17 @@ namespace FarmProductionAPI.Domain.Models
         public string? Phone { get; set; }
         public string? FullName { get; set; }
         public string? Address { get; set; }
+        public string? Avatar { get; set; }
+        public StatusUser? StatusUser { get; set; }
         public virtual Role? Role { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
+    }
+
+    public enum StatusUser
+    {
+        ACTIVE,
+        DISABLE,
+        VIP,
+        BLACKLIST
     }
 }

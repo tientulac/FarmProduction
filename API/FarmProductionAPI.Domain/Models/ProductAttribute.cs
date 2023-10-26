@@ -14,6 +14,8 @@ namespace FarmProductionAPI.Domain.Models
         public string? Color { get; set; }
         public string? Unit { get; set; }
         public string? Value  { get; set; }
+        public DateTime? ExpireDate { get; set; }
+        public DateTime? ManufactureDate { get; set; }
         public virtual Product? Product { get; set; }
         public virtual ICollection<OrderItem>? OrderItems { get; set; }
     }
