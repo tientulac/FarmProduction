@@ -3,7 +3,13 @@ using FarmProductionAPI.Core.Queries.BrandQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
+using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
+using System;
 
 namespace FarmProductionAPI.Controllers
 {
@@ -33,7 +39,7 @@ namespace FarmProductionAPI.Controllers
                     {
                         Code = "200",
                         Data = true,
-                        Message = path + $"\\{file.FileName}.jpg"
+                        Message = $"{file.FileName}"
                     };
                 }
                 else
@@ -55,6 +61,31 @@ namespace FarmProductionAPI.Controllers
                     Message = ex.Message,
                     MessageEX = ex.ToString()
                 };
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetImage(string imgName)
+        {
+            try
+            {
+                string imagePath = $"UploadedFiles/{imgName}";
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    string contentType = "image/jpeg"; 
+
+                    return File(System.IO.File.OpenRead(imagePath), contentType);
+                }
+                else
+                {
+                    return NotFound(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                return StatusCode(500, ex.Message);
             }
         }
     }

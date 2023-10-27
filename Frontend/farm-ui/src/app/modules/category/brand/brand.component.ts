@@ -8,6 +8,17 @@ import { BrandEntity } from 'src/app/entities/Brand.Entity';
 import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
+import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+
+interface ColumnItem {
+  name: string;
+  sortOrder: NzTableSortOrder | null;
+  sortFn: NzTableSortFn<any> | null;
+  listOfFilter: NzTableFilterList;
+  filterFn: NzTableFilterFn<any> | null;
+  filterMultiple: boolean;
+  sortDirections: NzTableSortOrder[];
+}
 
 @Component({
   selector: 'app-brand',
@@ -57,6 +68,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
   }
 
   openModal(type: any, data: BrandEntity | null) {
+    this.listFileUpload = [];
     this.isInsert = true;
     this.Entity = new BrandEntity();
     if (type === 'EDIT') {
@@ -81,7 +93,34 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
   };
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.uploadFileName = `brand_${this.Entity?.code}`;
+    this.uploadFileName = `brand_${this.Entity?.code}.jpg`;
     return true;
   };
+
+  listOfColumns: ColumnItem[] = [
+    {
+      name: 'Mã',
+      sortOrder: null,
+      sortFn: (a: BrandEntity, b: BrandEntity) => a.code.localeCompare(b.code),
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [
+        { text: 'Joe', value: 'Joe' },
+        { text: 'Jim', value: 'Jim' }
+      ],
+      filterFn: (list: string[], item: BrandEntity) => list.some(x => item.code.indexOf(x) !== -1)
+    },
+    {
+      name: 'Tên',
+      sortOrder: null,
+      sortFn: (a: BrandEntity, b: BrandEntity) => (a.name ?? '').localeCompare(b.name ?? ''),
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [
+        { text: 'Joe', value: 'Joe' },
+        { text: 'Jim', value: 'Jim' }
+      ],
+      filterFn: (list: string[], item: BrandEntity) => list.some(x => (item.name ?? '').indexOf(x) !== -1)
+    },
+  ];
 }

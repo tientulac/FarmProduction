@@ -7,9 +7,8 @@
         <div nz-row [nzGutter]="24">
             <div nz-col [nzSpan]="12">
                 <app-input-custom [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
-                    (changeInput)="field_Validation.code = $event;" [PLACEHOLDER]="'Nhập mã'"
-                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code"
-                    [DISABLED]="true">
+                    (changeInput)="field_Validation.code = $event;" [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true"
+                    [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code" [DISABLED]="true">
                 </app-input-custom>
             </div>
             <div nz-col [nzSpan]="12">
@@ -69,15 +68,16 @@
         <div class="card-body">
             <nz-table #basicTable [nzData]="Entities">
                 <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Mã</th>
-                        <th>Tên</th>
-                        <th>Ảnh</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày sửa</th>
-                        <th>Hành động</th>
-                    </tr>
+                    <th>STT</th>
+                    <th *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn"
+                        [nzSortDirections]="column.sortDirections" [nzFilterMultiple]="column.filterMultiple"
+                        [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
+                        {{ column.name }}
+                    </th>
+                    <th>Ảnh</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày sửa</th>
+                    <th>Hành động</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of basicTable.data; let i =index">

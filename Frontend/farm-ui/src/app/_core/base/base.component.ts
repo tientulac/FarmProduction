@@ -10,6 +10,7 @@ import { UploadImageService } from 'src/app/services/upload-image.service';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss']
 })
+
 export class BaseComponent<T> {
 
   Entity!: T | null;
