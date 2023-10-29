@@ -40,6 +40,7 @@ builder.Services.AddDbContext<DataContext>(
                 options =>
                 {
                     options.UseSqlServer(sqlServerSetting?.ConnectionString, builder => builder.MigrationsAssembly("FarmProductionAPI"));
+                    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 });
 
 builder.Services.AddTransient<IRepository<Brand>, BaseRepository<Brand>>();
@@ -92,4 +93,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+app.UseStaticFiles();
 

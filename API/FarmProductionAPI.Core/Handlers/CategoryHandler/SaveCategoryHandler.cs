@@ -37,7 +37,7 @@ namespace FarmProductionAPI.Core.Handlers.CategoryHandler
                     category = await _repository.GetById(request.Id.Value);
                     if (category is not null)
                     {
-                        await _repository.Update(_mapper.Map<Category>(request));
+                        await _repository.Update(_mapper.Map<Category>(request), category);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else

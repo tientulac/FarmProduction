@@ -28,6 +28,12 @@ export class InputCustomComponent {
   VALID_MIN_LENGTH: boolean = true;
   VALID_MAX_LENGTH: boolean = true;
 
+  ngOnInit() {
+    if (this.ENTITY.id) {
+      this.changeValueInput();
+    }
+  }
+
   changeValueInput() {
     if (this.REQUIRED) {
       this.VALID_REQUIRED = this.VALUE ? true : false;
@@ -39,7 +45,7 @@ export class InputCustomComponent {
       this.VALID_MAX_LENGTH = this.VALUE.toString().length >= this.MAXLENGTH ? false : true;
     }
     this.ENTITY[this.FIELD] = this.VALUE;
-    this.VALID = this.VALID_REQUIRED && this.VALID_MIN_LENGTH && this.VALID_MAX_LENGTH; 
+    this.VALID = this.VALID_REQUIRED && this.VALID_MIN_LENGTH && this.VALID_MAX_LENGTH;
     this.changeInput.emit(this.VALID);
   }
 }

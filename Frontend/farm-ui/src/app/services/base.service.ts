@@ -22,8 +22,8 @@ export class BaseService<T> {
         return new HttpHeaders().set('Authorization', `Bearer ${''}`)
     }
 
-    getAll(url: string): Observable<ReponseAPI<T[]>> {
-        return this.http.get<ReponseAPI<T[]>>(this.appConfig.API + url, {
+    getAll(url: string, request: any | null): Observable<ReponseAPI<T[]>> {
+        return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url + '/get-by-request', request, {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }
@@ -34,8 +34,8 @@ export class BaseService<T> {
         }).pipe(map((res) => { return res; }));
     }
 
-    save(url: string): Observable<ReponseAPI<T>> {
-        return this.http.post<ReponseAPI<T>>(this.appConfig.API + url, {
+    save(url: string, entity: T): Observable<ReponseAPI<T>> {
+        return this.http.post<ReponseAPI<T>>(this.appConfig.API + url, entity, {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }
@@ -46,8 +46,8 @@ export class BaseService<T> {
         }).pipe(map((res) => { return res; }));
     }
 
-    search(url: string): Observable<ReponseAPI<T>> {
-        return this.http.post<ReponseAPI<T>>(this.appConfig.API + url, {
+    search(url: string, request: any): Observable<ReponseAPI<T[]>> {
+        return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url + '/search', request, {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }

@@ -31,13 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.ProductImageHandler
         {
             try
             {
-                var ProductImage = new ProductImage();
+                var productImage = new ProductImage();
                 if (request.Id.HasValue)
                 {
-                    ProductImage = await _repository.GetById(request.Id.Value);
-                    if (ProductImage is not null)
+                    productImage = await _repository.GetById(request.Id.Value);
+                    if (productImage is not null)
                     {
-                        await _repository.Update(_mapper.Map<ProductImage>(request));
+                        await _repository.Update(_mapper.Map<ProductImage>(request), productImage);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else
@@ -51,14 +51,14 @@ namespace FarmProductionAPI.Core.Handlers.ProductImageHandler
                     }
                 }
 
-                ProductImage = _mapper.Map<ProductImage>(request);
-                await _repository.CreateOneAsync(ProductImage, cancellationToken);
+                productImage = _mapper.Map<ProductImage>(request);
+                await _repository.CreateOneAsync(productImage, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new ResponseResultAPI<ProductImageDTO>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<ProductImageDTO>(ProductImage),
+                    Data = _mapper.Map<ProductImageDTO>(productImage),
                     Message = "Success"
                 };
             }

@@ -1,4 +1,4 @@
-<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, null)" (searchEvent)="search()"
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
     (filterEvent)="isFilter = !isFilter"></app-group-button>
 
 <nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
@@ -6,10 +6,9 @@
     <ng-container *nzModalContent>
         <div nz-row [nzGutter]="24">
             <div nz-col [nzSpan]="12">
-                <app-input-custom [CLASSNAME]="(!field_Validation.code && onSubmitting) ? 'invalid-form' : ''"
-                    [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
-                    (changeInput)="field_Validation.code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'"
-                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code">
+                <app-input-custom [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
+                    (changeInput)="field_Validation.code = $event;" [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true"
+                    [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code" [DISABLED]="true">
                 </app-input-custom>
             </div>
             <div nz-col [nzSpan]="12">
@@ -24,6 +23,7 @@
                 <div class="clearfix">
                     <nz-upload [nzBeforeUpload]="beforeUpload" [nzCustomRequest]="handleUpload" nzListType="picture"
                         [nzLimit]="1" [(nzFileList)]="listFileUpload">
+                        <img *ngIf="Entity.image" src="{{URL_Upload}}/{{Entity.image ?? ''}}" class="img_logo">
                         <button nz-button>
                             <span nz-icon nzType="upload"></span>
                             Tải ảnh lên
@@ -45,13 +45,25 @@
     <div class="card">
         <div class="card-body">
             <div [nzGutter]="24">
-                <form nz-form nzLayout="vertical">
-                    <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="12">
                         <nz-form-item>
-                            <nz-form-label>Đối tượng tuyển sinh</nz-form-label>
+                            <nz-form-label>Mã thương hiệu</nz-form-label>
                             <nz-input-group [nzSuffix]="suffixIconSearch">
                                 <input type="text" nz-input placeholder="Nhập tìm kiếm"
-                                    [(ngModel)]="doi_tuong_tuyen_sinh_search" />
+                                    [(ngModel)]="EntitySearch.code" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                            <nz-form-label>Tên thương hiệu</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.name" />
                             </nz-input-group>
                             <ng-template #suffixIconSearch>
                                 <span nz-icon nzType="search"></span>
@@ -67,7 +79,8 @@
 <section class="content cus-body">
     <div class="card">
         <div class="card-body">
-            <nz-table #basicTable [nzData]="Entities">
+            <nz-table #basicTable [nzData]="Entities" [nzBordered]="true">
+
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -80,21 +93,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of basicTable.data; let i =index">
+                    <tr *ngFor="let data of basicTable.data; let i =index"
+                        [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
                         <td>{{i+1}}</td>
                         <td>{{data.code}}</td>
                         <td>{{data.name}}</td>
-                        <td><img [src]="data.image" alt=""></td>
+                        <td><img src="{{URL_Upload}}/{{data.image ?? ''}}" class="img_logo"></td>
                         <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
                         <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
-                        <td>
+                        <td *ngIf="!data.isSoftDeleted">
                             <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
                                     nzTheme="outline"></span></a>
                             <nz-divider nzType="vertical"></nz-divider>
-                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true"
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
                                     nzTheme="outline"></span></a>
 
                         </td>
+                        <td *ngIf="data.isSoftDeleted"></td>
                     </tr>
                 </tbody>
             </nz-table>
@@ -102,5 +117,5 @@
     </div>
 </section>
 
-<app-delete-modal [ID]="Entity?.id" [URL]="this.URL" [SHOWDELETE]="isDisplayDelete"
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
     (handleCancelEvent)="handleCancel()"></app-delete-modal>

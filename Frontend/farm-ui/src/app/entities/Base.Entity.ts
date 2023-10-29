@@ -1,9 +1,9 @@
 export class BaseEntity {
-    CreatedAt!: Date | null;
-    CreatedById!: any | null;
-    UpdatedAt!: Date | null;
-    UpdatedById!: any | null;
-    DeletedAt!: Date | null;
-    DeletedById!: any | null;
-    IsSoftDeleted!: any | null;
+    createdAt!: Date | null;
+    createdById!: any | null;
+    updatedAt!: Date | null;
+    updatedById!: any | null;
+    deletedAt!: Date | null;
+    deletedById!: any | null;
+    isSoftDeleted!: any | null;
 }

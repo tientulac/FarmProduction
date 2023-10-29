@@ -27,5 +27,11 @@ export class UploadImageService {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }
+
+    getImgUpload(fileName: string): Observable<any> {
+        return this.http.get<any>(this.appConfig.API + 'Upload/GetImage?imgName=' + fileName, {
+            headers: this.setHeader(),
+        }).pipe(map((res) => { return res; }));
+    }
 }
 
