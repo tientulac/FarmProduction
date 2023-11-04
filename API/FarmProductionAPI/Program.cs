@@ -50,6 +50,7 @@ builder.Services.AddTransient<IRepository<OrderItem>, BaseRepository<OrderItem>>
 builder.Services.AddTransient<IRepository<Product>, BaseRepository<Product>>();
 builder.Services.AddTransient<IRepository<ProductAttribute>, BaseRepository<ProductAttribute>>();
 builder.Services.AddTransient<IRepository<ProductImage>, BaseRepository<ProductImage>>();
+builder.Services.AddTransient<IRepository<ProductDescription>, BaseRepository<ProductDescription>>();
 builder.Services.AddTransient<IRepository<Role>, BaseRepository<Role>>();
 builder.Services.AddTransient<IRepository<UserAccount>, BaseRepository<UserAccount>>();
 

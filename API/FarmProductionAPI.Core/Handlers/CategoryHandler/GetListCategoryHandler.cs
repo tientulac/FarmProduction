@@ -31,7 +31,10 @@ namespace FarmProductionAPI.Core.Handlers.CategoryHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var categories = _repository.GetAll().AsQueryable().Where(x =>
+                    request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
+                    (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)));
+
                 return new ResponseResultAPI<List<CategoryDTO>>()
                 {
                     Code = "200",

@@ -64,29 +64,9 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
     this.listFileUpload = [];
     this.isInsert = true;
     this.Entity = new BrandEntity();
+    this.Entity.code = Math.random().toString(36).substring(2, 7);
     if (type === 'EDIT') {
       this.Entity = data;
     }
   }
-
-  handleUpload = (item: any) => {
-    const formData = new FormData();
-    formData.append(item.name, item.file as any, this.uploadFileName);
-    this.uploadImageService.upload(formData).subscribe(
-      (res: ReponseAPI<File>) => {
-        item.onSuccess(item.file);
-        if (res.code == "200") {
-          this.Entity!.image = res.message;
-        }
-        else {
-          alert(res.message);
-        }
-      }
-    );
-  };
-
-  beforeUpload = (file: NzUploadFile): boolean => {
-    this.uploadFileName = `brand_${this.Entity?.code}.jpg`;
-    return true;
-  };
 }

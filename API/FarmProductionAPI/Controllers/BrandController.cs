@@ -21,7 +21,7 @@ namespace FarmProductionAPI.Controllers
 
         [HttpPost]
         [Route("get-by-request")]
-        public async Task<ResponseResultAPI<List<BrandDTO>>> GetByRequets([FromBody] GetListBrandQuery query, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<BrandDTO>>> GetByRequet([FromBody] GetListBrandQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;

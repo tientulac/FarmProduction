@@ -427,6 +427,46 @@ namespace FarmProductionAPI.Migrations
                     b.ToTable("ProductAttribute", (string)null);
                 });
 
+            modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductDescription", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsSoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductDescription", (string)null);
+                });
+
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductImage", b =>
                 {
                     b.Property<Guid?>("Id")
@@ -633,6 +673,15 @@ namespace FarmProductionAPI.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductDescription", b =>
+                {
+                    b.HasOne("FarmProductionAPI.Domain.Models.Product", "Product")
+                        .WithMany("ProductDescriptions")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductImage", b =>
                 {
                     b.HasOne("FarmProductionAPI.Domain.Models.Product", "Product")
@@ -674,6 +723,8 @@ namespace FarmProductionAPI.Migrations
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>
                 {
                     b.Navigation("ProductAttributes");
+
+                    b.Navigation("ProductDescriptions");
 
                     b.Navigation("ProductImages");
                 });

@@ -26,3 +26,17 @@ D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\
 D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.pdb
 D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.genruntimeconfig.cache
 D:\DoAnWeb\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\ref\FarmProductionAPI.Domain.dll
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.deps.json
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.runtimeconfig.json
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.dll
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\bin\Debug\net7.0\FarmProductionAPI.Domain.pdb
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.AssemblyReference.cache
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfoInputs.cache
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.AssemblyInfo.cs
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.csproj.CoreCompileInputs.cache
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.dll
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\refint\FarmProductionAPI.Domain.dll
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.pdb
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\FarmProductionAPI.Domain.genruntimeconfig.cache
+E:\FarmProduction\FarmProduction\API\FarmProductionAPI.Domain\obj\Debug\net7.0\ref\FarmProductionAPI.Domain.dll

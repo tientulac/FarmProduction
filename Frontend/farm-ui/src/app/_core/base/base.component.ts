@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 
@@ -13,7 +14,7 @@ import { UploadImageService } from 'src/app/services/upload-image.service';
 
 export class BaseComponent<T> {
 
-  Entity!: T;
+  Entity!: T | null | any;
   EntitySearch!: T;
   Entities!: T[];
   URL: string = '';
@@ -49,7 +50,11 @@ export class BaseComponent<T> {
   listFileUpload = [...this.filesUpload];
 
   search() {
-    this.getList();
+    this.baseService.search(this.URL).subscribe(
+      (res) => {
+        this.Entity = res.data;
+      }
+    );
   }
 
   getList() {
@@ -101,4 +106,25 @@ export class BaseComponent<T> {
     this.isInsert = false;
     this.getList();
   }
+
+  handleUpload = (item: any) => {
+    const formData = new FormData();
+    formData.append(item.name, item.file as any, this.uploadFileName);
+    this.uploadImageService.upload(formData).subscribe(
+      (res: ReponseAPI<File>) => {
+        item.onSuccess(item.file);
+        if (res.code == "200") {
+          this.Entity.image = res.message;
+        }
+        else {
+          alert(res.message);
+        }
+      }
+    );
+  };
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.uploadFileName = `${this.URL}_${this.Entity?.code}.jpg`;
+    return true;
+  };
 }
