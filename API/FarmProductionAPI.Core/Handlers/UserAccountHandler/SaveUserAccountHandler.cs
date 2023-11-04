@@ -31,13 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
         {
             try
             {
-                var UserAccount = new UserAccount();
+                var userAccount = new UserAccount();
                 if (request.Id.HasValue)
                 {
-                    UserAccount = await _repository.GetById(request.Id.Value);
-                    if (UserAccount is not null)
+                    userAccount = await _repository.GetById(request.Id.Value);
+                    if (userAccount is not null)
                     {
-                        await _repository.Update(_mapper.Map<UserAccount>(request));
+                        await _repository.Update(_mapper.Map<UserAccount>(request), userAccount);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else
@@ -51,14 +51,14 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
                     }
                 }
 
-                UserAccount = _mapper.Map<UserAccount>(request);
-                await _repository.CreateOneAsync(UserAccount, cancellationToken);
+                userAccount = _mapper.Map<UserAccount>(request);
+                await _repository.CreateOneAsync(userAccount, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new ResponseResultAPI<UserAccountDTO>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<UserAccountDTO>(UserAccount),
+                    Data = _mapper.Map<UserAccountDTO>(userAccount),
                     Message = "Success"
                 };
             }

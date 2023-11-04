@@ -31,11 +31,16 @@ namespace FarmProductionAPI.Core.Handlers.ProductHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var products = _repository.GetAll().AsQueryable().Where(x =>
+                    request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
+                    (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)) &&
+                    (request.BrandIds == null || request.BrandIds.Contains(x.BrandId.GetValueOrDefault())) &&
+                    (request.CategoryIds == null || request.CategoryIds.Contains(x.CategoryId.GetValueOrDefault())));
+
                 return new ResponseResultAPI<List<ProductDTO>>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<List<ProductDTO>>(categories),
+                    Data = _mapper.Map<List<ProductDTO>>(products),
                     Message = "Success"
                 };
             }

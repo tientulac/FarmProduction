@@ -2,7 +2,7 @@
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="Master Data" nzIcon="appstore">
+            <li nz-submenu nzTitle="Master Data" nzIcon="file">
                 <ul>
                     <li nz-menu-item>
                         <a routerLink="category/catalog">Category</a>
@@ -12,10 +12,12 @@
                     </li>
                 </ul>
             </li>
-            <li nz-submenu nzTitle="Product" nzIcon="file">
+            <li nz-submenu nzTitle="Product" nzIcon="appstore">
                 <ul>
-                    <li nz-menu-item>Team 1</li>
-                    <li nz-menu-item>Team 2</li>
+                    <li nz-menu-item>
+                        <a routerLink="product">Product</a>
+                    </li>
+                    <li nz-menu-item>Statistic</li>
                 </ul>
             </li>
             <li nz-menu-item>

@@ -13,8 +13,17 @@ namespace FarmProductionAPI.Mappings
     {
         public ToMapping()
         {
-            CreateMap<SaveBrandCommand, Brand>();
+            CreateMap<SaveBrandCommand, Brand>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Code, opts => opts.MapFrom(src => src.Code))
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Image, opts => opts.MapFrom(src => src.Image));
+
             CreateMap<Brand, BrandDTO>();
+
+            CreateMap<ProductImage, ProductImageDTO>();
+
+            CreateMap<ProductDescription, ProductDescriptionDTO>();
 
             CreateMap<SaveCategoryCommand, Category>();
             CreateMap<Category, CategoryDTO>();

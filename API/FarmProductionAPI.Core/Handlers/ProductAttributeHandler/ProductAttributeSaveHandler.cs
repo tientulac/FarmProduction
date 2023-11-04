@@ -31,13 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.ProductAttributeHandler
         {
             try
             {
-                var ProductAttribute = new ProductAttribute();
+                var productAttribute = new ProductAttribute();
                 if (request.Id.HasValue)
                 {
-                    ProductAttribute = await _repository.GetById(request.Id.Value);
-                    if (ProductAttribute is not null)
+                    productAttribute = await _repository.GetById(request.Id.Value);
+                    if (productAttribute is not null)
                     {
-                        await _repository.Update(_mapper.Map<ProductAttribute>(request));
+                        await _repository.Update(_mapper.Map<ProductAttribute>(request), productAttribute);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else
@@ -51,14 +51,14 @@ namespace FarmProductionAPI.Core.Handlers.ProductAttributeHandler
                     }
                 }
 
-                ProductAttribute = _mapper.Map<ProductAttribute>(request);
-                await _repository.CreateOneAsync(ProductAttribute, cancellationToken);
+                productAttribute = _mapper.Map<ProductAttribute>(request);
+                await _repository.CreateOneAsync(productAttribute, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new ResponseResultAPI<ProductAttributeDTO>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<ProductAttributeDTO>(ProductAttribute),
+                    Data = _mapper.Map<ProductAttributeDTO>(productAttribute),
                     Message = "Success"
                 };
             }

@@ -31,13 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
         {
             try
             {
-                var OrderItem = new OrderItem();
+                var orderItem = new OrderItem();
                 if (request.Id.HasValue)
                 {
-                    OrderItem = await _repository.GetById(request.Id.Value);
-                    if (OrderItem is not null)
+                    orderItem = await _repository.GetById(request.Id.Value);
+                    if (orderItem is not null)
                     {
-                        await _repository.Update(_mapper.Map<OrderItem>(request));
+                        await _repository.Update(_mapper.Map<OrderItem>(request), orderItem);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else
@@ -51,14 +51,14 @@ namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
                     }
                 }
 
-                OrderItem = _mapper.Map<OrderItem>(request);
-                await _repository.CreateOneAsync(OrderItem, cancellationToken);
+                orderItem = _mapper.Map<OrderItem>(request);
+                await _repository.CreateOneAsync(orderItem, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new ResponseResultAPI<OrderItemDTO>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<OrderItemDTO>(OrderItem),
+                    Data = _mapper.Map<OrderItemDTO>(orderItem),
                     Message = "Success"
                 };
             }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProductController : ControllerBase
@@ -18,6 +18,15 @@ namespace FarmProductionAPI.Controllers
         public ProductController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+
+        [HttpGet]
+        [Route("get-by-request")]
+        public async Task<ResponseResultAPI<List<ProductDTO>>> GetByRequest([FromQuery] GetListProductQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
         }
 
         [HttpGet]

@@ -31,11 +31,11 @@ namespace FarmProductionAPI.Core.Handlers.ProductImageHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var pImages = _repository.GetAll().ToList();
                 return new ResponseResultAPI<List<ProductImageDTO>>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<List<ProductImageDTO>>(categories),
+                    Data = _mapper.Map<List<ProductImageDTO>>(pImages),
                     Message = "Success"
                 };
             }

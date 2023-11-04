@@ -19,5 +19,6 @@ namespace FarmProductionAPI.Domain.Models
         public virtual Brand? Brand { get; set; }
         public virtual ICollection<ProductAttribute>? ProductAttributes { get; set; }
         public virtual ICollection<ProductImage>? ProductImages { get; set; }
+        public virtual ICollection<ProductDescription>? ProductDescriptions { get; set; }
     }
 }

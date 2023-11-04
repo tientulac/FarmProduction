@@ -1,6 +1,7 @@
 ﻿using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
 using OneOf;
+using System.Text.Json.Serialization;
 
 namespace FarmProductionAPI.Core.Commands.BrandCommand
 {

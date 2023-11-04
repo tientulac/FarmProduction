@@ -1,6 +1,6 @@
 export class ReponseAPI<T> {
     data!: T;
-    code!: number | null;
+    code!: string | null;
     message!: string | null;
     messageEX!: string | null;
 }

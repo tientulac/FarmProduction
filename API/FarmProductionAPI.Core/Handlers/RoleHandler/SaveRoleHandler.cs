@@ -31,13 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.RoleHandler
         {
             try
             {
-                var Role = new Role();
+                var role = new Role();
                 if (request.Id.HasValue)
                 {
-                    Role = await _repository.GetById(request.Id.Value);
-                    if (Role is not null)
+                    role = await _repository.GetById(request.Id.Value);
+                    if (role is not null)
                     {
-                        await _repository.Update(_mapper.Map<Role>(request));
+                        await _repository.Update(_mapper.Map<Role>(request), role);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else
@@ -51,14 +51,14 @@ namespace FarmProductionAPI.Core.Handlers.RoleHandler
                     }
                 }
 
-                Role = _mapper.Map<Role>(request);
-                await _repository.CreateOneAsync(Role, cancellationToken);
+                role = _mapper.Map<Role>(request);
+                await _repository.CreateOneAsync(role, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new ResponseResultAPI<RoleDTO>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<RoleDTO>(Role),
+                    Data = _mapper.Map<RoleDTO>(role),
                     Message = "Success"
                 };
             }

@@ -12,7 +12,7 @@ export class DeleteModalComponent {
   @Input() TITLE: any;
   @Input() ENTITY: any = null;
   @Input() URL: any = null;
-  // @Output() deleteEvent = new EventEmitter<string>();
+  @Output() deleteEvent = new EventEmitter<string>();
   @Output() handleCancelEvent = new EventEmitter<string>();
 
   constructor(
@@ -21,21 +21,22 @@ export class DeleteModalComponent {
   }
 
   confirm() {
-    // this.deleteEvent.emit();
-    // this.baseService.delete(this.URL + this.ID).subscribe(
-    //   (res) => {
-    //     if (res.StatusCode == 200) {
-    //       alert('Success !');
-    //     }
-    //     else {
-    //       alert('Faied !');
-    //     }
-    //   }
-    // );
-    this.handleCancelEvent.emit();
+    const url = `${this.URL.toString() + '/' + this.ID.toString()}`;
+    this.deleteEvent.emit();
+    this.baseService.delete(url).subscribe(
+      (res) => {
+        if (res.code == '200') {
+          alert('Success !');
+          this.handleCancelEvent.emit();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
   }
 
-  closeModal(){
+  closeModal() {
     this.handleCancelEvent.emit();
   }
 }

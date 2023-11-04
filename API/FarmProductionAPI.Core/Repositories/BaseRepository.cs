@@ -43,11 +43,12 @@ namespace FarmProductionAPI.Core.Repositories
             return insertedItem;
         }
 
-        public virtual async Task<TEntity> Update(TEntity entity)
+        public virtual async Task<TEntity> Update(TEntity entity, TEntity source)
         {
             entity.UpdatedAt = DateTime.Now;
-            var updatedItem = _dbContext.Set<TEntity>()
-                .Update(entity).Entity;
+            entity.CreatedAt = source.CreatedAt;
+            entity.DeletedAt = source.DeletedAt;
+            var updatedItem = _dbContext.Set<TEntity>().Update(entity).Entity;
             await _dbContext.SaveChangesAsync();
             return updatedItem;
         }
@@ -57,7 +58,7 @@ namespace FarmProductionAPI.Core.Repositories
             entity.DeletedAt = DateTime.Now;
             entity.IsSoftDeleted = true;
             _dbContext.Set<TEntity>()
-                .Remove(entity);
+                .Update(entity);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -124,7 +125,8 @@ namespace FarmProductionAPI.Core.Repositories
             if (items is not { Count: > 0 }) return false;
             try
             {
-                items.ForEach(x => {
+                items.ForEach(x =>
+                {
                     x.CreatedAt = DateTime.Now;
                 });
                 await _dbContext.AddRangeAsync(items, token);
@@ -161,7 +163,8 @@ namespace FarmProductionAPI.Core.Repositories
             if (items is not { Count: > 0 }) return false;
             try
             {
-                items.ForEach(x => {
+                items.ForEach(x =>
+                {
                     x.DeletedAt = DateTime.Now;
                     x.IsSoftDeleted = true;
                 });

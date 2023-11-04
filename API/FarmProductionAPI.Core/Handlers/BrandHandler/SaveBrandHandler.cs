@@ -37,7 +37,7 @@ namespace FarmProductionAPI.Core.Handlers.BrandHandler
                     brand = await _repository.GetById(request.Id.Value);
                     if (brand is not null)
                     {
-                        await _repository.Update(_mapper.Map<Brand>(request));
+                        await _repository.Update(_mapper.Map<Brand>(request), brand);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }
                     else

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 
@@ -10,9 +11,11 @@ import { UploadImageService } from 'src/app/services/upload-image.service';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss']
 })
+
 export class BaseComponent<T> {
 
-  Entity!: T | null;
+  Entity!: T | null | any;
+  EntitySearch!: T;
   Entities!: T[];
   URL: string = '';
   field_Validation: any = {};
@@ -22,6 +25,8 @@ export class BaseComponent<T> {
   isFilter: boolean = false;
   isInsert: boolean = false;
   uploadFileName: any = '';
+  URL_Upload: any = '';
+  id_record: any = null;
 
   GROUP_BUTTON = {
     EXCEL: false,
@@ -35,7 +40,7 @@ export class BaseComponent<T> {
     public baseService: BaseService<T>,
     public modal: NzModalService,
     public title: Title,
-    public uploadImageService: UploadImageService
+    public uploadImageService: UploadImageService,
   ) {
   }
 
@@ -45,15 +50,11 @@ export class BaseComponent<T> {
   listFileUpload = [...this.filesUpload];
 
   search() {
-    this.baseService.search(this.URL).subscribe(
-      (res) => {
-        this.Entity = res.data;
-      }
-    );
+    this.getList();
   }
 
   getList() {
-    this.baseService.getAll(this.URL).subscribe(
+    this.baseService.getAll(this.URL, this.EntitySearch).subscribe(
       (res) => {
         this.Entities = res.data;
       }
@@ -61,9 +62,16 @@ export class BaseComponent<T> {
   }
 
   save() {
-    this.baseService.save(this.URL).subscribe(
+    this.baseService.save(this.URL, this.Entity).subscribe(
       (res) => {
-        this.Entity = res.data;
+        if (res.code == "200") {
+          this.Entity = res.data;
+          alert("Thành công !");
+          this.handleCancel();
+        }
+        else {
+          alert(res.messageEX);
+        }
       }
     );
   }
@@ -72,6 +80,14 @@ export class BaseComponent<T> {
     this.baseService.getById(this.URL).subscribe(
       (res) => {
         this.Entity = res.data;
+      }
+    );
+  }
+
+  getImage(fileName: string) {
+    this.uploadImageService.getImgUpload(fileName).subscribe(
+      (res) => {
+        console.log(res);
       }
     );
   }
@@ -86,4 +102,25 @@ export class BaseComponent<T> {
     this.isInsert = false;
     this.getList();
   }
+
+  handleUpload = (item: any) => {
+    const formData = new FormData();
+    formData.append(item.name, item.file as any, this.uploadFileName);
+    this.uploadImageService.upload(formData).subscribe(
+      (res: ReponseAPI<File>) => {
+        item.onSuccess(item.file);
+        if (res.code == "200") {
+          this.Entity.image = res.message;
+        }
+        else {
+          alert(res.message);
+        }
+      }
+    );
+  };
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.uploadFileName = `${this.URL}_${this.Entity?.code}.jpg`;
+    return true;
+  };
 }

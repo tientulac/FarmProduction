@@ -31,7 +31,10 @@ namespace FarmProductionAPI.Core.Handlers.BrandHandler
         {
             try
             {
-                var brands = _repository.GetAll().ToList();
+                var brands = _repository.GetAll().AsQueryable().Where(x =>
+                    request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
+                    (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)));
+
                 return new ResponseResultAPI<List<BrandDTO>>()
                 {
                     Code = "200",

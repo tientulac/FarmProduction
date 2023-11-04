@@ -9,7 +9,7 @@ namespace FarmProductionAPI.Core.Repositories
         Task<TEntity> GetById(Guid id);
         IQueryable<TEntity> GetAll();
         Task<TEntity> Add(TEntity entity);
-        Task<TEntity> Update(TEntity entity);
+        Task<TEntity> Update(TEntity entity, TEntity source);
         Task Remove(TEntity entity);
         Task<PaginatedList<TEntity>> GetPaginated(PagingAndSortingModel pagingAndSortingModel);
         Task<TEntity> GetByIdAsync(Guid id, Func<IQueryable<TEntity>, IQueryable<TEntity>>? specialAction = null, CancellationToken token = default);

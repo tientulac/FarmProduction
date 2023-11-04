@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
-import { BrandEntity } from 'src/app/entities/Brand.Entity';
+import { BrandEntity, BrandEntitySearch } from 'src/app/entities/Brand.Entity';
+import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
+import { AppConfig, AppConfiguration } from 'src/configuration';
 
 @Component({
   selector: 'app-brand',
@@ -18,6 +20,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
   listName: any;
 
   constructor(
+    @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
       AppInjector.get(BaseService<BrandEntity>),
@@ -26,11 +29,12 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       AppInjector.get(UploadImageService),
     );
     this.Entity = new BrandEntity();
+    this.EntitySearch = new BrandEntitySearch();
     this.Entities = new Array<BrandEntity>();;
     this.URL = 'brand';
+    this.URL_Upload = appConfig.URL_UPLOAD;
     this.title.setTitle('Thương hiệu');
     this.field_Validation = {
-      code: false,
       name: false
     };
 
@@ -52,29 +56,17 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       alert('Dữ liệu nhập chưa hợp lệ');
       return false;
     }
+    this.save();
     return true;
   }
 
-  openModal(type: any, data: BrandEntity | null) {
+  openModal(type: any, data: BrandEntity) {
+    this.listFileUpload = [];
     this.isInsert = true;
     this.Entity = new BrandEntity();
+    this.Entity.code = Math.random().toString(36).substring(2, 7);
     if (type === 'EDIT') {
       this.Entity = data;
     }
   }
-
-  handleUpload = (item: any) => {
-    const formData = new FormData();
-    formData.append(item.name, item.file as any, this.uploadFileName);
-    this.uploadImageService.upload(formData).subscribe(
-      (res: any) => {
-        item.onSuccess(item.file);
-      }
-    );
-  };
-
-  beforeUpload = (file: NzUploadFile): boolean => {
-    this.uploadFileName = `brand_${(new Date()).getTime()}`;
-    return true;
-  };
 }

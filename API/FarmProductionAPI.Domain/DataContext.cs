@@ -25,6 +25,7 @@ namespace FarmProductionAPI.Domain
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductDescription> ProductDescriptions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
 
@@ -97,6 +98,12 @@ namespace FarmProductionAPI.Domain
                 entity.HasKey(e => e.Id);
             });
 
+            modelBuilder.Entity<ProductDescription>(entity =>
+            {
+                entity.ToTable("ProductDescription");
+
+                entity.HasKey(e => e.Id);
+            });
 
             modelBuilder.Entity<Role>(entity =>
             {
