@@ -18,6 +18,22 @@
                     [(VALUE)]="Entity.name">
                 </app-input-custom>
             </div>
+            <div nz-col [nzSpan]="24">
+                <app-select-custom [CLASSNAME]="(!field_Validation.categoryId && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL_SELECT]="'name'" (changeSelect)="field_Validation.categoryId = $event" [VALUE_SELECT]="'id'"
+                    [LISTOPTION]="categories" [LABEL]="'Danh mục'"
+                    (changeSelect)="field_Validation.categoryId = $event; validateCustom()"
+                    [PLACEHOLDER]="'Chọn danh mục'" [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'categoryId'"
+                    [TYPE]="'NORMAL'" [VALUE]="Entity.categoryId"></app-select-custom>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <app-select-custom [CLASSNAME]="(!field_Validation.brandId && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL_SELECT]="'name'" (changeSelect)="field_Validation.brandId = $event" [VALUE_SELECT]="'id'"
+                    [LISTOPTION]="brands" [LABEL]="'Thương hiệu'"
+                    (changeSelect)="field_Validation.brandId = $event; validateCustom()"
+                    [PLACEHOLDER]="'Chọn thương hiệu'" [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'brandId'"
+                    [TYPE]="'NORMAL'" [VALUE]="Entity.brandId"></app-select-custom>
+            </div>
             <div nz-col [nzSpan]="12">
                 <br>
                 <div class="clearfix">
@@ -30,13 +46,6 @@
                         </button>
                     </nz-upload>
                 </div>
-            </div>
-            <div nz-col [nzSpan]="12">
-                <app-select-custom [CLASSNAME]="(!field_Validation.categoryId && onSubmitting) ? 'invalid-form' : ''"
-                    [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="categories" [LABEL]="'Tên'"
-                    (changeSelect)="field_Validation.categoryId = $event; validateCustom()"
-                    [PLACEHOLDER]="'Chọn danh mục'" [REQUIRED]="true" [ENTITY]="Entity"
-                    [FIELD]="'categoryId'"></app-select-custom>
             </div>
         </div>
     </ng-container>
@@ -53,6 +62,8 @@
                         <th>Mã</th>
                         <th>Tên</th>
                         <th>Ảnh</th>
+                        <th>Danh mục</th>
+                        <th>Thương hiệu</th>
                         <th>Ngày tạo</th>
                         <th>Ngày sửa</th>
                         <th>Hành động</th>
@@ -65,6 +76,8 @@
                         <td>{{data.code}}</td>
                         <td>{{data.name}}</td>
                         <td><img src="{{URL_Upload}}/{{data.image ?? ''}}" class="img_logo"></td>
+                        <td>{{data.category.name}}</td>
+                        <td>{{data.brand.name}}</td>
                         <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
                         <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
                         <td *ngIf="!data.isSoftDeleted">
@@ -73,7 +86,12 @@
                             <nz-divider nzType="vertical"></nz-divider>
                             <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
                                     nzTheme="outline"></span></a>
-
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="file"
+                                    (click)="isDisplayDetail = true; id_record = data.id; Entity.description = ''"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="zoom-in" nzTheme="outline"></span> </a>
                         </td>
                         <td *ngIf="data.isSoftDeleted"></td>
                     </tr>
@@ -82,3 +100,16 @@
         </div>
     </div>
 </section>
+
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>
+
+<nz-modal *ngIf="isDisplayDetail" [(nzVisible)]="isDisplayDetail" [nzTitle]="'Chi tiết'" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <ckeditor [(ngModel)]="Entity.description" [editor]="Editor"></ckeditor>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Đóng</button>
+        <button nz-button nzType="primary" (click)="addProductDescription()">Xác nhận</button>
+    </div>
+</nz-modal>

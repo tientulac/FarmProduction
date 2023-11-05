@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainModule } from "./modules/main/main.module";
 import { BaseService } from "./services/base.service";
+import { BrowserModule } from "@angular/platform-browser";
 
 registerLocaleData(vi);
 
@@ -18,11 +19,12 @@ registerLocaleData(vi);
     AppComponent,
   ],
   imports: [
-    UtilityModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserModule,
     BrowserAnimationsModule,
-    MainModule
+    MainModule,
+    UtilityModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: vi_VN },

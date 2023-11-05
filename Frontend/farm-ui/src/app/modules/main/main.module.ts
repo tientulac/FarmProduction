@@ -15,7 +15,7 @@ import { CommonNgZorroAntdModule } from "../ng-zorro-antd.module";
     ],
     imports: [
         MainRoutingModule,
-        CommonNgZorroAntdModule
+        CommonNgZorroAntdModule,
     ],
     providers: [
     ],

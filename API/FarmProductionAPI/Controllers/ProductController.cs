@@ -21,7 +21,7 @@ namespace FarmProductionAPI.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("get-by-request")]
         public async Task<ResponseResultAPI<List<ProductDTO>>> GetByRequest([FromQuery] GetListProductQuery query, CancellationToken cancellationToken)
         {

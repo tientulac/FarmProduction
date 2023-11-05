@@ -2,6 +2,7 @@
 using FarmProductionAPI.Core.Commands.BrandCommand;
 using FarmProductionAPI.Core.Commands.CategoryCommand;
 using FarmProductionAPI.Core.Commands.ProductAttributeCommand;
+using FarmProductionAPI.Core.Commands.ProductDescriptionCommand;
 using FarmProductionAPI.Core.Commands.RoleCommand;
 using FarmProductionAPI.Core.Commands.UserAccountCommand;
 using FarmProductionAPI.Domain.Dtos;
@@ -23,16 +24,18 @@ namespace FarmProductionAPI.Mappings
 
             CreateMap<ProductImage, ProductImageDTO>();
 
-            CreateMap<ProductDescription, ProductDescriptionDTO>();
-
             CreateMap<SaveCategoryCommand, Category>();
             CreateMap<Category, CategoryDTO>();
 
             CreateMap<SaveProductAttributeCommand, ProductAttribute>();
             CreateMap<ProductAttribute, ProductAttributeDTO>();
 
+            CreateMap<SaveProductDescriptionCommand, ProductDescription>();
+            CreateMap<ProductDescription, ProductDescriptionDTO>();
+
             CreateMap<SaveProductCommand, Product>();
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.ProductDesciptions, otps => otps.MapFrom(src => src.ProductDescriptions));
 
             CreateMap<SaveUserAccountCommand, UserAccount>();
             CreateMap<UserAccount, UserAccountDTO>();

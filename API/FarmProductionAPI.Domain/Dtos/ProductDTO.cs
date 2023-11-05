@@ -28,5 +28,6 @@ namespace FarmProductionAPI.Domain.Dtos
         public  BrandDTO? Brand { get; set; }
         public  List<ProductAttributeDTO>? ProductAttributes { get; set; }
         public List<ProductImageDTO>? ProductImages { get; set; }
+        public List<ProductDescriptionDTO>? ProductDesciptions { get; set; }
     }
 }

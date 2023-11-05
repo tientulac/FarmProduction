@@ -22,6 +22,7 @@ export class BaseComponent<T> {
   isSubmit: boolean = false;
   onSubmitting: boolean = false;
   isDisplayDelete: boolean = false;
+  isDisplayDetail: boolean = false;
   isFilter: boolean = false;
   isInsert: boolean = false;
   uploadFileName: any = '';
@@ -50,11 +51,12 @@ export class BaseComponent<T> {
   listFileUpload = [...this.filesUpload];
 
   search() {
-    this.baseService.search(this.URL).subscribe(
-      (res) => {
-        this.Entity = res.data;
-      }
-    );
+    // this.baseService.search(this.URL, this.EntitySearch).subscribe(
+    //   (res) => {
+    //     this.Entity = res.data;
+    //   }
+    // );
+    this.getList();
   }
 
   getList() {
@@ -104,6 +106,7 @@ export class BaseComponent<T> {
   handleCancel(): void {
     this.isDisplayDelete = false;
     this.isInsert = false;
+    this.isDisplayDetail = false;
     this.getList();
   }
 

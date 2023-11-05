@@ -1,11 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { BrandEntity, BrandEntitySearch } from 'src/app/entities/Brand.Entity';
 import { CategoryEntity, CategoryEntitySearch } from 'src/app/entities/Category.Entity';
 import { ProductEntity, ProductEntitySearch } from 'src/app/entities/Product.Entity';
+import { ProductDescriptionEntity } from 'src/app/entities/ProductDescription.Entity';
 import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
@@ -18,12 +20,15 @@ import { AppConfig, AppConfiguration } from 'src/configuration';
 })
 export class ProductComponent extends BaseComponent<ProductEntity> {
 
-  categoryService!: BaseService<CategoryEntity>;
-  brandService!: BaseService<BrandEntity>;
   categories!: CategoryEntitySearch[];
   brands!: BrandEntitySearch[];
+  public Editor = ClassicEditor;
+  EntityDescription = new ProductDescriptionEntity();
 
   constructor(
+    public categoryService: BaseService<CategoryEntity>,
+    public brandService: BaseService<BrandEntity>,
+    public productDescriptionService: BaseService<ProductDescriptionEntity>,
     @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
@@ -52,17 +57,17 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.getList();
   }
 
-  async ngOnInit() {
-    await this.getListFilter();
+  ngOnInit() {
+    this.getListFilter();
   }
 
-  async getListFilter() {
-    await this.categoryService.getAll('category', null).subscribe(
+  getListFilter() {
+    this.categoryService.getAll('category', {}).subscribe(
       (res: ReponseAPI<any>) => {
         this.categories = res.data;
       }
     );
-    await this.brandService.getAll('brand', null).subscribe(
+    this.brandService.getAll('brand', {}).subscribe(
       (res: ReponseAPI<any>) => {
         this.brands = res.data;
       }
@@ -87,5 +92,22 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     if (type === 'EDIT') {
       this.Entity = data;
     }
+  }
+
+  addProductDescription() {
+    this.EntityDescription.productId = this.id_record;
+    this.EntityDescription.description = this.Entity.description;
+    this.productDescriptionService.save('ProductDescription', this.EntityDescription).subscribe(
+      (res) => {
+        if (res.code == "200") {
+          alert("Thành công !");
+          this.EntityDescription = res.data;
+          this.handleCancel();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
   }
 }
