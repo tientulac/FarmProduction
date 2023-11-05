@@ -5,6 +5,7 @@ using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.ProductHandler
@@ -35,7 +36,10 @@ namespace FarmProductionAPI.Core.Handlers.ProductHandler
                     request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
                     (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)) &&
                     (request.BrandIds == null || request.BrandIds.Contains(x.BrandId.GetValueOrDefault())) &&
-                    (request.CategoryIds == null || request.CategoryIds.Contains(x.CategoryId.GetValueOrDefault())));
+                    (request.CategoryIds == null || request.CategoryIds.Contains(x.CategoryId.GetValueOrDefault())))
+                    .Include(x => x.Brand)
+                    .Include(x => x.Category)
+                    .Include(x => x.ProductDescriptions);
 
                 return new ResponseResultAPI<List<ProductDTO>>()
                 {

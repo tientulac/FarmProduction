@@ -32,7 +32,12 @@ namespace FarmProductionAPI.Core.Handlers.ProductDescriptionHandler
             try
             {
                 var pDescriptions = _repository.GetAll().AsQueryable().Where(x => 
-                    string.IsNullOrEmpty(request.SearchStringKeyword) || x.Description.ToLower().Contains(request.SearchStringKeyword)).ToList();
+                    string.IsNullOrEmpty(request.SearchStringKeyword) || x.Description.ToLower().Contains(request.SearchStringKeyword));
+                
+                if (request.ProductId.HasValue)
+                {
+                    pDescriptions = pDescriptions.Where(x => x.ProductId == request.ProductId);
+                }
                 return new ResponseResultAPI<List<ProductDescriptionDTO>>()
                 {
                     Code = "200",

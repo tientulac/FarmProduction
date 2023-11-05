@@ -88,5 +88,19 @@ namespace FarmProductionAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet]
+        public List<string> GetAllImages()
+        {
+            try
+            {
+                return Directory.GetFiles("UploadedFiles").Select(x => x.Replace("UploadedFiles\\", "")).ToList();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                throw ex;
+            }
+        }
     }
 }
