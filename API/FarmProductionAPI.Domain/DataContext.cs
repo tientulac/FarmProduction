@@ -20,8 +20,6 @@ namespace FarmProductionAPI.Domain
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
@@ -59,22 +57,6 @@ namespace FarmProductionAPI.Domain
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Category");
-
-                entity.HasKey(e => e.Id);
-            });
-
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.ToTable("Order");
-
-                entity.HasKey(e => e.Id);
-
-                entity.Navigation("UserAccount");
-            });
-
-            modelBuilder.Entity<OrderItem>(entity =>
-            {
-                entity.ToTable("OrderItem");
 
                 entity.HasKey(e => e.Id);
             });

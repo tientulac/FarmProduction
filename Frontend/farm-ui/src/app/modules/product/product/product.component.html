@@ -51,6 +51,61 @@
     </ng-container>
 </nz-modal>
 
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Mã sản phẩm</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.code" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Tên sản phẩm</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.name" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Danh mục</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn danh mục"
+                                [(ngModel)]="EntitySearch.categoryId">
+                                <nz-option *ngFor="let option of categories" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Thương hiệu</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn thương hiệu"
+                                [(ngModel)]="EntitySearch.brandId">
+                                <nz-option *ngFor="let option of brands" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="content cus-body">
     <div class="card">
         <div class="card-body">

@@ -45,8 +45,6 @@ builder.Services.AddDbContext<DataContext>(
 
 builder.Services.AddTransient<IRepository<Brand>, BaseRepository<Brand>>();
 builder.Services.AddTransient<IRepository<Category>, BaseRepository<Category>>();
-builder.Services.AddTransient<IRepository<Order>, BaseRepository<Order>>();
-builder.Services.AddTransient<IRepository<OrderItem>, BaseRepository<OrderItem>>();
 builder.Services.AddTransient<IRepository<Product>, BaseRepository<Product>>();
 builder.Services.AddTransient<IRepository<ProductAttribute>, BaseRepository<ProductAttribute>>();
 builder.Services.AddTransient<IRepository<ProductImage>, BaseRepository<ProductImage>>();

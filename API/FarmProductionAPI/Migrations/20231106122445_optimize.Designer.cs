@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmProductionAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231105143439_Update-Role")]
-    partial class UpdateRole
+    [Migration("20231106122445_optimize")]
+    partial class optimize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,130 +109,6 @@ namespace FarmProductionAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category", (string)null);
-                });
-
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.Order", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DistrictFromId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DistrictToId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FromAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsSoftDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("PaymentShip")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("PaymentType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProvinceFromId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProvinceToId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ToAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UserAccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("WardFromId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WardToId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserAccountId");
-
-                    b.ToTable("Order", (string)null);
-                });
-
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.OrderItem", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal?>("CountBought")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeletedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("IsSoftDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductAttributeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductAttributeId");
-
-                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>
@@ -523,30 +399,6 @@ namespace FarmProductionAPI.Migrations
                     b.ToTable("UserAccount", (string)null);
                 });
 
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.Order", b =>
-                {
-                    b.HasOne("FarmProductionAPI.Domain.Models.UserAccount", "UserAccount")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserAccountId");
-
-                    b.Navigation("UserAccount");
-                });
-
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.OrderItem", b =>
-                {
-                    b.HasOne("FarmProductionAPI.Domain.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("FarmProductionAPI.Domain.Models.ProductAttribute", "ProductAttribute")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductAttributeId");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("ProductAttribute");
-                });
-
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>
                 {
                     b.HasOne("FarmProductionAPI.Domain.Models.Brand", "Brand")
@@ -608,11 +460,6 @@ namespace FarmProductionAPI.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>
                 {
                     b.Navigation("ProductAttributes");
@@ -620,16 +467,6 @@ namespace FarmProductionAPI.Migrations
                     b.Navigation("ProductDescriptions");
 
                     b.Navigation("ProductImages");
-                });
-
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductAttribute", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("FarmProductionAPI.Domain.Models.UserAccount", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
