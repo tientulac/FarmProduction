@@ -24,6 +24,7 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
   brands!: BrandEntitySearch[];
   public Editor = ClassicEditor;
   EntityDescription = new ProductDescriptionEntity();
+  productDescriptions!: any;
 
   constructor(
     public categoryService: BaseService<CategoryEntity>,
@@ -107,6 +108,22 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
         else {
           alert(res.messageEX);
         }
+      }
+    );
+  }
+
+  getProductDescriptions(p_id: any) {
+    this.productDescriptionService.getById(`ProductDescription?ProductId=${p_id}`).subscribe(
+      (res) => {
+        this.productDescriptions = res.data;
+      } 
+    );
+  }
+
+  deleteProductDescription(desc_id: any) {
+    this.productDescriptionService.delete(`ProductDescription/${desc_id}`).subscribe(
+      (res) => {
+        this.getProductDescriptions(this.id_record);
       }
     );
   }

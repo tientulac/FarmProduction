@@ -51,11 +51,65 @@
     </ng-container>
 </nz-modal>
 
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Mã sản phẩm</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.code" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Tên sản phẩm</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.name" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Danh mục</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn danh mục"
+                                [(ngModel)]="EntitySearch.categoryId">
+                                <nz-option *ngFor="let option of categories" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Thương hiệu</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn thương hiệu"
+                                [(ngModel)]="EntitySearch.brandId">
+                                <nz-option *ngFor="let option of brands" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="content cus-body">
     <div class="card">
         <div class="card-body">
             <nz-table #basicTable [nzData]="Entities" [nzBordered]="true">
-
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -88,12 +142,17 @@
                                     nzTheme="outline"></span></a>
                             <nz-divider nzType="vertical"></nz-divider>
                             <a><span nz-icon nzType="file"
-                                    (click)="isDisplayDetail = true; id_record = data.id; Entity.description = ''"
+                                    (click)="isDisplayDetail = true; id_record = data.id; Entity.description = ''; isInsertDetail = true"
                                     nzTheme="outline"></span></a>
                             <nz-divider nzType="vertical"></nz-divider>
                             <a><span nz-icon nzType="zoom-in" nzTheme="outline"></span> </a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="eye" nzTheme="outline"
+                                    (click)="isDisplayDetail = true; isInsertDetail = false; getProductDescriptions(data.id)"></span>
+                            </a>
                         </td>
-                        <td *ngIf="data.isSoftDeleted"></td>
+                        <td *ngIf=" data.isSoftDeleted">
+                        </td>
                     </tr>
                 </tbody>
             </nz-table>
@@ -106,7 +165,29 @@
 
 <nz-modal *ngIf="isDisplayDetail" [(nzVisible)]="isDisplayDetail" [nzTitle]="'Chi tiết'" (nzOnCancel)="handleCancel()">
     <ng-container *nzModalContent>
-        <ckeditor [(ngModel)]="Entity.description" [editor]="Editor"></ckeditor>
+        <ckeditor *ngIf="isInsertDetail" [(ngModel)]="Entity.description" [editor]="Editor"></ckeditor>
+        <ng-container *ngIf="!isInsertDetail">
+            <nz-table #basicTable [nzData]="productDescriptions" [nzBordered]="true">
+                <thead>
+                    <tr>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let desc of basicTable.data; let i =index"
+                        [class]="desc.isSoftDeleted ? 'bg_deleted' : ''">
+                        <td>
+                            <div [innerHTML]="desc.description"></div>
+                        </td>
+                        <td style="width: 75px !important;">
+                            <a><span nz-icon nzType="delete" (click)="deleteProductDescription(desc.id)"
+                                    nzTheme="outline"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </ng-container>
     </ng-container>
     <div *nzModalFooter>
         <button nz-button nzType="default" (click)="handleCancel()">Đóng</button>

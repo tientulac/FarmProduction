@@ -25,6 +25,7 @@ namespace FarmProductionAPI.Mappings
             CreateMap<ProductImage, ProductImageDTO>();
 
             CreateMap<SaveCategoryCommand, Category>();
+            CreateMap<Category, ParentCategoryDTO>();
             CreateMap<Category, CategoryDTO>();
 
             CreateMap<SaveProductAttributeCommand, ProductAttribute>();

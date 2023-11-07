@@ -36,7 +36,7 @@ export class InputCustomComponent {
 
   changeValueInput() {
     if (this.REQUIRED) {
-      this.VALID_REQUIRED = this.VALUE ? true : false;
+      this.VALID_REQUIRED = this.VALUE.toString().length > 0 ? true : false;
     }
     if (this.MINLENGTH) {
       this.VALID_MIN_LENGTH = this.VALUE.toString().length <= this.MINLENGTH ? false : true;

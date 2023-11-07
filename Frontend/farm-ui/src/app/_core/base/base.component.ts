@@ -28,6 +28,7 @@ export class BaseComponent<T> {
   uploadFileName: any = '';
   URL_Upload: any = '';
   id_record: any = null;
+  isInsertDetail: boolean = false;
 
   GROUP_BUTTON = {
     EXCEL: false,

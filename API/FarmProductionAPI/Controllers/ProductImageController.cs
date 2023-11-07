@@ -33,6 +33,14 @@ namespace FarmProductionAPI.Controllers
             return result;
         }
 
+        [HttpPost]
+        [Route("save-many")]
+        public async Task<ResponseResultAPI<List<ProductImageDTO>>> SaveMany([FromBody] SaveManyProductImageCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result;
+        }
+
         [HttpDelete("{id:guid}")]
         public async Task<ResponseResultAPI<ProductImageDTO>> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {

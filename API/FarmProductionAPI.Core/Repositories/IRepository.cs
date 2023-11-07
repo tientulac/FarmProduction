@@ -20,6 +20,6 @@ namespace FarmProductionAPI.Core.Repositories
         Task<OneOf<TEntity, Exception>> CreateOneAsync(TEntity item, CancellationToken token = default);
         Task<OneOf<bool, Exception>> CreateManyAsync(List<TEntity> items, CancellationToken token = default);
         Task<OneOf<bool, Exception>> RemoveOneAsync(OneOf<TEntity, Expression<Func<TEntity, bool>>> itemOrSearchExpression);
-        Task<OneOf<bool, Exception>> RemoveManyAsync(OneOf<List<TEntity>, Expression<Func<TEntity, bool>>> itemsOrSearchExpression);
+        Task RemoveManyAsync(List<TEntity> entities, CancellationToken token = default);
     }
 }

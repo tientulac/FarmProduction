@@ -39,7 +39,7 @@ namespace FarmProductionAPI.Core.Handlers.ProductHandler
                     (request.CategoryIds == null || request.CategoryIds.Contains(x.CategoryId.GetValueOrDefault())))
                     .Include(x => x.Brand)
                     .Include(x => x.Category)
-                    .Include(x => x.ProductDescriptions);
+                    .Include(x =>  x.ProductDescriptions.Where(x => x.IsSoftDeleted != true));
 
                 return new ResponseResultAPI<List<ProductDTO>>()
                 {

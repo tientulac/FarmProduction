@@ -13,7 +13,7 @@
             </div>
             <div nz-col [nzSpan]="12">
                 <app-input-custom [CLASSNAME]="(!field_Validation.name && onSubmitting) ? 'invalid-form' : ''"
-                    [LABEL]="'Tên'" (changeInput)="field_Validation.name = $event; validateCustom()"
+                    [LABEL]="'Tên'" [MINLENGTH]="3" (changeInput)="field_Validation.name = $event; validateCustom()"
                     [PLACEHOLDER]="'Nhập tên'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'name'"
                     [(VALUE)]="Entity.name">
                 </app-input-custom>

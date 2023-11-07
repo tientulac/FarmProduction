@@ -156,25 +156,11 @@ namespace FarmProductionAPI.Core.Repositories
             }
         }
 
-        public async Task<OneOf<bool, Exception>> RemoveManyAsync(OneOf<List<TEntity>, Expression<Func<TEntity, bool>>> itemsOrSearchExpression)
+        public virtual async Task RemoveManyAsync(List<TEntity> entities, CancellationToken token = default)
         {
-            var items = await itemsOrSearchExpression.Match(Task.FromResult, f => GetManyByConditionAsync(f));
-
-            if (items is not { Count: > 0 }) return false;
-            try
-            {
-                items.ForEach(x =>
-                {
-                    x.DeletedAt = DateTime.Now;
-                    x.IsSoftDeleted = true;
-                });
-                _dbContext.RemoveRange(items);
-                return true;
-            }
-            catch (Exception e)
-            {
-                return e;
-            }
+            _dbContext.Set<TEntity>()
+                .RemoveRange(entities);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -19,16 +19,24 @@ namespace FarmProductionAPI.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        [Route("get-sub-categories")]
+        public async Task<ResponseResultAPI<List<CategoryDTO>>> GetSubCategories([FromQuery] GetListSubCategoryQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
         [HttpPost]
         [Route("get-by-request")]
-        public async Task<ResponseResultAPI<List<CategoryDTO>>> GetByRequet([FromBody] GetListCategoryQuery query, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<ParentCategoryDTO>>> GetByRequet([FromBody] GetListCategoryQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;
         }
 
         [HttpGet]
-        public async Task<ResponseResultAPI<List<CategoryDTO>>> GetListCategory([FromQuery] GetListCategoryQuery query, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<ParentCategoryDTO>>> GetListCategory([FromQuery] GetListCategoryQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;
