@@ -31,7 +31,13 @@ namespace FarmProductionAPI.Core.Handlers.ProductImageHandler
         {
             try
             {
-                var pImages = _repository.GetAll().ToList();
+                var pImages = _repository.GetAll().AsQueryable();
+
+                if (request.ProductId.HasValue)
+                {
+                    pImages = pImages.Where(x => x.ProductId == request.ProductId && x.IsSoftDeleted != true);
+                }
+
                 return new ResponseResultAPI<List<ProductImageDTO>>()
                 {
                     Code = "200",

@@ -7,7 +7,9 @@ import { AppInjector } from 'src/app/app.module';
 import { BrandEntity, BrandEntitySearch } from 'src/app/entities/Brand.Entity';
 import { CategoryEntity, CategoryEntitySearch } from 'src/app/entities/Category.Entity';
 import { ProductEntity, ProductEntitySearch } from 'src/app/entities/Product.Entity';
+import { ProductAttributeEntity, ProductAttributeSearchEntity } from 'src/app/entities/ProductAttribute.Entity';
 import { ProductDescriptionEntity } from 'src/app/entities/ProductDescription.Entity';
+import { ProductImageEntity } from 'src/app/entities/ProductImage.Entity';
 import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
@@ -22,6 +24,11 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
 
   categories!: CategoryEntitySearch[];
   brands!: BrandEntitySearch[];
+  productAttributeEntity!: ProductAttributeEntity;
+  productAttributes!: ProductAttributeEntity[];
+  productImages!: ProductImageEntity[];
+  productImageEntity!: ProductImageEntity;
+  productAttributeFilter!: ProductAttributeSearchEntity;
   public Editor = ClassicEditor;
   EntityDescription = new ProductDescriptionEntity();
   productDescriptions!: any;
@@ -30,6 +37,8 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     public categoryService: BaseService<CategoryEntity>,
     public brandService: BaseService<BrandEntity>,
     public productDescriptionService: BaseService<ProductDescriptionEntity>,
+    public productImageService: BaseService<ProductImageEntity>,
+    public productAttributeService: BaseService<ProductAttributeEntity>,
     @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
@@ -56,19 +65,16 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.GROUP_BUTTON.SEARCH = true;
 
     this.getList();
-  }
-
-  ngOnInit() {
     this.getListFilter();
   }
 
   getListFilter() {
-    this.categoryService.getAll('category', {}).subscribe(
+    this.categoryService.getAll('category/get-sub-categories').subscribe(
       (res: ReponseAPI<any>) => {
         this.categories = res.data;
       }
     );
-    this.brandService.getAll('brand', {}).subscribe(
+    this.brandService.getByRequest('brand', {}).subscribe(
       (res: ReponseAPI<any>) => {
         this.brands = res.data;
       }
@@ -95,6 +101,18 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     }
   }
 
+  openAttributeModal(data: ProductEntity) {
+    this.isDisplayAttribute = true;
+    this.listFileUpload = [];
+    this.productAttributeFilter = new ProductAttributeSearchEntity();
+    this.productAttributeEntity = new ProductAttributeEntity();
+    this.productImageEntity = new ProductImageEntity();
+    this.productAttributeFilter.productId = data.id;
+    this.id_record = data.id;
+    this.getListAttribute();
+    this.getListImage();
+  }
+
   addProductDescription() {
     this.EntityDescription.productId = this.id_record;
     this.EntityDescription.description = this.Entity.description;
@@ -116,7 +134,7 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productDescriptionService.getById(`ProductDescription?ProductId=${p_id}`).subscribe(
       (res) => {
         this.productDescriptions = res.data;
-      } 
+      }
     );
   }
 
@@ -127,4 +145,106 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
       }
     );
   }
+
+  getListAttribute() {
+    this.productAttributeService.getByRequest('ProductAttribute', this.productAttributeFilter).subscribe(
+      (res: ReponseAPI<any>) => {
+        this.productAttributes = res.data;
+      }
+    );
+  }
+
+  getListImage() {
+    this.productImageService.getAll(`ProductImage?ProductId=${this.id_record}`).subscribe(
+      (res: ReponseAPI<any>) => {
+        this.productImages = res.data;
+      }
+    );
+  }
+
+  saveAttribute() {
+    this.productAttributeService.save('ProductAttribute', this.productAttributeEntity).subscribe(
+      (res: ReponseAPI<any>) => {
+        if (res.code == "200") {
+          alert("Thành công !");
+          this.getListAttribute();
+          this.productAttributeEntity = new ProductAttributeEntity();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
+  }
+
+  deleteAttribute(id: any) {
+    this.productAttributeService.delete(`ProductAttribute/${id}`).subscribe(
+      (res: ReponseAPI<any>) => {
+        if (res.code == "200") {
+          alert("Thành công !");
+          this.getListAttribute();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
+  }
+
+  saveManyImage() {
+    this.productImageService.save('ProductImage/save-many', this.productImageEntity).subscribe(
+      (res: ReponseAPI<any>) => {
+        if (res.code == "200") {
+          alert("Thành công !");
+          this.getListImage();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
+  }
+
+  deleteImage(id: any) {
+    this.productAttributeService.delete(`ProductImage/${id}`).subscribe(
+      (res: ReponseAPI<any>) => {
+        if (res.code == "200") {
+          alert("Thành công !");
+          this.getListImage();
+        }
+        else {
+          alert(res.messageEX);
+        }
+      }
+    );
+  }
+
+  handleUploadProductImage = (item: any) => {
+    const formData = new FormData();
+    formData.append(item.name, item.file as any, this.uploadFileName);
+    this.uploadImageService.upload(formData).subscribe(
+      (res: ReponseAPI<File>) => {
+        item.onSuccess(item.file);
+        if (res.code == "200") {
+          this.Entity.image = res.message;
+          this.productImageEntity.productId = this.id_record;
+          this.productImageEntity.image = this.uploadFileName;
+          this.productImageService.save('ProductImage', this.productImageEntity).subscribe(
+            (res: ReponseAPI<any>) => {
+              if (res.code == "200") {
+                alert("Thành công !");
+                this.getListImage();
+              }
+              else {
+                alert(res.messageEX);
+              }
+            }
+          );
+        }
+        else {
+          alert(res.message);
+        }
+      }
+    );
+  };
 }

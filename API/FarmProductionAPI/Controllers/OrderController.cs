@@ -19,6 +19,14 @@ namespace FarmProductionAPI.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
+        [Route("get-by-request")]
+        public async Task<ResponseResultAPI<List<OrderDTO>>> GetByRequest([FromBody] GetListOrderQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
         [HttpGet]
         public async Task<ResponseResultAPI<List<OrderDTO>>> GetListOrder([FromQuery] GetListOrderQuery query, CancellationToken cancellationToken)
         {

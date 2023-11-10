@@ -12,5 +12,6 @@ namespace FarmProductionAPI.Core.Commands.ProductAttributeCommand
         public string? Color { get; set; }
         public string? Unit { get; set; }
         public string? Value { get; set; }
+        public Guid? ProductId { get; set; }
     }
 }

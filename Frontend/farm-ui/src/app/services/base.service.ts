@@ -22,8 +22,14 @@ export class BaseService<T> {
         return new HttpHeaders().set('Authorization', `Bearer ${''}`)
     }
 
-    getAll(url: string, request: any | null): Observable<ReponseAPI<T[]>> {
+    getByRequest(url: string, request: any | null): Observable<ReponseAPI<T[]>> {
         return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url + '/get-by-request', request, {
+            headers: this.setHeader(),
+        }).pipe(map((res) => { return res; }));
+    }
+
+    getAll(url: string): Observable<ReponseAPI<T[]>> {
+        return this.http.get<ReponseAPI<T[]>>(this.appConfig.API + url, {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
     }

@@ -18,6 +18,7 @@ namespace FarmProductionAPI.Domain.Dtos
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
         public bool? IsSoftDeleted { get; set; }
+        public string? Code { get; set; }
         public List<OrderItemDTO>? OrderItems { get; set; }
         public StatusOrder? Status { get; set; }
         public OrderType? Type { get; set; }
@@ -34,5 +35,6 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? ProvinceToId { get; set; }
         public string? FromAddress { get; set; }
         public string? ToAddress { get; set; }
+        public Guid? SellerAccountId { get; set; }
     }
 }

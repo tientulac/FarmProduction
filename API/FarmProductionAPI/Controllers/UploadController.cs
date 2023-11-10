@@ -10,6 +10,7 @@ using System.IO;
 using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System;
+using NetTopologySuite.Index.HPRtree;
 
 namespace FarmProductionAPI.Controllers
 {
@@ -86,6 +87,51 @@ namespace FarmProductionAPI.Controllers
             {
                 // Handle exceptions here
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ResponseResultAPI<List<string>>> UploadImages(IEnumerable<IFormFile> files, CancellationToken cancellationToken)
+        {
+            string path = "";
+            try
+            {
+                var listImage = new List<string>();
+                if (files.Any())
+                {
+                    foreach (var item in files)
+                    {
+                        if (item.Length > 0)
+                        {
+                            path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            using (var fileStream = new FileStream(Path.Combine(path, item.FileName), FileMode.Create))
+                            {
+                                await item.CopyToAsync(fileStream);
+                            }
+                            listImage.Add(item.FileName);
+                        }
+                    }                   
+                }
+                return new ResponseResultAPI<List<string>>()
+                {
+                    Code = "200",
+                    Data = listImage.Distinct().ToList(),
+                    Message = $"Upload Success"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseResultAPI<List<string>>()
+                {
+                    Code = "500",
+                    Data = null,
+                    Message = ex.Message,
+                    MessageEX = ex.ToString()
+                };
             }
         }
 

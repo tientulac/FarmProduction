@@ -10,7 +10,7 @@ using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.CategoryHandler
 {
-    public class GetListCategoryHandler : IRequestHandler<GetListCategoryQuery, ResponseResultAPI<List<ParentCategoryDTO>>>
+    public class GetListCategoryHandler : IRequestHandler<GetListCategoryQuery, ResponseResultAPI<List<CategoryDTO>>>
     {
         private readonly IMapper _mapper;
 
@@ -27,38 +27,38 @@ namespace FarmProductionAPI.Core.Handlers.CategoryHandler
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<ResponseResultAPI<List<ParentCategoryDTO>>> Handle(GetListCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<CategoryDTO>>> Handle(GetListCategoryQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var categories = _repository.GetAll().Where(x => x.ParentCategoryId == null).AsQueryable().Where(x => 
+                var categories = _repository.GetAll().AsQueryable().Where(x => 
                     request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
                     (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)));
-                var parentCategories = _mapper.Map<List<ParentCategoryDTO>>(categories);
-                if (parentCategories.Any())
-                {
-                    foreach (var item in parentCategories)
-                    {
-                        var listSubCategories = _repository.GetAll().AsQueryable().Where(x => x.ParentCategoryId != null && x.ParentCategoryId == item.Id && request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
-                            (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)));
+                //var parentCategories = _mapper.Map<List<ParentCategoryDTO>>(categories);
+                //if (parentCategories.Any())
+                //{
+                //    foreach (var item in parentCategories)
+                //    {
+                //        var listSubCategories = _repository.GetAll().AsQueryable().Where(x => x.ParentCategoryId != null && x.ParentCategoryId == item.Id && request == null || (string.IsNullOrEmpty(request.Code) || x.Code.ToLower().Contains(request.Code)) &&
+                //            (string.IsNullOrEmpty(request.Name) || x.Name.ToLower().Contains(request.Name)));
 
-                        if (listSubCategories.Any())
-                        {
-                            item.SubCategories = _mapper.Map<List<CategoryDTO>>(listSubCategories);
-                        }
-                    }
-                }
+                //        if (listSubCategories.Any())
+                //        {
+                //            item.SubCategories = _mapper.Map<List<CategoryDTO>>(listSubCategories);
+                //        }
+                //    }
+                //}
 
-                return new ResponseResultAPI<List<ParentCategoryDTO>>()
+                return new ResponseResultAPI<List<CategoryDTO>>()
                 {
                     Code = "200",
-                    Data = parentCategories,
+                    Data = _mapper.Map<List<CategoryDTO>>(categories),
                     Message = "Success"
                 };
             }
             catch (Exception ex)
             {
-                return new ResponseResultAPI<List<ParentCategoryDTO>>()
+                return new ResponseResultAPI<List<CategoryDTO>>()
                 {
                     Code = "500",
                     Data = null,

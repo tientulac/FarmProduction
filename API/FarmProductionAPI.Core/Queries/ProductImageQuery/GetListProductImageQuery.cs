@@ -2,7 +2,9 @@
 using FarmProductionAPI.Domain.Response;
 using MediatR;
 
-namespace FarmProductionAPI.Core.Queries.ProductImageQuery
+namespace FarmProductionAPI.Core.Queries.ProductImageQuery;
+
+public record GetListProductImageQuery : IRequest<ResponseResultAPI<List<ProductImageDTO>>>
 {
-    public record GetListProductImageQuery : IRequest<ResponseResultAPI<List<ProductImageDTO>>>;
+    public Guid? ProductId { get; set; }
 }

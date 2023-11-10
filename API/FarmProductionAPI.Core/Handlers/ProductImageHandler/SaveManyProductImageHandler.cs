@@ -33,8 +33,8 @@ namespace FarmProductionAPI.Core.Handlers.ProductImageHandler
             {
                 if (request.Images.Any())
                 {
-                    var productImages = _repository.GetAll().Where(x => x.ProductId == request.ProductId).ToList();
-                    await _repository.RemoveManyAsync(productImages, cancellationToken);
+                    //var productImages = _repository.GetAll().Where(x => x.ProductId == request.ProductId).ToList();
+                    //await _repository.RemoveManyAsync(productImages, cancellationToken);
 
                     foreach (var item in request.Images)
                     {

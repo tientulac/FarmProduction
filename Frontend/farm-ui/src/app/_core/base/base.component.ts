@@ -21,8 +21,11 @@ export class BaseComponent<T> {
   field_Validation: any = {};
   isSubmit: boolean = false;
   onSubmitting: boolean = false;
+
   isDisplayDelete: boolean = false;
   isDisplayDetail: boolean = false;
+  isDisplayAttribute: boolean = false;
+
   isFilter: boolean = false;
   isInsert: boolean = false;
   uploadFileName: any = '';
@@ -61,7 +64,7 @@ export class BaseComponent<T> {
   }
 
   getList() {
-    this.baseService.getAll(this.URL, this.EntitySearch).subscribe(
+    this.baseService.getByRequest(this.URL, this.EntitySearch).subscribe(
       (res) => {
         this.Entities = res.data;
       }
@@ -108,6 +111,7 @@ export class BaseComponent<T> {
     this.isDisplayDelete = false;
     this.isInsert = false;
     this.isDisplayDetail = false;
+    this.isDisplayAttribute = false;
     this.getList();
   }
 
@@ -119,6 +123,7 @@ export class BaseComponent<T> {
         item.onSuccess(item.file);
         if (res.code == "200") {
           this.Entity.image = res.message;
+          console.log(this.listFileUpload);
         }
         else {
           alert(res.message);
@@ -129,6 +134,11 @@ export class BaseComponent<T> {
 
   beforeUpload = (file: NzUploadFile): boolean => {
     this.uploadFileName = `${this.URL}_${this.Entity?.code}.jpg`;
+    return true;
+  };
+
+  beforeUploadAttribute = (file: NzUploadFile): boolean => {
+    this.uploadFileName = `image_${new Date().getTime()}.jpg`;
     return true;
   };
 }

@@ -18,6 +18,16 @@
                     [(VALUE)]="Entity.name">
                 </app-input-custom>
             </div>
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="24">Danh mục cha</nz-form-label>
+                    <nz-select style="width: 100%;" nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn danh mục"
+                        [(ngModel)]="Entity.parentCategoryId">
+                        <nz-option *ngFor="let option of categories" [nzLabel]="option.name"
+                            [nzValue]="option.id"></nz-option>
+                    </nz-select>
+                </nz-form-item>
+            </div>
             <div nz-col [nzSpan]="12">
                 <br>
                 <div class="clearfix">

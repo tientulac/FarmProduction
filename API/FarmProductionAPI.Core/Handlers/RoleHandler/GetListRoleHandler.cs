@@ -31,11 +31,11 @@ namespace FarmProductionAPI.Core.Handlers.RoleHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var roles = _repository.GetAll().ToList();
                 return new ResponseResultAPI<List<RoleDTO>>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<List<RoleDTO>>(categories),
+                    Data = _mapper.Map<List<RoleDTO>>(roles),
                     Message = "Success"
                 };
             }

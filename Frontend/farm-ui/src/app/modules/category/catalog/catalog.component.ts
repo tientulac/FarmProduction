@@ -4,6 +4,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { CategoryEntity, CategoryEntitySearch } from 'src/app/entities/Category.Entity';
+import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 import { AppConfig, AppConfiguration } from 'src/configuration';
@@ -14,7 +15,11 @@ import { AppConfig, AppConfiguration } from 'src/configuration';
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent extends BaseComponent<CategoryEntity> {
+
+  categories!: CategoryEntitySearch[];
+
   constructor(
+    public categoryService: BaseService<CategoryEntity>,
     @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
@@ -56,9 +61,18 @@ export class CatalogComponent extends BaseComponent<CategoryEntity> {
     this.listFileUpload = [];
     this.isInsert = true;
     this.Entity = new CategoryEntity();
+    this.getListParentCategory();
     this.Entity.code = Math.random().toString(36).substring(2, 7);
     if (type === 'EDIT') {
       this.Entity = data;
     }
+  }
+
+  getListParentCategory() {
+    this.categoryService.getByRequest('category', {}).subscribe(
+      (res: ReponseAPI<any>) => {
+        this.categories = res.data;
+      }
+    );
   }
 }

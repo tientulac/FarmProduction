@@ -23,6 +23,7 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? Color { get; set; }
         public string? Unit { get; set; }
         public string? Value { get; set; }
+        public Guid? ProductId { get; set; }
         public ProductDTO? Product { get; set; }
         public  List<OrderItemDTO>? OrderItems { get; set; }
     }

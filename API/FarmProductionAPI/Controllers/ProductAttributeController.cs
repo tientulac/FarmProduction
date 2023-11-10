@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProductAttributeController : ControllerBase
@@ -17,6 +17,14 @@ namespace FarmProductionAPI.Controllers
         public ProductAttributeController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPost]
+        [Route("get-by-request")]
+        public async Task<ResponseResultAPI<List<ProductAttributeDTO>>> GetByRequest([FromBody] GetListProductAttributeByRequestQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
         }
 
         [HttpGet]

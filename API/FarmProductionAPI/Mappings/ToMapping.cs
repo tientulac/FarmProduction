@@ -3,6 +3,7 @@ using FarmProductionAPI.Core.Commands.BrandCommand;
 using FarmProductionAPI.Core.Commands.CategoryCommand;
 using FarmProductionAPI.Core.Commands.ProductAttributeCommand;
 using FarmProductionAPI.Core.Commands.ProductDescriptionCommand;
+using FarmProductionAPI.Core.Commands.ProductImageCommand;
 using FarmProductionAPI.Core.Commands.RoleCommand;
 using FarmProductionAPI.Core.Commands.UserAccountCommand;
 using FarmProductionAPI.Domain.Dtos;
@@ -43,6 +44,9 @@ namespace FarmProductionAPI.Mappings
 
             CreateMap<SaveRoleCommand, Role>();
             CreateMap<Role, RoleDTO>();
+
+            CreateMap<SaveProductImageCommand, ProductImage>();
+            CreateMap<ProductImage, ProductImageDTO>();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace FarmProductionAPI.Core.Commands.OrderCommand
         public StatusOrder? Status { get; set; }
         public OrderType? Type { get; set; }
         public Guid? UserAccountId { get; set; }
+        public Guid? SellerAccountId { get; set; }
         public decimal? Total { get; set; }
         public decimal? PaymentShip { get; set; }
         public PaymentType? PaymentType { get; set; }

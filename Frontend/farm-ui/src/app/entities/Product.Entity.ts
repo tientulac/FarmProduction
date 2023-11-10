@@ -4,7 +4,6 @@ import { CategoryEntity, CategoryEntitySearch } from "./Category.Entity";
 import { ProductDescriptionEntity } from "./ProductDescription.Entity";
 
 export class ProductEntity extends BaseEntity {
-    id!: number | null;
     code!: string | null;
     name!: string | null;
     image!: string | null;
@@ -18,7 +17,6 @@ export class ProductEntity extends BaseEntity {
 }
 
 export class ProductEntitySearch extends BaseEntity {
-    id!: number | null;
     code!: string | null;
     name!: string | null;
     image!: string | null;

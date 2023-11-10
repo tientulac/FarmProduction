@@ -10,6 +10,7 @@ namespace FarmProductionAPI.Domain.Models
     public class Order: BaseEntity
     {
         public ICollection<OrderItem>? OrderItems { get; set; }
+        public string? Code { get; set; }
         public StatusOrder? Status { get; set; }
         public OrderType? Type { get; set; }
         public Guid? UserAccountId { get; set; }
