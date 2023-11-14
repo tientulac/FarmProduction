@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class RoleController : ControllerBase
@@ -19,8 +19,9 @@ namespace FarmProductionAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ResponseResultAPI<List<RoleDTO>>> GetListRole([FromQuery] GetListRoleQuery query, CancellationToken cancellationToken)
+        [HttpPost]
+        [Route("get-by-request")]
+        public async Task<ResponseResultAPI<List<RoleDTO>>> GetByRequest([FromBody] GetListRoleQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;

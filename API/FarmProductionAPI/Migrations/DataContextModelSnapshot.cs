@@ -114,6 +114,9 @@ namespace FarmProductionAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -150,6 +153,9 @@ namespace FarmProductionAPI.Migrations
                     b.Property<string>("ProvinceToId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SellerAccountId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
@@ -181,7 +187,7 @@ namespace FarmProductionAPI.Migrations
 
                     b.HasIndex("UserAccountId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.OrderItem", b =>
@@ -232,6 +238,71 @@ namespace FarmProductionAPI.Migrations
                     b.ToTable("OrderItem", (string)null);
                 });
 
+            modelBuilder.Entity("FarmProductionAPI.Domain.Models.Producer", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsSoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MainMarketing")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TypeModel")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("YearBorn")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Producer");
+                });
+
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>
                 {
                     b.Property<Guid?>("Id")
@@ -268,6 +339,9 @@ namespace FarmProductionAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ProducerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
@@ -283,6 +357,8 @@ namespace FarmProductionAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("ProducerId");
+
                     b.ToTable("Product", (string)null);
                 });
 
@@ -294,6 +370,9 @@ namespace FarmProductionAPI.Migrations
 
                     b.Property<int?>("Amount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
@@ -310,11 +389,17 @@ namespace FarmProductionAPI.Migrations
                     b.Property<Guid?>("DeletedById")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("ExpireDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsSoftDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ManufactureDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -557,9 +642,15 @@ namespace FarmProductionAPI.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("FarmProductionAPI.Domain.Models.Producer", "Producer")
+                        .WithMany("Products")
+                        .HasForeignKey("ProducerId");
+
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Producer");
                 });
 
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.ProductAttribute", b =>
@@ -611,6 +702,11 @@ namespace FarmProductionAPI.Migrations
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("FarmProductionAPI.Domain.Models.Producer", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("FarmProductionAPI.Domain.Models.Product", b =>

@@ -23,9 +23,11 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? Image { get; set; }
         public Guid? BrandId { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? ProducerId { get; set; }
         public ProductStatus? Status { get; set; }
         public  CategoryDTO? Category { get; set; }
         public  BrandDTO? Brand { get; set; }
+        public  ProducerDTO? Producer { get; set; }
         public  List<ProductAttributeDTO>? ProductAttributes { get; set; }
         public List<ProductImageDTO>? ProductImages { get; set; }
         public List<ProductDescriptionDTO>? ProductDesciptions { get; set; }

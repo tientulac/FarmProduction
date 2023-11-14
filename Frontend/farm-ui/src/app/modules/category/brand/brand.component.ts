@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { ToastrService } from 'ngx-toastr';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { BrandEntity, BrandEntitySearch } from 'src/app/entities/Brand.Entity';
@@ -27,6 +28,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
       AppInjector.get(NzModalService),
       AppInjector.get(Title),
       AppInjector.get(UploadImageService),
+      AppInjector.get(ToastrService),
     );
     this.Entity = new BrandEntity();
     this.EntitySearch = new BrandEntitySearch();
@@ -53,7 +55,7 @@ export class BrandComponent extends BaseComponent<BrandEntity> {
   async onSubmit(): Promise<boolean> {
     this.onSubmitting = true;
     if (!this.isSubmit) {
-      alert('Dữ liệu nhập chưa hợp lệ');
+      this.toastr.warning('Dữ liệu nhập chưa hợp lệ');
       return false;
     }
     this.save();

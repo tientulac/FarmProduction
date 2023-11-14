@@ -22,7 +22,7 @@ namespace FarmProductionAPI.Domain.Models
 
     public enum StatusAccount
     {
-        ACTIVE,
+        ACTIVE = 1,
         DISABLE,
         BAN,
         APPROVE,

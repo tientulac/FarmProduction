@@ -50,10 +50,12 @@ namespace FarmProductionAPI.Core.Handlers.RoleHandler
                         };
                     }
                 }
-
-                role = _mapper.Map<Role>(request);
-                await _repository.CreateOneAsync(role, cancellationToken);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                else
+                {
+                    role = _mapper.Map<Role>(request);
+                    await _repository.CreateOneAsync(role, cancellationToken);
+                    await _unitOfWork.SaveChangesAsync(cancellationToken);
+                }
 
                 return new ResponseResultAPI<RoleDTO>()
                 {

@@ -8,20 +8,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputCustomComponent } from '../custom/input-custom/input-custom.component';
 import { SelectCustomComponent } from '../custom/select-custom/select-custom.component';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '../app.routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
         CommonNgZorroAntdModule,
-        HttpClientModule,
-        BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
     ],
     declarations: [
         BaseComponent,

@@ -1,5 +1,5 @@
 <app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
-    (filterEvent)="isFilter = !isFilter"></app-group-button>
+    (filterEvent)="displayFilter()"></app-group-button>
 
 <nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
     (nzOnOk)="onSubmit()">
@@ -207,52 +207,90 @@
                 <div nz-col [nzSpan]="16">
                     <div [nzGutter]="24">
                         <form nz-form nzLayout="vertical" nz-row>
-                            <div nz-col [nzSpan]="4">
+                            <div nz-col [nzSpan]="2">
+                                <app-input-custom [PLACEHOLDER]="'Nhập mã'" [TYPE]="'text'"
+                                    [ENTITY]="productAttributeEntity" [FIELD]="'code'"
+                                    [(VALUE)]="productAttributeEntity.code">
+                                </app-input-custom>
+                            </div>
+                            <div nz-col [nzSpan]="2">
                                 <app-input-custom [PLACEHOLDER]="'Nhập giá'" [TYPE]="'number'"
-                                    [ENTITY]="productAttributeEntity" [FIELD]="'price'" [(VALUE)]="Entity.price">
+                                    [ENTITY]="productAttributeEntity" [FIELD]="'price'"
+                                    [(VALUE)]="productAttributeEntity.price">
                                 </app-input-custom>
                             </div>
                             <div nz-col [nzSpan]="4">
                                 <app-input-custom [PLACEHOLDER]="'Nhập số lượng'" [TYPE]="'number'"
-                                    [ENTITY]="productAttributeEntity" [FIELD]="'amount'" [(VALUE)]="Entity.amount">
+                                    [ENTITY]="productAttributeEntity" [FIELD]="'amount'"
+                                    [(VALUE)]="productAttributeEntity.amount">
                                 </app-input-custom>
                             </div>
                             <div nz-col [nzSpan]="4">
-                                <app-input-custom [TYPE]="'color'" [ENTITY]="productAttributeEntity" [FIELD]="'color'"
-                                    [(VALUE)]="Entity.color">
+                                <input nz-input [(ngModel)]="productAttributeEntity.color" type="color" />
+                            </div>
+                            <div nz-col [nzSpan]="4">
+                                <app-input-custom [TYPE]="'text'" [PLACEHOLDER]="'Nhập đơn vị tính'"
+                                    [ENTITY]="productAttributeEntity" [FIELD]="'unit'"
+                                    [(VALUE)]="productAttributeEntity.unit">
                                 </app-input-custom>
                             </div>
                             <div nz-col [nzSpan]="4">
-                                <app-input-custom [TYPE]="'unit'" [PLACEHOLDER]="'Nhập đơn vị tính'"
-                                    [ENTITY]="productAttributeEntity" [FIELD]="'unit'" [(VALUE)]="Entity.unit">
-                                </app-input-custom>
-                            </div>
-                            <div nz-col [nzSpan]="4">
-                                <app-input-custom [TYPE]="'value'" [PLACEHOLDER]="'Nhập giá trị'"
-                                    [ENTITY]="productAttributeEntity" [FIELD]="'value'" [(VALUE)]="Entity.unit">
+                                <app-input-custom [TYPE]="'text'" [PLACEHOLDER]="'Nhập giá trị'"
+                                    [ENTITY]="productAttributeEntity" [FIELD]="'value'"
+                                    [(VALUE)]="productAttributeEntity.value">
                                 </app-input-custom>
                             </div>
                             &nbsp;&nbsp;
                             <div nz-col [nzSpan]="3">
-                                <button nz-button [nzType]="'primary'">
+                                <button nz-button [nzType]="'primary'" (click)="saveAttribute()">
                                     +
+                                </button>&nbsp;
+                                <button nz-button [nzType]="'primary'"
+                                    (click)="productAttributeEntity = {}; isEdit = false">
+                                    Tải lại
                                 </button>
+                            </div>
+                            <div nz-col [nzSpan]="12" *ngIf="!isEdit">
+                                <nz-range-picker [(ngModel)]="dateRange"
+                                    (ngModelChange)="onChangeDateRange($event)"></nz-range-picker>
                             </div>
                         </form>
                         <nz-table #basicTable [nzData]="productAttributes">
                             <thead>
                                 <tr>
+                                    <th>Mã sản phẩm</th>
                                     <th>Đơn vị tính</th>
                                     <th>Giá trị</th>
                                     <th>Màu sắc</th>
                                     <th>Giá tiền</th>
                                     <th>Số lượng</th>
+                                    <th>Ngày sản xuất</th>
+                                    <th>Ngày hết hạn</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of basicTable.data">
-
+                                <tr *ngFor="let data of basicTable.data"
+                                    [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                                    <td>{{data.code}}</td>
+                                    <td>{{data.unit}}</td>
+                                    <td>{{data.value}}</td>
+                                    <td><input type="color" value="{{data.color}}" disabled="true"></td>
+                                    <td>{{data.price | number}}</td>
+                                    <td>{{data.amount | number}}</td>
+                                    <td>{{data.manufactureDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{data.expireDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td *ngIf="data.isSoftDeleted">
+                                    </td>
+                                    <td *ngIf="!data.isSoftDeleted">
+                                        <a><span nz-icon nzType="edit" nzTheme="outline"
+                                                (click)="editAttibute(data)"></span></a>
+                                        <nz-divider nzType="vertical"></nz-divider>
+                                        <a><span nz-icon nzType="delete" (click)="deleteAttribute(data.id)"
+                                                nzTheme="outline"></span></a>
+                                    </td>
+                                    <td *ngIf=" data.isSoftDeleted">
+                                    </td>
                                 </tr>
                             </tbody>
                         </nz-table>

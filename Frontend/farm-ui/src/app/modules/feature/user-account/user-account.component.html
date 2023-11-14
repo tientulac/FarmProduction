@@ -1,0 +1,155 @@
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
+    (filterEvent)="displayFilter()"></app-group-button>
+
+<nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Tên đăng nhập'" [MINLENGTH]="5"
+                    (changeInput)="field_Validation.userName = $event; validateCustom()"
+                    [PLACEHOLDER]="'Nhập tên đăng nhập'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'userName'" [(VALUE)]="Entity.userName">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12" *ngIf="!isEdit">
+                <app-input-custom [LABEL]="'Mật khẩu'" [MINLENGTH]="6" [MAXLENGTH]="10"
+                    (changeInput)="field_Validation.hashPassword = $event; validateCustom()"
+                    [PLACEHOLDER]="'Nhập mật khẩu'" [REQUIRED]="true" [TYPE]="'password'" [ENTITY]="Entity"
+                    [FIELD]="'hashPassword'" [(VALUE)]="Entity.hashPassword">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Email'" [PLACEHOLDER]="'Nhập email'" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'email'" [(VALUE)]="Entity.email">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Số điện thoại'" [PLACEHOLDER]="'Nhập số điện thoại'" [TYPE]="'phone'"
+                    [ENTITY]="Entity" [FIELD]="'phone'" [(VALUE)]="Entity.phone">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Họ tên'" [PLACEHOLDER]="'Nhập họ tên'" [TYPE]="'fullName'" [ENTITY]="Entity"
+                    [FIELD]="'fullName'" [(VALUE)]="Entity.fullName">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Địa chỉ'" [PLACEHOLDER]="'Nhập địa chỉ'" [TYPE]="'address'"
+                    [ENTITY]="Entity" [FIELD]="'address'" [(VALUE)]="Entity.address">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12" *ngIf="isEdit">
+                <div nz-col [nzSpan]="24">
+                    <app-select-custom [CLASSNAME]="(!field_Validation.status && onSubmitting) ? 'invalid-form' : ''"
+                        [LABEL_SELECT]="'name'" (changeSelect)="field_Validation.status = $event; validateCustom()"
+                        [VALUE_SELECT]="'id'" [LISTOPTION]="listStatus" [LABEL]="'Trạng thái'"
+                        [PLACEHOLDER]="'Chọn trạng thái'" [REQUIRED]="true" [ENTITY]="Entity" [FIELD]="'status'"
+                        [TYPE]="'NORMAL'" [VALUE]="Entity.status"></app-select-custom>
+                </div>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <app-select-custom [LABEL_SELECT]="'name'" [VALUE_SELECT]="'id'" [LISTOPTION]="roles" [LABEL]="'Quyền'"
+                    [PLACEHOLDER]="'Chọn quyền'" [ENTITY]="Entity" [FIELD]="'roleId'" [TYPE]="'NORMAL'"
+                    [VALUE]="Entity.roleId"></app-select-custom>
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="8">
+                        <nz-form-item>
+                            <nz-form-label>Tên đăng nhập</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.userName" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="8">
+                        <nz-form-item>
+                            <nz-form-label>Họ tên</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.fullName" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Quyền</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn quyền"
+                                [(ngModel)]="EntitySearch.roleId">
+                                <nz-option *ngFor="let option of roles" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content cus-body">
+    <div class="card">
+        <div class="card-body">
+            <nz-table #basicTable [nzData]="Entities" [nzBordered]="true">
+
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Họ và tên</th>
+                        <th>Quyền</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày sửa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i =index"
+                        [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                        <td>{{i+1}}</td>
+                        <td>{{data.userName}}</td>
+                        <td>{{data.fullName}}</td>
+                        <td>{{data.role.name}}</td>
+                        <td>{{data.email}}</td>
+                        <td>{{data.phone}}</td>
+                        <td>{{data.address}}</td>
+                        <td>{{renderStatus(data.status)}}</td>
+                        <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td *ngIf="!data.isSoftDeleted">
+                            <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
+                                    nzTheme="outline"></span></a>
+
+                        </td>
+                        <td *ngIf="data.isSoftDeleted"></td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</section>
+
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>

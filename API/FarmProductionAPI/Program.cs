@@ -53,6 +53,7 @@ builder.Services.AddTransient<IRepository<ProductImage>, BaseRepository<ProductI
 builder.Services.AddTransient<IRepository<ProductDescription>, BaseRepository<ProductDescription>>();
 builder.Services.AddTransient<IRepository<Role>, BaseRepository<Role>>();
 builder.Services.AddTransient<IRepository<UserAccount>, BaseRepository<UserAccount>>();
+builder.Services.AddTransient<IRepository<Producer>, BaseRepository<Producer>>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.InstallServicesInAssembly<IFarmProductionInfrastructureMarker>(configuration);

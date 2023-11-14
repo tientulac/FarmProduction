@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainModule } from "./modules/main/main.module";
 import { BaseService } from "./services/base.service";
 import { BrowserModule } from "@angular/platform-browser";
+import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(vi);
 
@@ -25,7 +26,11 @@ registerLocaleData(vi);
     BrowserAnimationsModule,
     MainModule,
     UtilityModule,
-  ],
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),],
   providers: [
     { provide: NZ_I18N, useValue: vi_VN },
     BaseService

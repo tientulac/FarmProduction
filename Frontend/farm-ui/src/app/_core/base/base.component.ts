@@ -2,9 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { ToastrService } from 'ngx-toastr';
 import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-base',
@@ -15,7 +17,7 @@ import { UploadImageService } from 'src/app/services/upload-image.service';
 export class BaseComponent<T> {
 
   Entity!: T | null | any;
-  EntitySearch!: T;
+  EntitySearch!: T | {};
   Entities!: T[];
   URL: string = '';
   field_Validation: any = {};
@@ -32,6 +34,18 @@ export class BaseComponent<T> {
   URL_Upload: any = '';
   id_record: any = null;
   isInsertDetail: boolean = false;
+  id_edit: any = null;
+  isEdit: boolean = false;
+  dateRange: any;
+  listStatus: any = [];
+
+  cities: any;
+  districts: any;
+  wards: any;
+  feeShip: any = 0;
+  id_city: any = null;
+  id_district: any = null;
+  id_ward: any = null;
 
   GROUP_BUTTON = {
     EXCEL: false,
@@ -46,6 +60,7 @@ export class BaseComponent<T> {
     public modal: NzModalService,
     public title: Title,
     public uploadImageService: UploadImageService,
+    public toastr: ToastrService
   ) {
   }
 
@@ -71,16 +86,24 @@ export class BaseComponent<T> {
     );
   }
 
+  getAll() {
+    this.baseService.getAll(this.URL).subscribe(
+      (res) => {
+        this.Entities = res.data;
+      }
+    );
+  }
+
   save() {
     this.baseService.save(this.URL, this.Entity).subscribe(
       (res) => {
         if (res.code == "200") {
           this.Entity = res.data;
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.handleCancel();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -126,7 +149,7 @@ export class BaseComponent<T> {
           console.log(this.listFileUpload);
         }
         else {
-          alert(res.message);
+          this.toastr.warning(res.message?.toString());
         }
       }
     );
@@ -141,4 +164,57 @@ export class BaseComponent<T> {
     this.uploadFileName = `image_${new Date().getTime()}.jpg`;
     return true;
   };
+
+  displayFilter() {
+    this.isFilter = !this.isFilter;
+    this.EntitySearch = {};
+    this.getList();
+  }
+
+  renderStatus(status: any) {
+    return this.listStatus.filter((x: any) => x.id == status)[0].name ?? '';
+  }
+
+  getListCity() {
+    this.baseService.getListCity().subscribe(
+      (res) => {
+        this.cities = res.data;
+      }
+    );;
+  }
+
+  getListDistrict() {
+    this.baseService.getListDistrict({ province_id: this.id_city }).subscribe(
+      (res) => {
+        this.districts = _.sortBy(res.data, 'ProvinceName');
+      }
+    );
+  }
+
+  getListWard() {
+    this.baseService.getListWard({ district_id: this.id_district }).subscribe(
+      (res) => {
+        this.wards = res.data;
+      }
+    );
+  }
+
+  getPaymentShipper() {
+    this.baseService.getShipPayment({
+      "service_id": 100039,
+      // "insurance_value": this.totalPrice,
+      "coupon": null,
+      "from_district_id": 1542,
+      "to_district_id": this.id_district,
+      "to_ward_code": this.id_ward,
+      "height": 5,
+      "length": 5,
+      "weight": 100,
+      "width": 5
+    }).subscribe(
+      (res: any) => {
+        this.feeShip = res.data.total;
+      }
+    );
+  }
 }

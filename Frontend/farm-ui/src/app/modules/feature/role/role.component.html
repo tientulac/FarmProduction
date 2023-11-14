@@ -1,0 +1,79 @@
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
+    (filterEvent)="displayFilter()"></app-group-button>
+
+<nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
+                    (changeInput)="field_Validation.code = $event; validateCustom()" [PLACEHOLDER]="'Nhập mã'"
+                    [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [CLASSNAME]="(!field_Validation.name && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL]="'Tên'" (changeInput)="field_Validation.name = $event; validateCustom()"
+                    [PLACEHOLDER]="'Nhập tên'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'name'"
+                    [(VALUE)]="Entity.name">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <label nz-checkbox [(ngModel)]="Entity.isAdmin">Admin</label>
+                <label nz-checkbox [(ngModel)]="Entity.isActive">Active</label>
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<section class="content cus-body">
+    <div class="card">
+        <div class="card-body">
+            <nz-table #basicTable [nzData]="Entities" [nzBordered]="true">
+
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Amin</th>
+                        <th>Active</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày sửa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i =index"
+                        [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                        <td>{{i+1}}</td>
+                        <td>{{data.code}}</td>
+                        <td>{{data.name}}</td>
+                        <td *ngIf="data.isAdmin" style="color: green; font-weight: bold;"><span nz-icon nzType="check"
+                                nzTheme="outline"></span></td>
+                        <td *ngIf="data.isActive" style="color: green; font-weight: bold;"><span nz-icon nzType="check"
+                                nzTheme="outline"></span></td>
+                        <td *ngIf="!data.isAdmin" style="color: red; font-weight: bold;"><span nz-icon nzType="close"
+                                nzTheme="outline"></span></td>
+                        <td *ngIf="!data.isActive" style="color: red; font-weight: bold;"><span nz-icon nzType="close"
+                                nzTheme="outline"></span></td>
+                        <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td *ngIf="!data.isSoftDeleted">
+                            <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
+                                    nzTheme="outline"></span></a>
+
+                        </td>
+                        <td *ngIf="data.isSoftDeleted"></td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</section>
+
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>

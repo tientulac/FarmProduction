@@ -5,6 +5,7 @@ using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
@@ -31,7 +32,13 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var categories = _repository.GetAll().AsQueryable().Where(x =>
+                    (string.IsNullOrEmpty(request.UserName) || x.UserName.Contains(request.UserName)) &&
+                    (string.IsNullOrEmpty(request.Email) || x.Email.Contains(request.Email)) &&
+                    (string.IsNullOrEmpty(request.Phone) || x.Phone.Contains(request.Phone)) &&
+                    (string.IsNullOrEmpty(request.FullName) || x.FullName.Contains(request.FullName)) &&
+                    (request.RoleId == null || x.RoleId == request.RoleId) 
+                    ).Include(x => x.Role);
                 return new ResponseResultAPI<List<UserAccountDTO>>()
                 {
                     Code = "200",

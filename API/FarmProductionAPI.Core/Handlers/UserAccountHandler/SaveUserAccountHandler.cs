@@ -37,6 +37,7 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
                     userAccount = await _repository.GetById(request.Id.Value);
                     if (userAccount is not null)
                     {
+                        request.Hashpassword = userAccount.Hashpassword;
                         await _repository.Update(_mapper.Map<UserAccount>(request), userAccount);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
                     }

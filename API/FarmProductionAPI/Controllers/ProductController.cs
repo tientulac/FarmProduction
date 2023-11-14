@@ -23,7 +23,7 @@ namespace FarmProductionAPI.Controllers
 
         [HttpPost]
         [Route("get-by-request")]
-        public async Task<ResponseResultAPI<List<ProductDTO>>> GetByRequest([FromQuery] GetListProductQuery query, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<ProductDTO>>> GetByRequest([FromBody] GetListProductQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;

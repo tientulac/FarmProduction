@@ -14,6 +14,7 @@ namespace FarmProductionAPI.Domain.Models
         public StatusOrder? Status { get; set; }
         public OrderType? Type { get; set; }
         public Guid? UserAccountId { get; set; }
+        public Guid? SellerAccountId { get; set; }
         public virtual UserAccount? UserAccount { get; set; }
         public decimal? Total { get; set; }
         public decimal? PaymentShip { get; set; }

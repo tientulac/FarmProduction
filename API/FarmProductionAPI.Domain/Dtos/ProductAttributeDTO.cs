@@ -17,6 +17,7 @@ namespace FarmProductionAPI.Domain.Dtos
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
         public bool? IsSoftDeleted { get; set; }
+        public string? Code { get; set; }
         public decimal? Price { get; set; }
         public int? Amount { get; set; }
         public string? Image { get; set; }
@@ -24,6 +25,8 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? Unit { get; set; }
         public string? Value { get; set; }
         public Guid? ProductId { get; set; }
+        public DateTime? ManufactureDate { get; set; }
+        public DateTime? ExpireDate { get; set; }
         public ProductDTO? Product { get; set; }
         public  List<OrderItemDTO>? OrderItems { get; set; }
     }

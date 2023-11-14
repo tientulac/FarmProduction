@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { ToastrService } from 'ngx-toastr';
 import { BaseComponent } from 'src/app/_core/base/base.component';
 import { AppInjector } from 'src/app/app.module';
 import { BrandEntity, BrandEntitySearch } from 'src/app/entities/Brand.Entity';
@@ -20,7 +21,7 @@ import { AppConfig, AppConfiguration } from 'src/configuration';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent extends BaseComponent<ProductEntity> {
+export class ProductComponent extends BaseComponent<ProductEntity> implements OnInit {
 
   categories!: CategoryEntitySearch[];
   brands!: BrandEntitySearch[];
@@ -46,6 +47,7 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
       AppInjector.get(NzModalService),
       AppInjector.get(Title),
       AppInjector.get(UploadImageService),
+      AppInjector.get(ToastrService),
     );
     this.Entity = new ProductEntity();
     this.EntitySearch = new ProductEntitySearch();
@@ -68,6 +70,9 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.getListFilter();
   }
 
+  ngOnInit(): void {
+  }
+
   getListFilter() {
     this.categoryService.getAll('category/get-sub-categories').subscribe(
       (res: ReponseAPI<any>) => {
@@ -84,7 +89,7 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
   async onSubmit(): Promise<boolean> {
     this.onSubmitting = true;
     if (!this.isSubmit) {
-      alert('Dữ liệu nhập chưa hợp lệ');
+      this.toastr.warning('Dữ liệu nhập chưa hợp lệ');
       return false;
     }
     this.save();
@@ -107,7 +112,6 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productAttributeFilter = new ProductAttributeSearchEntity();
     this.productAttributeEntity = new ProductAttributeEntity();
     this.productImageEntity = new ProductImageEntity();
-    this.productAttributeFilter.productId = data.id;
     this.id_record = data.id;
     this.getListAttribute();
     this.getListImage();
@@ -119,12 +123,12 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productDescriptionService.save('ProductDescription', this.EntityDescription).subscribe(
       (res) => {
         if (res.code == "200") {
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.EntityDescription = res.data;
           this.handleCancel();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -163,15 +167,16 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
   }
 
   saveAttribute() {
+    this.productAttributeEntity.productId = this.id_record;
     this.productAttributeService.save('ProductAttribute', this.productAttributeEntity).subscribe(
       (res: ReponseAPI<any>) => {
         if (res.code == "200") {
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.getListAttribute();
           this.productAttributeEntity = new ProductAttributeEntity();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -181,11 +186,12 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productAttributeService.delete(`ProductAttribute/${id}`).subscribe(
       (res: ReponseAPI<any>) => {
         if (res.code == "200") {
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.getListAttribute();
+          this.getList();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -195,11 +201,11 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productImageService.save('ProductImage/save-many', this.productImageEntity).subscribe(
       (res: ReponseAPI<any>) => {
         if (res.code == "200") {
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.getListImage();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -209,11 +215,11 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
     this.productAttributeService.delete(`ProductImage/${id}`).subscribe(
       (res: ReponseAPI<any>) => {
         if (res.code == "200") {
-          alert("Thành công !");
+          this.toastr.success("Thành công !");
           this.getListImage();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
@@ -232,19 +238,30 @@ export class ProductComponent extends BaseComponent<ProductEntity> {
           this.productImageService.save('ProductImage', this.productImageEntity).subscribe(
             (res: ReponseAPI<any>) => {
               if (res.code == "200") {
-                alert("Thành công !");
+                this.toastr.success("Thành công !");
                 this.getListImage();
               }
               else {
-                alert(res.messageEX);
+                this.toastr.warning(res.messageEX?.toString());
               }
             }
           );
         }
         else {
-          alert(res.message);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
   };
+
+  editAttibute(data: ProductAttributeEntity) {
+    this.id_edit = data.id ?? null;
+    this.productAttributeEntity = data;
+    this.isEdit = true;
+  }
+
+  onChangeDateRange(result: Date[]): void {
+    this.productAttributeEntity.manufactureDate = result[0];
+    this.productAttributeEntity.expireDate = result[1];
+  }
 }

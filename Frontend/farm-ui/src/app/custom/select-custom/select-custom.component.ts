@@ -43,7 +43,7 @@ export class SelectCustomComponent {
       }
     }
     this.ENTITY[this.FIELD] = this.VALUE;
-    this.VALID = this.VALID_REQUIRED; 
+    this.VALID = this.VALID_REQUIRED;
     this.changeSelect.emit(this.VALID);
   }
 }

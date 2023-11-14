@@ -1,5 +1,5 @@
 <app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
-    (filterEvent)="isFilter = !isFilter"></app-group-button>
+    (filterEvent)="displayFilter()"></app-group-button>
 
 <nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
     (nzOnOk)="onSubmit()">

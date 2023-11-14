@@ -13,6 +13,7 @@ namespace FarmProductionAPI.Core.Commands.CategoryCommand
         public string? Image { get; set; }
         public Guid? BrandId { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? ProducerId { get; set; }
         public ProductStatus? Status { get; set; }
     }
 }

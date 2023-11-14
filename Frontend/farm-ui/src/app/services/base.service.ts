@@ -10,6 +10,8 @@ import { ReponseAPI } from '../entities/ResponseAPI';
 })
 export class BaseService<T> {
 
+    TOKEN: any = 'a5cac09d-cea5-11ed-a3ed-eac62dba9bd9';
+    API: any = 'https://online-gateway.ghn.vn/shiip/public-api/master-data/';
 
     constructor(
         @Inject(AppConfig) private readonly appConfig: AppConfiguration,
@@ -56,6 +58,30 @@ export class BaseService<T> {
         return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url + '/search', request, {
             headers: this.setHeader(),
         }).pipe(map((res) => { return res; }));
+    }
+
+    getListCity(): Observable<any> {
+        return this.http.get<any>(this.API + 'province', {
+            headers: new HttpHeaders().set('Token', `${this.TOKEN}`),
+        }).pipe(map((z) => { return z; }));
+    }
+
+    getListDistrict(req: any): Observable<any> {
+        return this.http.post<any>(this.API + 'district', req, {
+            headers: new HttpHeaders().set('Token', `${this.TOKEN}`),
+        }).pipe(map((z) => { return z; }));
+    }
+
+    getListWard(req: any): Observable<any> {
+        return this.http.post<any>(this.API + 'ward', req, {
+            headers: new HttpHeaders().set('Token', `${this.TOKEN}`),
+        }).pipe(map((z) => { return z; }));
+    }
+
+    getShipPayment(req: any): Observable<any> {
+        return this.http.post<any>('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', req, {
+            headers: new HttpHeaders().set('Token', `${this.TOKEN}`),
+        }).pipe(map((z) => { return z; }));
     }
 }
 

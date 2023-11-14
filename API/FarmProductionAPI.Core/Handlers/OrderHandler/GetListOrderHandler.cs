@@ -5,6 +5,8 @@ using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.OrderHandler
@@ -31,11 +33,51 @@ namespace FarmProductionAPI.Core.Handlers.OrderHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var orders = _repository.GetAll().Include(x => x.UserAccount).AsQueryable();
+                if (!string.IsNullOrEmpty(request.ProvinceToId))
+                {
+                    orders = orders.Where(x => x.ProvinceToId == request.ProvinceToId);
+                }
+                if (!string.IsNullOrEmpty(request.DistrictToId))
+                {
+                    orders = orders.Where(x => x.DistrictToId == request.DistrictToId);
+                }
+                if (!string.IsNullOrEmpty(request.WardToId))
+                {
+                    orders = orders.Where(x => x.WardToId == request.WardToId);
+                }
+                if (!string.IsNullOrEmpty(request.Code))
+                {
+                    orders = orders.Where(x => x.Code.Contains(request.Code));
+                }
+                if (request.Status != null)
+                {
+                    orders = orders.Where(x => x.Status == request.Status);
+                }
+                if (request.Type != null)
+                {
+                    orders = orders.Where(x => x.Type == request.Type);
+                }
+                if (!string.IsNullOrEmpty(request.UserName))
+                {
+                    orders = orders.Where(x => x.UserAccount != null && x.UserAccount.UserName.Contains(request.UserName));
+                }
+                if (request.PaymentType != null)
+                {
+                    orders = orders.Where(x => x.PaymentType == request.PaymentType);
+                }
+                if (request.FromDate != null)
+                {
+                    orders = orders.Where(x => x.CreatedAt >= request.FromDate);
+                }
+                if (request.ToDate != null)
+                {
+                    orders = orders.Where(x => x.CreatedAt <= request.ToDate);
+                }
                 return new ResponseResultAPI<List<OrderDTO>>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<List<OrderDTO>>(categories),
+                    Data = _mapper.Map<List<OrderDTO>>(orders),
                     Message = "Success"
                 };
             }

@@ -65,7 +65,7 @@ namespace FarmProductionAPI.Domain
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("Order");
+                entity.ToTable("Orders");
 
                 entity.HasKey(e => e.Id);
             });

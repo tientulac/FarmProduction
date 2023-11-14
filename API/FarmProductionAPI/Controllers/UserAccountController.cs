@@ -13,7 +13,7 @@ using System.Text;
 
 namespace FarmProductionAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class UserAccountController : ControllerBase
@@ -27,8 +27,9 @@ namespace FarmProductionAPI.Controllers
             _config = config;
         }
 
-        [HttpGet]
-        public async Task<ResponseResultAPI<List<UserAccountDTO>>> GetListUserAccount([FromQuery] GetListUserAccountQuery query, CancellationToken cancellationToken)
+        [HttpPost]
+        [Route("get-by-request")]
+        public async Task<ResponseResultAPI<List<UserAccountDTO>>> GetByRequest([FromBody] GetListUserAccountQuery query, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return result;
@@ -49,6 +50,7 @@ namespace FarmProductionAPI.Controllers
         }
 
         [HttpPost]
+        [Route("login")]
         public async Task<ResponseResultAPI<UserAccountDTO>> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
@@ -56,7 +58,6 @@ namespace FarmProductionAPI.Controllers
             {
                 result.Data.Token = GenerateToken(result.Data);
             }
-            var a = User;
             return result;
         }
 

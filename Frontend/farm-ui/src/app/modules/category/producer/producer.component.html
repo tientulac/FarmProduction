@@ -1,0 +1,175 @@
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (openModalEvent)="openModal($event, Entity)" (searchEvent)="search()"
+    (filterEvent)="displayFilter()"></app-group-button>
+
+<nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Mã'" [MINLENGTH]="3" [MAXLENGTH]="10"
+                    (changeInput)="field_Validation.code = $event;" [PLACEHOLDER]="'Nhập mã'" [REQUIRED]="true"
+                    [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'code'" [(VALUE)]="Entity.code">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [CLASSNAME]="(!field_Validation.name && onSubmitting) ? 'invalid-form' : ''"
+                    [LABEL]="'Tên'" (changeInput)="field_Validation.name = $event; validateCustom()"
+                    [PLACEHOLDER]="'Nhập tên'" [REQUIRED]="true" [TYPE]="'text'" [ENTITY]="Entity" [FIELD]="'name'"
+                    [(VALUE)]="Entity.name">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <app-input-custom [LABEL]="'Địa chỉ'" [PLACEHOLDER]="'Nhập địa chỉ'" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'address'" [(VALUE)]="Entity.address">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Số điện thoại'" [PLACEHOLDER]="'Nhập SĐT'" [TYPE]="'phoneNumber'"
+                    [ENTITY]="Entity" [FIELD]="'phoneNumber'" [(VALUE)]="Entity.phoneNumber">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Email'" [PLACEHOLDER]="'Nhập email'" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'email'" [(VALUE)]="Entity.email">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <app-input-custom [LABEL]="'Website'" [PLACEHOLDER]="'Nhập url'" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'website'" [(VALUE)]="Entity.website">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Lĩnh vực kinh doanh'" [PLACEHOLDER]="'Nhập lĩnh vực'" [TYPE]="'text'"
+                    [ENTITY]="Entity" [FIELD]="'mainMarketing'" [(VALUE)]="Entity.mainMarketing">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>Loại hình kinh doanh</nz-form-label><br>
+                    <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn" style="width: 100%;"
+                        [(ngModel)]="Entity.typeModel">
+                        <nz-option *ngFor="let option of listTypeModel" [nzLabel]="option.name"
+                            [nzValue]="option.id"></nz-option>
+                    </nz-select>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <app-input-custom [LABEL]="'Mô tả'" [PLACEHOLDER]="'Nhập mô tả'" [TYPE]="'text'" [ENTITY]="Entity"
+                    [FIELD]="'description'" [(VALUE)]="Entity.description">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <app-input-custom [LABEL]="'Năm thành lập'" [PLACEHOLDER]="'Nhập năm'" [TYPE]="'number'"
+                    [ENTITY]="Entity" [FIELD]="'yearBorn'" [(VALUE)]="Entity.yearBorn">
+                </app-input-custom>
+            </div>
+            <div nz-col [nzSpan]="24">
+                <br>
+                <div class="clearfix">
+                    <nz-upload [nzBeforeUpload]="beforeUpload" [nzCustomRequest]="handleUpload" nzListType="picture"
+                        [nzLimit]="1" [(nzFileList)]="listFileUpload">
+                        <img *ngIf="Entity.image" src="{{URL_Upload}}/{{Entity.image ?? ''}}" class="img_logo">
+                        <button nz-button>
+                            <span nz-icon nzType="upload"></span>
+                            Tải ảnh lên
+                        </button>
+                    </nz-upload>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                            <nz-form-label>Mã NSX</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.code" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                            <nz-form-label>Tên NSX</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.name" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content cus-body">
+    <div class="card">
+        <div class="card-body">
+            <nz-table #basicTable [nzData]="Entities" [nzBordered]="true" [nzScroll]="{ x: '1100px' }">
+                <thead>
+                    <tr>
+                        <th nzLeft>STT</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Logo</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th>Website</th>
+                        <th>Loại hình</th>
+                        <th>Lĩnh vực kinh doanh</th>
+                        <th>Mô tả</th>
+                        <th>Năm thành lập</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày sửa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i =index"
+                        [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                        <td nzLeft>{{i+1}}</td>
+                        <td>{{data.code}}</td>
+                        <td>{{data.name}}</td>
+                        <td><img src="{{URL_Upload}}/{{data.image ?? ''}}" class="img_logo"></td>
+                        <td>{{data.address}}</td>
+                        <td>{{data.phoneNumber}}</td>
+                        <td>{{data.email}}</td>
+                        <td><a href="{{data.website}}">Địa chỉ website</a></td>
+                        <td>{{renderTypeModel(data.typeModel)}}</td>
+                        <td>{{data.mainMarketing}}</td>
+                        <td>{{data.description}}</td>
+                        <td>{{data.yearBorn}}</td>
+                        <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td *ngIf="!data.isSoftDeleted">
+                            <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
+                                    nzTheme="outline"></span></a>
+
+                        </td>
+                        <td *ngIf="data.isSoftDeleted"></td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</section>
+
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>

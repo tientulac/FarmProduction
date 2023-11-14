@@ -1,0 +1,162 @@
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (searchEvent)="search()"
+    (filterEvent)="displayFilter()"></app-group-button>
+
+<section class="content cus-body" *ngIf="isFilter">
+    <div class="card">
+        <div class="card-body">
+            <div [nzGutter]="24">
+                <form nz-form nzLayout="vertical" nz-row>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Tỉnh</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn tỉnh"
+                                [(ngModel)]="id_city"
+                                (ngModelChange)="EntitySearch.provinceToId = id_city; getListDistrict()">
+                                <nz-option *ngFor="let option of cities" [nzLabel]="option.ProvinceName"
+                                    [nzValue]="option.ProvinceID"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Huyện</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn huyện"
+                                [(ngModel)]="id_district"
+                                (ngModelChange)="EntitySearch.districtToId = id_district; getListWard()">
+                                <nz-option *ngFor="let option of districts" [nzLabel]="option.DistrictName"
+                                    [nzValue]="option.DistrictID"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Xã</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn xã" [(ngModel)]="id_ward"
+                                (ngModelChange)="EntitySearch.wardToId = id_ward;">
+                                <nz-option *ngFor="let option of wards" [nzLabel]="option.WardName"
+                                    [nzValue]="option.WardCode"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Mã hóa đơn</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.code" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Trạng thái</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn trạng thái"
+                                [(ngModel)]="EntitySearch.status">
+                                <nz-option *ngFor="let option of listStatus" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Loại hóa đơn</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn loại"
+                                [(ngModel)]="EntitySearch.type">
+                                <nz-option *ngFor="let option of listType" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Tài khoản</nz-form-label>
+                            <nz-input-group [nzSuffix]="suffixIconSearch">
+                                <input type="text" nz-input placeholder="Nhập tìm kiếm"
+                                    [(ngModel)]="EntitySearch.userName" />
+                            </nz-input-group>
+                            <ng-template #suffixIconSearch>
+                                <span nz-icon nzType="search"></span>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-item>
+                            <nz-form-label>Loại thanh toán</nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn loại"
+                                [(ngModel)]="EntitySearch.paymentType">
+                                <nz-option *ngFor="let option of listPaymentType" [nzLabel]="option.name"
+                                    [nzValue]="option.id"></nz-option>
+                            </nz-select>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-label>Từ ngày</nz-form-label><br>
+                        <nz-date-picker [(ngModel)]="EntitySearch.fromDate" style="width: 100%;"></nz-date-picker>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                        <nz-form-label>Đến ngày</nz-form-label><br>
+                        <nz-date-picker [(ngModel)]="EntitySearch.toDate" style="width: 100%;"></nz-date-picker>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content cus-body">
+    <div class="card">
+        <div class="card-body">
+            <nz-table #basicTable [nzData]="Entities" [nzBordered]="true">
+
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã</th>
+                        <th>Tỉnh</th>
+                        <th>Huyện</th>
+                        <th>Xã</th>
+                        <th>Loại hóa đơn</th>
+                        <th>Tài khoản</th>
+                        <th>Loại thanh toán</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày sửa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i =index"
+                        [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                        <td>{{i+1}}</td>
+                        <td>{{data.code}}</td>
+                        <td>{{data.provinceToId}}</td>
+                        <td>{{data.districtToId}}</td>
+                        <td>{{data.wardToId}}</td>
+                        <td>{{renderName(listType, data.type)}}</td>
+                        <td>{{data.userAccount.userName}}</td>
+                        <td>{{renderName(listPaymentType, data.paymentType)}}</td>
+                        <td>{{renderName(listStatus, data.status)}}</td>
+                        <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                        <td *ngIf="!data.isSoftDeleted">
+                            <a><span nz-icon nzType="edit" (click)="openModal('EDIT', data)"
+                                    nzTheme="outline"></span></a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a><span nz-icon nzType="delete" (click)="isDisplayDelete = true; id_record = data.id"
+                                    nzTheme="outline"></span></a>
+
+                        </td>
+                        <td *ngIf="data.isSoftDeleted"></td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</section>
+
+
+<app-delete-modal [ID]="id_record" [URL]="URL" [SHOWDELETE]="isDisplayDelete"
+    (handleCancelEvent)="handleCancel()"></app-delete-modal>

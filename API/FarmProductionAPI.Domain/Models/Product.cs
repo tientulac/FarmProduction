@@ -15,8 +15,10 @@ namespace FarmProductionAPI.Domain.Models
         public Guid? BrandId { get; set; }
         public Guid? CategoryId { get; set; }
         public ProductStatus? Status { get; set; }
+        public Guid? ProducerId { get; set; }
         public virtual Category? Category { get; set; }
         public virtual Brand? Brand { get; set; }
+        public virtual Producer? Producer { get; set; }
         public virtual ICollection<ProductAttribute>? ProductAttributes { get; set; }
         public virtual ICollection<ProductImage>? ProductImages { get; set; }
         public virtual ICollection<ProductDescription>? ProductDescriptions { get; set; }

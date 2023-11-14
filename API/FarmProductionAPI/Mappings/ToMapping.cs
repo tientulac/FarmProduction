@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FarmProductionAPI.Core.Commands.BrandCommand;
 using FarmProductionAPI.Core.Commands.CategoryCommand;
+using FarmProductionAPI.Core.Commands.OrderCommand;
+using FarmProductionAPI.Core.Commands.ProducerCommand;
 using FarmProductionAPI.Core.Commands.ProductAttributeCommand;
 using FarmProductionAPI.Core.Commands.ProductDescriptionCommand;
 using FarmProductionAPI.Core.Commands.ProductImageCommand;
@@ -47,6 +49,12 @@ namespace FarmProductionAPI.Mappings
 
             CreateMap<SaveProductImageCommand, ProductImage>();
             CreateMap<ProductImage, ProductImageDTO>();
+
+            CreateMap<SaveProducerCommand, Producer>();
+            CreateMap<Producer, ProducerDTO>();
+
+            CreateMap<SaveOrderCommand, Order>();
+            CreateMap<Order, OrderDTO>();
         }
     }
 }

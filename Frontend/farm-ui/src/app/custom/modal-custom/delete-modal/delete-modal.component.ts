@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BaseService } from 'src/app/services/base.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class DeleteModalComponent {
   @Output() handleCancelEvent = new EventEmitter<string>();
 
   constructor(
-    public baseService: BaseService<null>
+    public baseService: BaseService<null>,
+    public toastr: ToastrService
   ) {
   }
 
@@ -26,11 +28,11 @@ export class DeleteModalComponent {
     this.baseService.delete(url).subscribe(
       (res) => {
         if (res.code == '200') {
-          alert('Success !');
+          this.toastr.success('Thành công !');
           this.handleCancelEvent.emit();
         }
         else {
-          alert(res.messageEX);
+          this.toastr.warning(res.messageEX?.toString());
         }
       }
     );
