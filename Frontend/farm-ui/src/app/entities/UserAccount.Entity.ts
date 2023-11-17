@@ -24,3 +24,17 @@ export class UserAccountEntitySearch extends BaseEntity {
     status!: number | null;
     role!: RoleEntity;
 }
+
+
+export class UserAccountLogin extends BaseEntity {
+    roleId!: string | null;
+    userName!: string | null;
+    hashPassword!: string | null;
+    email!: string | null;
+    phone!: string | null;
+    fullName!: string | null;
+    address!: string | null;
+    status!: number | null;
+    role!: RoleEntity;
+    token!: string | null;
+}

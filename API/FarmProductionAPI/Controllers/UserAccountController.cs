@@ -1,6 +1,8 @@
-﻿using FarmProductionAPI.Core.Commands.UserAccountCommand;
+﻿using FarmProductionAPI.Core.Commands.ExportCommand;
+using FarmProductionAPI.Core.Commands.UserAccountCommand;
 using FarmProductionAPI.Core.Queries.UserAccountQuery;
 using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.ExportModels;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,7 +16,7 @@ using System.Text;
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class UserAccountController : ControllerBase
     {
@@ -50,6 +52,7 @@ namespace FarmProductionAPI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("login")]
         public async Task<ResponseResultAPI<UserAccountDTO>> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
         {
@@ -63,12 +66,14 @@ namespace FarmProductionAPI.Controllers
 
         private string GenerateToken(UserAccountDTO user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var _key = _config["Jwt:Key"];
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var role = user.Role != null ? user.Role.Code : "";
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier,user.UserName),
-                new Claim(ClaimTypes.Role, user.Role.Code)
+                new Claim(ClaimTypes.Role, role)
             };
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
@@ -78,6 +83,14 @@ namespace FarmProductionAPI.Controllers
 
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [HttpGet]
+        [Route("export")]
+        public async Task<ResponseResultAPI<byte[]>> ExportUserAccount([FromQuery] ExportExcelCommand<UserAccountExport> command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result;
         }
     }
 }

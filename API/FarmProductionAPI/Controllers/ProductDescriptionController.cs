@@ -3,12 +3,14 @@ using FarmProductionAPI.Core.Queries.ProductDescriptionQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProductDescriptionController : ControllerBase
     {

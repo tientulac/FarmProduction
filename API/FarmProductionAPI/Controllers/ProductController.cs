@@ -1,15 +1,19 @@
 ﻿using FarmProductionAPI.Core.Commands.CategoryCommand;
+using FarmProductionAPI.Core.Commands.ExportCommand;
 using FarmProductionAPI.Core.Commands.ProductCommand;
 using FarmProductionAPI.Core.Queries.ProductQuery;
 using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.ExportModels;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProductController : ControllerBase
     {
@@ -47,6 +51,14 @@ namespace FarmProductionAPI.Controllers
         public async Task<ResponseResultAPI<ProductDTO>> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new DeleteProductCommand(id));
+            return result;
+        }
+
+        [HttpGet]
+        [Route("export")]
+        public async Task<ResponseResultAPI<byte[]>> ExportProduct([FromQuery] ExportExcelCommand<ProductExport> command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
             return result;
         }
     }

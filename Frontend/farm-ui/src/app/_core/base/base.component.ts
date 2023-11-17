@@ -7,6 +7,7 @@ import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 import * as _ from 'lodash';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-base',
@@ -82,6 +83,19 @@ export class BaseComponent<T> {
     this.baseService.getByRequest(this.URL, this.EntitySearch).subscribe(
       (res) => {
         this.Entities = res.data;
+      }
+    );
+  }
+
+  export() {
+    this.baseService.export(this.URL).subscribe(
+      (res) => {
+        const linkSource = 'data:application/octet-stream;base64,' + res.data;
+        const downloadLink = document.createElement('a');
+        const fileName = `${this.URL}.xlsx`;
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
       }
     );
   }

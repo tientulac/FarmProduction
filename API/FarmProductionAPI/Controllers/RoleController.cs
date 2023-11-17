@@ -3,6 +3,8 @@ using FarmProductionAPI.Core.Queries.RoleQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers

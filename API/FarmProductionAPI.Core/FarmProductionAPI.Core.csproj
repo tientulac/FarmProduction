@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="DynamicExpressions" Version="1.1.0" />
     <PackageReference Include="EFCore.BulkExtensions" Version="7.1.6" />
+    <PackageReference Include="EPPlus" Version="7.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="OneOf" Version="3.0.263" />

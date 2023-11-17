@@ -1,14 +1,18 @@
-﻿using FarmProductionAPI.Core.Commands.ProducerCommand;
+﻿using FarmProductionAPI.Core.Commands.ExportCommand;
+using FarmProductionAPI.Core.Commands.ProducerCommand;
 using FarmProductionAPI.Core.Queries.ProducerQuery;
 using FarmProductionAPI.Domain.Dtos;
+using FarmProductionAPI.Domain.ExportModels;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProducerController : ControllerBase
     {

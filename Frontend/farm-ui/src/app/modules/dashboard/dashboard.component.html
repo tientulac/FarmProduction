@@ -1,0 +1,123 @@
+<div class="page-inner">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-dark bg-primary-gradient">
+                <div class="card-body pb-0">
+                    <div class="h1 fw-bold float-right"><i class="fa fa-user"></i></div>
+                    <h2 class="mb-2">{{count_user}}</h2>
+                    <p>Người dùng</p>
+                    <div class="pull-in sparkline-fix chart-as-background">
+                        <div><canvas width="327" height="70" id="UserAccountChart"
+                                style="display: inline-block; width: 327px; height: 70px; vertical-align: top;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-dark bg-secondary-gradient">
+                <div class="card-body pb-0">
+                    <div class="h1 fw-bold float-right"><i class="fa fa-book" aria-hidden="true"></i></div>
+                    <h2 class="mb-2">{{count_product}}</h2>
+                    <p>Sản phẩm</p>
+                    <div class="pull-in sparkline-fix chart-as-background">
+                        <div><canvas width="327" height="70" id="ProductChart"
+                                style="display: inline-block; width: 327px; height: 70px; vertical-align: top;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-dark bg-success2">
+                <div class="card-body pb-0">
+                    <div class="h1 fw-bold float-right"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+                    <h2 class="mb-2">{{count_transaction}}</h2>
+                    <p>Giao dịch</p>
+                    <div class="pull-in sparkline-fix chart-as-background">
+                        <div><canvas width="327" height="70" id="TransactionChart"
+                                style="display: inline-block; width: 327px; height: 70px; vertical-align: top;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-12">
+        <div class="row">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h2 class="text-center">
+                        Biểu đồ thống kê hóa đơn
+                    </h2>
+                    <div class="chart-container">
+                        <span>
+                            <button nz-button nzType="primary" style="float: right;" (click)="filterChart()">Tìm kiếm</button>
+                            <nz-range-picker style="float: right;" [(ngModel)]="date"
+                                (ngModelChange)="onChange($event)"></nz-range-picker>
+
+                        </span>
+                        <canvas id="MyChart">{{ chart }}</canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-center">
+                        Biểu đồ thống kê theo size và màu sắc
+                    </h2>
+                    <div class="chart-container">
+                        <canvas id="MyChart1">{{ chart }}</canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Thống kê người dùng</div>
+                        <div class="card-tools">
+                            <a href="javascript:void(0)" class="btn btn-info btn-border btn-round btn-sm mr-2">
+                                <span class="btn-label">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                Export
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="card-body">
+                    <div class="table-responsive table-hover table-sales" style="overflow-y: auto;max-height:400px">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>UserName</th>
+                                    <th>Admin</th>
+                                    <th>Active</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of listAccount">
+                                    <td>{{ data.account_id }}</td>
+                                    <td>{{ data.user_name }}</td>
+                                    <td *ngIf="data.admin"><i style="color: green;" class="fa fa-check"></i></td>
+                                    <td *ngIf="data.active"><i style="color: green;" class="fa fa-check"></i></td>
+                                    <td *ngIf="!data.admin" style="color: red;">X</td>
+                                    <td *ngIf="!data.active" style="color: red;">X</td>
+                                    <td>{{ data.email }}</td>
+                                    <td>{{ data.role_code }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

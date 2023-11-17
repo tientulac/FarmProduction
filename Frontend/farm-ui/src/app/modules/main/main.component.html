@@ -13,13 +13,16 @@
             </div>
         </div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="ADMIN" nzIcon="user">
+            <li nz-submenu nzTitle="{{userInfo.fullName | uppercase}}" nzIcon="user">
                 <ul>
                     <li nz-menu-item>
                         <a (click)="isShownInfo = true">Thông tin cá nhân</a>
                     </li>
                     <li nz-menu-item>
                         <a (click)="isChangePass = true">Đổi mật khẩu</a>
+                    </li>
+                    <li nz-menu-item>
+                        <a (click)="logout()">Đăng xuất</a>
                     </li>
                 </ul>
             </li>

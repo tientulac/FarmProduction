@@ -2,7 +2,9 @@ using FarmProductionAPI;
 using FarmProductionAPI.Core;
 using FarmProductionAPI.Core.Repositories;
 using FarmProductionAPI.Domain;
+using FarmProductionAPI.Domain.ExportModels;
 using FarmProductionAPI.Domain.Models;
+using FarmProductionAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,6 +56,8 @@ builder.Services.AddTransient<IRepository<ProductDescription>, BaseRepository<Pr
 builder.Services.AddTransient<IRepository<Role>, BaseRepository<Role>>();
 builder.Services.AddTransient<IRepository<UserAccount>, BaseRepository<UserAccount>>();
 builder.Services.AddTransient<IRepository<Producer>, BaseRepository<Producer>>();
+builder.Services.AddTransient<IExportExcel<UserAccountExport>, ExportToExcel<UserAccountExport>>();
+builder.Services.AddTransient<IExportExcel<ProductExport>, ExportToExcel<ProductExport>>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.InstallServicesInAssembly<IFarmProductionInfrastructureMarker>(configuration);
@@ -98,3 +102,4 @@ app.Run();
 
 app.UseStaticFiles();
 
+app.UseJwtMiddleware(builder.Configuration["Jwt:Key"]);

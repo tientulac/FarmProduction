@@ -47,6 +47,7 @@ export class UserAccountComponent extends BaseComponent<UserAccountEntity>{
     this.GROUP_BUTTON.FILTER = true;
     this.GROUP_BUTTON.RELOAD = true;
     this.GROUP_BUTTON.SEARCH = true;
+    this.GROUP_BUTTON.EXCEL = true;
 
     this.getList();
     this.getListRole();
