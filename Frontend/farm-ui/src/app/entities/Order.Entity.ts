@@ -22,6 +22,7 @@ export class OrderEntity extends BaseEntity {
     fromDate!: Date | null;
     toDate!: Date | null;
     userAccount!: UserAccountEntity | null;
+    address!: string | null;
 }
 
 export class OrderEntitySearch extends BaseEntity {
@@ -44,4 +45,5 @@ export class OrderEntitySearch extends BaseEntity {
     toDate!: Date | null;
     userName!: string | null;
     userAccount!: UserAccountEntity | null;
+    address!: string | null;
 }

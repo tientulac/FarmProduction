@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { AppConfig, AppConfiguration } from 'src/configuration';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent extends BaseComponent<OrderEntity>{
+export class OrderComponent extends BaseComponent<OrderEntity> {
 
   listType: any = [
     { id: 0, name: 'Online' },
@@ -61,9 +61,42 @@ export class OrderComponent extends BaseComponent<OrderEntity>{
 
     this.getList();
     this.getListCity();
+    //alert(this.getAdress(225, 1818, "210401"));
   }
+
 
   renderName(list: any, value: any) {
     return list.filter((x: any) => x.id == value)[0].name ?? '';
+  }
+
+  getAdress() {
+    if (this.Entities.length > 0) {
+      this.Entities.forEach((order: OrderEntity) => {
+        this.baseService.getListCity().subscribe(
+          (res) => {
+            let city = res.data.filter((x: any) => x.ProvinceID == order.provinceToId)[0] ?? null;
+            if (city) {
+              order.address = `${city.ProvinceName}`;
+              this.baseService.getListDistrict({ province_id: order.provinceToId }).subscribe(
+                (res) => {
+                  let district = res.data.filter((x: any) => x.DistrictID == order.districtToId)[0] ?? null;
+                  if (district) {
+                    order.address += `- ${district.DistrictName}`;
+                    this.baseService.getListWard({ district_id: order.districtToId }).subscribe(
+                      (res) => {
+                        let ward = res.data.filter((x: any) => x.WardCode === order.wardToId)[0] ?? null;
+                        if (ward) {
+                          order.address += `- ${ward.WardName}`;
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          }
+        );
+      })
+    }
   }
 }

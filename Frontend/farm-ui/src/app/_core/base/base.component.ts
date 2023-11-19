@@ -200,7 +200,7 @@ export class BaseComponent<T> {
   getListDistrict() {
     this.baseService.getListDistrict({ province_id: this.id_city }).subscribe(
       (res) => {
-        this.districts = _.sortBy(res.data, 'ProvinceName');
+        this.districts = _.sortBy(res.data, 'DistrictName');
       }
     );
   }

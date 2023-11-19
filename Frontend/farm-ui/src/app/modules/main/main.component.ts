@@ -18,7 +18,7 @@ export class MainComponent {
     public toastr: ToastrService,
     public router: Router
   ) {
-    this.userInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
+    this.userInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo')))) ?? {};
   }
 
 

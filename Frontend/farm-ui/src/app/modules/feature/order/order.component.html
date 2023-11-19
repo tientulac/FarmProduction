@@ -1,6 +1,5 @@
 <app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (searchEvent)="search()"
     (filterEvent)="displayFilter()"></app-group-button>
-
 <section class="content cus-body" *ngIf="isFilter">
     <div class="card">
         <div class="card-body">
@@ -115,9 +114,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Mã</th>
-                        <th>Tỉnh</th>
-                        <th>Huyện</th>
-                        <th>Xã</th>
+                        <th>Địa chỉ giao hàng</th>
                         <th>Loại hóa đơn</th>
                         <th>Tài khoản</th>
                         <th>Loại thanh toán</th>
@@ -132,9 +129,7 @@
                         [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
                         <td>{{i+1}}</td>
                         <td>{{data.code}}</td>
-                        <td>{{data.provinceToId}}</td>
-                        <td>{{data.districtToId}}</td>
-                        <td>{{data.wardToId}}</td>
+                        <td>{{data.address}}</td>
                         <td>{{renderName(listType, data.type)}}</td>
                         <td>{{data.userAccount.userName}}</td>
                         <td>{{renderName(listPaymentType, data.paymentType)}}</td>
