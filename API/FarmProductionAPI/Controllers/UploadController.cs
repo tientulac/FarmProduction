@@ -15,7 +15,7 @@ using NetTopologySuite.Index.HPRtree;
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    ////[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class UploadController : ControllerBase
     {

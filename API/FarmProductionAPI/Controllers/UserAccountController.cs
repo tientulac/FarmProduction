@@ -16,7 +16,7 @@ using System.Text;
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class UserAccountController : ControllerBase
     {

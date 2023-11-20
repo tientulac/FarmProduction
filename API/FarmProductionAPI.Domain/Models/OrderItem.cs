@@ -15,5 +15,6 @@ namespace FarmProductionAPI.Domain.Models
         public virtual Order? Order { get; set; }
         public virtual ProductAttribute? ProductAttribute { get; set; }
         public decimal? CountBought { get; set; }
+        public decimal? UnitPrice { get; set; }
     }
 }

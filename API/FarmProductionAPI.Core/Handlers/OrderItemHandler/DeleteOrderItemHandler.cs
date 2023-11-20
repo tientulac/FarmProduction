@@ -20,12 +20,20 @@ namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly IRepository<OrderItem> _repository;
+        private readonly IRepository<ProductAttribute> _productAttributeRepository;
 
-        public DeleteOrderItemHandler(IMapper mapper, ILogger logger, IRepository<OrderItem> repository, IUnitOfWork unitOfWork)
+        public DeleteOrderItemHandler(
+            IMapper mapper, 
+            ILogger logger, 
+            IRepository<OrderItem> repository, 
+            IUnitOfWork unitOfWork,
+            IRepository<ProductAttribute> productAttributeRepository
+        )
         {
             _mapper = mapper;
             _logger = logger;
             _repository = repository;
+            _productAttributeRepository = productAttributeRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -35,15 +43,21 @@ namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
             {
                 if (request.Id.HasValue)
                 {
-                    var OrderItem = await _repository.GetByIdAsync(request.Id.Value, db => db, cancellationToken);
-                    if (OrderItem is not null)
+                    var orderItem = await _repository.GetByIdAsync(request.Id.Value, db => db, cancellationToken);
+                    if (orderItem is not null)
                     {
-                        await _repository.Remove(OrderItem);
+                        await _repository.Remove(orderItem);
                         await _unitOfWork.SaveChangesAsync(cancellationToken);
+                        var att = _productAttributeRepository.GetAll().FirstOrDefault(x => x.Id == orderItem.ProductAttributeId);
+                        if (att != null)
+                        {
+                            att.Amount += (int)orderItem.CountBought;
+                            _productAttributeRepository.Update(att, att);
+                        }
                         return new ResponseResultAPI<OrderItemDTO>()
                         {
                             Code = "200",
-                            Data = _mapper.Map<OrderItemDTO>(OrderItem),
+                            Data = _mapper.Map<OrderItemDTO>(orderItem),
                             Message = "Success"
                         };
                     }

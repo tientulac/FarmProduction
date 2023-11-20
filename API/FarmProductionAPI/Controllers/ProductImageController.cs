@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FarmProductionAPI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class ProductImageController : ControllerBase
     {

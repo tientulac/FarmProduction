@@ -5,6 +5,7 @@ using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
@@ -31,11 +32,15 @@ namespace FarmProductionAPI.Core.Handlers.OrderItemHandler
         {
             try
             {
-                var categories = _repository.GetAll().ToList();
+                var orderItems = _repository.GetAll();
+                if (request.OrderId.HasValue)
+                {
+                    orderItems = orderItems.Where(x => x.OrderId == request.OrderId).Include(x => x.Order).Include(x => x.ProductAttribute);
+                }
                 return new ResponseResultAPI<List<OrderItemDTO>>()
                 {
                     Code = "200",
-                    Data = _mapper.Map<List<OrderItemDTO>>(categories),
+                    Data = _mapper.Map<List<OrderItemDTO>>(orderItems),
                     Message = "Success"
                 };
             }

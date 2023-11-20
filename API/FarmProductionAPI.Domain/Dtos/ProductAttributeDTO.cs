@@ -28,6 +28,5 @@ namespace FarmProductionAPI.Domain.Dtos
         public DateTime? ManufactureDate { get; set; }
         public DateTime? ExpireDate { get; set; }
         public ProductDTO? Product { get; set; }
-        public  List<OrderItemDTO>? OrderItems { get; set; }
     }
 }

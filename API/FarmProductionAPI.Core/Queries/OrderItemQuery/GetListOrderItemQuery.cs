@@ -4,5 +4,8 @@ using MediatR;
 
 namespace FarmProductionAPI.Core.Queries.OrderItemQuery
 {
-    public record GetListOrderItemQuery : IRequest<ResponseResultAPI<List<OrderItemDTO>>>;
+    public record GetListOrderItemQuery : IRequest<ResponseResultAPI<List<OrderItemDTO>>>
+    {
+        public Guid? OrderId { get; set; }
+    };
 }

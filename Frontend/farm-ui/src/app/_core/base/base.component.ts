@@ -198,7 +198,7 @@ export class BaseComponent<T> {
   }
 
   getListDistrict() {
-    this.baseService.getListDistrict({ province_id: this.id_city }).subscribe(
+    this.baseService.getListDistrict({ province_id: parseInt(this.id_city) }).subscribe(
       (res) => {
         this.districts = _.sortBy(res.data, 'DistrictName');
       }
@@ -206,7 +206,7 @@ export class BaseComponent<T> {
   }
 
   getListWard() {
-    this.baseService.getListWard({ district_id: this.id_district }).subscribe(
+    this.baseService.getListWard({ district_id: parseInt(this.id_district) }).subscribe(
       (res) => {
         this.wards = res.data;
       }
@@ -219,7 +219,7 @@ export class BaseComponent<T> {
       // "insurance_value": this.totalPrice,
       "coupon": null,
       "from_district_id": 1542,
-      "to_district_id": this.id_district,
+      "to_district_id": parseInt(this.id_district),
       "to_ward_code": this.id_ward,
       "height": 5,
       "length": 5,

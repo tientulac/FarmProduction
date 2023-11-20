@@ -2,6 +2,7 @@
 using FarmProductionAPI.Core.Commands.BrandCommand;
 using FarmProductionAPI.Core.Commands.CategoryCommand;
 using FarmProductionAPI.Core.Commands.OrderCommand;
+using FarmProductionAPI.Core.Commands.OrderItemCommand;
 using FarmProductionAPI.Core.Commands.ProducerCommand;
 using FarmProductionAPI.Core.Commands.ProductAttributeCommand;
 using FarmProductionAPI.Core.Commands.ProductDescriptionCommand;
@@ -55,6 +56,9 @@ namespace FarmProductionAPI.Mappings
 
             CreateMap<SaveOrderCommand, Order>();
             CreateMap<Order, OrderDTO>();
+
+            CreateMap<SaveOrderItemCommand, OrderItem>();
+            CreateMap<OrderItem, OrderItemDTO>();
         }
     }
 }

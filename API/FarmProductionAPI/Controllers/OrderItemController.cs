@@ -2,6 +2,7 @@
 using FarmProductionAPI.Core.Queries.OrderItemQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
+using FarmProductionAPI.Migrations;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -9,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FarmProductionAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/[controller]")]
+    ////[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     public class OrderItemController : ControllerBase
     {
@@ -19,6 +20,22 @@ namespace FarmProductionAPI.Controllers
         public OrderItemController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPost]
+        [Route("InsertOrderItem")]
+        public async Task<ResponseResultAPI<List<OrderItemDTO>>> InsertOrderItem([FromBody] InsertOrderItemCommand query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
+        [HttpPost]
+        [Route("UpdateOrderItem")]
+        public async Task<ResponseResultAPI<OrderItemDTO>> UpdateOrderItem([FromBody] UpdateOrderItemCommand query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
         }
 
         [HttpGet]

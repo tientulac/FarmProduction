@@ -13,5 +13,6 @@ namespace FarmProductionAPI.Core.Commands.OrderItemCommand
         public Guid? ProductAttributeId { get; set; }
         public StatusOrder? Status { get; set; }
         public decimal? CountBought { get; set; }
+        public decimal? UnitPrice { get; set; }
     }
 }
