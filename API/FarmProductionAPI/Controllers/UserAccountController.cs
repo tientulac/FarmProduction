@@ -52,6 +52,14 @@ namespace FarmProductionAPI.Controllers
         }
 
         [HttpPost]
+        [Route("ChangePass")]
+        public async Task<ResponseResultAPI<UserAccountDTO>> ChangePass([FromBody] ChangePasswordCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result;
+        }
+
+        [HttpPost]
         [AllowAnonymous]
         [Route("login")]
         public async Task<ResponseResultAPI<UserAccountDTO>> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)

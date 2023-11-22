@@ -1,5 +1,5 @@
-<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (searchEvent)="search()"
-    (filterEvent)="displayFilter()"></app-group-button>
+<app-group-button [GROUP_BUTTON]="GROUP_BUTTON" (searchEvent)="search()" (filterEvent)="displayFilter()"
+    (exportExcelEvent)="export()"></app-group-button>
 
 <nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" [nzTitle]="Entity.code" (nzOnCancel)="handleCancel()"
     (nzOnOk)="onSubmit()">

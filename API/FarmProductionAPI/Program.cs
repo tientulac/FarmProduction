@@ -59,6 +59,7 @@ builder.Services.AddTransient<IRepository<UserAccount>, BaseRepository<UserAccou
 builder.Services.AddTransient<IRepository<Producer>, BaseRepository<Producer>>();
 builder.Services.AddTransient<IExportExcel<UserAccountExport>, ExportToExcel<UserAccountExport>>();
 builder.Services.AddTransient<IExportExcel<ProductExport>, ExportToExcel<ProductExport>>();
+builder.Services.AddTransient<IExportExcel<OrderExport>, ExportToExcel<OrderExport>>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.InstallServicesInAssembly<IFarmProductionInfrastructureMarker>(configuration);

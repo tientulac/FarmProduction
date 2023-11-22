@@ -61,6 +61,7 @@ export class OrderComponent extends BaseComponent<OrderEntity> {
     this.GROUP_BUTTON.FILTER = true;
     this.GROUP_BUTTON.RELOAD = true;
     this.GROUP_BUTTON.SEARCH = true;
+    this.GROUP_BUTTON.EXCEL = true;
 
     this.listStatus = [
       { id: 0, name: 'Đang chờ duyệt' },
