@@ -32,9 +32,9 @@ namespace FarmProductionAPI.Core.Handlers.UserAccountHandler
             try
             {
                 var user = new UserAccount();
-                if (request.Id.HasValue && !string.IsNullOrEmpty(request.OldHashpassword) && !string.IsNullOrEmpty(request.NewHashpassword))
+                if (request.Id.HasValue && !string.IsNullOrEmpty(request.NewHashpassword))
                 {
-                    user = await _repository.GetFirstByConditionAsync(x => x.Id == request.Id && x.Hashpassword == request.OldHashpassword);
+                    user = await _repository.GetFirstByConditionAsync(x => x.Id == request.Id);
                     if (user is null)
                     {
                         return new ResponseResultAPI<UserAccountDTO>()

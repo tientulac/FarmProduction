@@ -33,6 +33,11 @@ namespace FarmProductionAPI.Core.Repositories
             return _queryAble.AsQueryable();
         }
 
+        public virtual IQueryable<TEntity> GetAllUserSite()
+        {
+            return _queryAble.AsQueryable().Where(x => x.IsSoftDeleted != true);
+        }
+
         public virtual async Task<TEntity> Add(TEntity entity)
         {
             entity.CreatedAt = DateTime.Now;

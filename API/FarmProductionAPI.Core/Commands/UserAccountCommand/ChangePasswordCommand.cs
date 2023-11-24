@@ -7,6 +7,5 @@ namespace FarmProductionAPI.Core.Commands.UserAccountCommand
     {
         public Guid? Id { get; set; }
         public string? NewHashpassword { get; set; }
-        public string? OldHashpassword { get; set; }
     }
 }

@@ -6,6 +6,7 @@ import { SidebarComponent } from "src/app/layouts/sidebar/sidebar.component";
 import { MainComponent } from "./main.component";
 import { CommonNgZorroAntdModule } from "../ng-zorro-antd.module";
 import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { CommonModule } from "@angular/common";
         MainRoutingModule,
         CommonNgZorroAntdModule,
         CommonModule,
+        FormsModule,
     ],
     providers: [
     ],

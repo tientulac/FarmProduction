@@ -43,6 +43,7 @@ namespace FarmProductionAPI.Mappings
                 .ForMember(dest => dest.ProductDesciptions, otps => otps.MapFrom(src => src.ProductDescriptions));
 
             CreateMap<SaveUserAccountCommand, UserAccount>();
+            CreateMap<UpdateInfoCommand, UserAccount>();
             CreateMap<UserAccount, UserAccountDTO>();
 
             CreateMap<SaveRoleCommand, Role>();

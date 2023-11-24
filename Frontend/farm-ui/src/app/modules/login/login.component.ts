@@ -18,7 +18,6 @@ export class LoginComponent {
     public toastr: ToastrService,
     public router: Router
   ) {
-
   }
 
   login() {
@@ -33,6 +32,14 @@ export class LoginComponent {
       this.loginService.login(req).subscribe(
         (res) => {
           if (res.code == "200") {
+            if (res.data.status != 1) {
+              this.toastr.warning('Tài khoản chưa được kích hoạt');
+              return;
+            }
+            if (!res.data.role.code?.toLowerCase().includes('admin')) {
+              this.toastr.warning('Tài khoản không có quyền truy cập quản trị');
+              return;
+            }
             this.toastr.success("Đăng nhập thành công");
             localStorage.setItem('TOKEN', res.data.token?.toString() ?? '');
             localStorage.setItem('UserInfo', JSON.stringify(res.data) ?? {});

@@ -8,6 +8,7 @@ namespace FarmProductionAPI.Core.Repositories
     {
         Task<TEntity> GetById(Guid id);
         IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAllUserSite();
         Task<TEntity> Add(TEntity entity);
         Task<TEntity> Update(TEntity entity, TEntity source);
         Task Remove(TEntity entity);

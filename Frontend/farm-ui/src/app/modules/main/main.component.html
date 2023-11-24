@@ -1,6 +1,6 @@
 <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-        <div class="logo" nz-row>
+        <a class="logo" nz-row style="cursor: pointer" routerLink="../main/dashboard">
             <div nz-col [nzSpan]="12">
                 <img style="height: 32px;"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMzsnwyvJ1Z6NK-CXej3EUX80UsiOEwayMnqZs3hDqeJzQOe8Yh2M6AZ1WNmA9Wlm9eww&usqp=CAU"
@@ -11,15 +11,15 @@
                     Farm Production
                 </p>
             </div>
-        </div>
+        </a>
         <ul nz-menu nzTheme="dark" nzMode="inline">
             <li nz-submenu nzTitle="{{userInfo?.fullName | uppercase}}" nzIcon="user">
                 <ul>
                     <li nz-menu-item>
-                        <a (click)="isShownInfo = true">Thông tin cá nhân</a>
+                        <a (click)="openModal('INFO', userInfo)">Thông tin cá nhân</a>
                     </li>
                     <li nz-menu-item>
-                        <a (click)="isChangePass = true">Đổi mật khẩu</a>
+                        <a (click)="openModal('CHANGEPASS', userInfo)">Đổi mật khẩu</a>
                     </li>
                     <li nz-menu-item>
                         <a (click)="logout()">Đăng xuất</a>
@@ -54,10 +54,10 @@
                 <span nz-icon nzType="book"></span>
                 <span> <a routerLink="feature/order">Hóa đơn</a></span>
             </li>
-            <li nz-menu-item>
+            <!-- <li nz-menu-item>
                 <span nz-icon nzType="home"></span>
                 <span> <a routerLink="feature/shopping">Bán hàng tại quầy</a></span>
-            </li>
+            </li> -->
             <li nz-menu-item>
                 <span nz-icon nzType="user"></span>
                 <span> <a routerLink="feature/role">Quyền</a></span>
@@ -79,3 +79,43 @@
         <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
     </nz-layout>
 </nz-layout>
+
+<nz-modal *ngIf="isShownInfo" [(nzVisible)]="isShownInfo" nzTitle="Cập nhật" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Email</nz-form-label>
+                <input nz-input placeholder="Nhập email" [(ngModel)]="Entity.email" type="text" />
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Số điện thoại</nz-form-label>
+                <input nz-input placeholder="Nhập sđt" [(ngModel)]="Entity.phone" type="text" />
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Họ tên</nz-form-label>
+                <input nz-input placeholder="Nhập họ tên" [(ngModel)]="Entity.fullName" type="text" />
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Địa chỉ</nz-form-label>
+                <input nz-input placeholder="Nhập địa chỉ" [(ngModel)]="Entity.address" type="text" />
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<nz-modal *ngIf="isChangePass" [(nzVisible)]="isChangePass" nzTitle="Cập nhật" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="onSubmit()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Mật khẩu mới</nz-form-label>
+                <input nz-input placeholder="Nhập mật khẩu" [(ngModel)]="Entity.oldHashPassword" type="password" />
+            </div>
+            <div nz-col [nzSpan]="24">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Xác nhận mật khẩu</nz-form-label>
+                <input nz-input placeholder="Nhập sđt" [(ngModel)]="Entity.newHashPassword" type="password" />
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>

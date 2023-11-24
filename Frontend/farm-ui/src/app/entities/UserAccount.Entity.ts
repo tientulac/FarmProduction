@@ -11,6 +11,8 @@ export class UserAccountEntity extends BaseEntity {
     address!: string | null;
     status!: number | null;
     role!: RoleEntity;
+    oldHashPassword!: string | null;
+    newHashPassword!: string | null;
 }
 
 export class UserAccountEntitySearch extends BaseEntity {
@@ -37,4 +39,6 @@ export class UserAccountLogin extends BaseEntity {
     status!: number | null;
     role!: RoleEntity;
     token!: string | null;
+    oldHashPassword!: string | null;
+    newHashPassword!: string | null;
 }

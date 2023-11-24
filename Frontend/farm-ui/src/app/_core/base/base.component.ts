@@ -28,9 +28,11 @@ export class BaseComponent<T> {
   isDisplayDelete: boolean = false;
   isDisplayDetail: boolean = false;
   isDisplayAttribute: boolean = false;
-
+  isShownInfo = false;
+  isChangePass = false;
   isFilter: boolean = false;
   isInsert: boolean = false;
+
   uploadFileName: any = '';
   URL_Upload: any = '';
   id_record: any = null;
@@ -149,6 +151,8 @@ export class BaseComponent<T> {
     this.isInsert = false;
     this.isDisplayDetail = false;
     this.isDisplayAttribute = false;
+    this.isShownInfo = false;
+    this.isChangePass = false;
     this.getList();
   }
 
