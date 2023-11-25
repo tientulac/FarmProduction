@@ -40,7 +40,6 @@ export class UserAccountComponent extends BaseComponent<UserAccountEntity>{
     this.field_Validation = {
       userName: false,
       hashPassword: false,
-      status: false
     };
 
     this.GROUP_BUTTON.ADD = true;

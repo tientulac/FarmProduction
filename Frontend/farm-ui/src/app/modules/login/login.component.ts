@@ -43,7 +43,7 @@ export class LoginComponent {
             this.toastr.success("Đăng nhập thành công");
             localStorage.setItem('TOKEN', res.data.token?.toString() ?? '');
             localStorage.setItem('UserInfo', JSON.stringify(res.data) ?? {});
-            this.router.navigateByUrl('/main/dashboard');
+            this.router.navigateByUrl('/main/feature/dashboard');
           }
           else {
             this.toastr.warning('Tên đăng nhập hoặc mật khẩu không chính xác');

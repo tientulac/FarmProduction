@@ -23,7 +23,6 @@ registerLocaleData(vi);
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
   ],
   imports: [
     AppRoutingModule,
