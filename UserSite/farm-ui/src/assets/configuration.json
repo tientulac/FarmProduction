@@ -1,0 +1,6 @@
+{
+    "production": false,
+    "dev": true,
+    "API": "https://localhost:44350/api/",
+    "URL_UPLOAD": "https://localhost:44350/api/Upload/GetImage?imgName="
+}
