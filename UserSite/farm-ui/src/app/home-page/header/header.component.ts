@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { BaseComponent } from 'src/app/_core/base/base.component';
@@ -20,6 +21,7 @@ export class HeaderComponent extends BaseComponent<CategoryEntity>{
 
   constructor(
     public categoryService: BaseService<CategoryEntity>,
+    private router: Router,
     @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
@@ -37,5 +39,12 @@ export class HeaderComponent extends BaseComponent<CategoryEntity>{
     this.title.setTitle('Danh mục');
 
     this.getList();
+  }
+
+  activeNavbar(name: any) {
+    if (name == this.router.url) {
+      return 'nav-item nav-link active';
+    }
+    return 'nav-item nav-link';
   }
 }

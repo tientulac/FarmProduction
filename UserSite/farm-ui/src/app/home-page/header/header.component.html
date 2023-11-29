@@ -38,20 +38,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto py-0">
-            <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
-            <a href="about.html" class="nav-item nav-link">Về chúng tôi</a>
-            <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Danh mục</a>
-                <div class="dropdown-menu m-0">
-                    <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                    <a href="detail.html" class="dropdown-item">Blog Detail</a>
-                    <a href="feature.html" class="dropdown-item">Features</a>
-                    <a href="team.html" class="dropdown-item">The Team</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+            <a routerLink="/" [class]="activeNavbar('/')">Trang chủ</a>
+            <a routerLink="/about-us" [class]="activeNavbar('/about-us')">Về chúng tôi</a>
+            <div class="nav-item dropdown" *ngFor="let cate of Entities">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{cate.name}}</a>
+                <div class="dropdown-menu m-0" *ngFor="let subCate of cate.subCategories">
+                    <a routerLink="/category/{{cate.id}}" class="dropdown-item">{{subCate.name}}</a>
                 </div>
             </div>
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a routerLink="/contact" [class]="activeNavbar('/contact')">Liên hệ</a>
         </div>
     </div>
 </nav>
