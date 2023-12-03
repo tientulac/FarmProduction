@@ -1,0 +1,48 @@
+<!-- Contact Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="mx-auto text-center mb-5" style="max-width: 500px;">
+            <h6 class="text-primary text-uppercase">Đăng ký</h6>
+            <h1 class="display-5">Khách hàng đăng ký thông tin</h1>
+        </div>
+        <div class="row g-0">
+            <div class="col-lg-12">
+                <div class="bg-primary h-100 p-5">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <input type="text" class="form-control bg-light border-0 px-4"
+                                    placeholder="Tên đăng nhập" [(ngModel)]="Entity.userName" style="height: 55px;">
+                            </div>
+                            <div class="col-6">
+                                <input type="password" class="form-control bg-light border-0 px-4"
+                                    placeholder="Mật khẩu" [(ngModel)]="Entity.hashPassword" style="height: 55px;">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control bg-light border-0 px-4" placeholder="Email"
+                                    [(ngModel)]="Entity.email" style="height: 55px;">
+                            </div>
+                            <div class="col-6">
+                                <input type="email" class="form-control bg-light border-0 px-4"
+                                    [(ngModel)]="Entity.phone" placeholder="Số điện thoại" style="height: 55px;">
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control bg-light border-0 px-4" placeholder="Họ tên"
+                                    [(ngModel)]="Entity.fullName" style="height: 55px;">
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control bg-light border-0 px-4 py-3" rows="2"
+                                    [(ngModel)]="Entity.address" placeholder="Địa chỉ"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-secondary w-100 py-3" type="submit" (click)="register()">Đăng
+                                    ký</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { vi_VN } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +18,11 @@ import { FooterComponent } from './home-page/footer/footer.component';
 import { MainComponent } from './home-page/main/main.component';
 import { BaseService } from './services/base.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 registerLocaleData(vi);
 
@@ -28,7 +33,12 @@ registerLocaleData(vi);
     HomePageComponent,
     HeaderComponent,
     FooterComponent,
-    MainComponent
+    MainComponent,
+    CategoryComponent,
+    ProductComponent,
+    UserInfoComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +47,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule,
     CommonNgZorroAntdModule,
+    CommonModule,
     ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [

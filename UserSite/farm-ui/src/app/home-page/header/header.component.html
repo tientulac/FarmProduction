@@ -4,7 +4,7 @@
         <div class="col-lg-3">
             <div class="d-flex align-items-center justify-content-start">
                 <i class="bi bi-phone-vibrate fs-1 text-primary me-2"></i>
-                <h2 class="mb-0">+012 345 6789</h2>
+                <h2 class="mb-0">0947267178</h2>
             </div>
         </div>
         <div class="col-lg-6">
@@ -43,10 +43,15 @@
             <div class="nav-item dropdown" *ngFor="let cate of Entities">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{cate.name}}</a>
                 <div class="dropdown-menu m-0" *ngFor="let subCate of cate.subCategories">
-                    <a routerLink="/category/{{cate.id}}" class="dropdown-item">{{subCate.name}}</a>
+                    <a routerLink="/category/{{subCate.id}}" class="dropdown-item">{{subCate.name}}</a>
                 </div>
             </div>
             <a routerLink="/contact" [class]="activeNavbar('/contact')">Liên hệ</a>
+            <a *ngIf="!isLogin" routerLink="/register" [class]="activeNavbar('/register')">Đăng ký</a>
+            <a *ngIf="!isLogin" routerLink="/login" [class]="activeNavbar('/login')">Đăng nhập</a>
+            <a *ngIf="isLogin" routerLink="/user-info" [class]="activeNavbar('/user-info')"><span nz-icon nzType="user"
+                    nzTheme="outline"></span>&nbsp;{{userInfo.userName}}</a>
+            <a *ngIf="isLogin" href="javascript:void(0)" class="nav-item nav-link" (click)="logout()">Đăng xuất</a>
         </div>
     </div>
 </nav>

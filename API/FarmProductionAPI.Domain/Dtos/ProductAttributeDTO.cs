@@ -20,6 +20,7 @@ namespace FarmProductionAPI.Domain.Dtos
         public string? Code { get; set; }
         public decimal? Price { get; set; }
         public int? Amount { get; set; }
+        public int? AmountBought { get; set; }
         public string? Image { get; set; }
         public string? Color { get; set; }
         public string? Unit { get; set; }

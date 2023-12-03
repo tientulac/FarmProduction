@@ -12,6 +12,5 @@
         public bool? IsSoftDeleted { get; set; }
         public Guid? ProductId { get; set; }
         public string? Image { get; set; }
-        public ProductDTO? Product { get; set; }
     }
 }

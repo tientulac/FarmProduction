@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FarmProductionAPI.Core.Queries.OrderQuery;
+using FarmProductionAPI.Core.Queries.UserSiteQuery;
 using FarmProductionAPI.Core.Repositories;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
@@ -11,7 +12,7 @@ using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.OrderHandler
 {
-    public class GetListOrderHandler : IRequestHandler<GetListOrderQuery, ResponseResultAPI<List<OrderDTO>>>
+    public class GetListOrderUserSiteHandler : IRequestHandler<GetListOrderUserSiteQuery, ResponseResultAPI<List<OrderDTO>>>
     {
         private readonly IMapper _mapper;
 
@@ -21,7 +22,7 @@ namespace FarmProductionAPI.Core.Handlers.OrderHandler
 
         private readonly IRepository<Order> _repository;
 
-        public GetListOrderHandler(IMapper mapper, ILogger logger, IRepository<Order> repository, IUnitOfWork unitOfWork)
+        public GetListOrderUserSiteHandler(IMapper mapper, ILogger logger, IRepository<Order> repository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _logger = logger;
@@ -29,11 +30,11 @@ namespace FarmProductionAPI.Core.Handlers.OrderHandler
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseResultAPI<List<OrderDTO>>> Handle(GetListOrderQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<OrderDTO>>> Handle(GetListOrderUserSiteQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var orders = _repository.GetAll().Include(x => x.UserAccount).Include(x => x.OrderItems).AsQueryable();
+                var orders = _repository.GetAllUserSite().Include(x => x.UserAccount).Include(x => x.OrderItems).AsQueryable();
                 if (!string.IsNullOrEmpty(request.ProvinceToId))
                 {
                     orders = orders.Where(x => x.ProvinceToId == request.ProvinceToId);

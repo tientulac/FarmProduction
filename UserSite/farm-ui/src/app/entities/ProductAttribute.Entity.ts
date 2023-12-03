@@ -1,4 +1,5 @@
 import { BaseEntity } from "./Base.Entity";
+import { ProductEntity } from "./Product.Entity";
 
 export class ProductAttributeEntity extends BaseEntity {
     productId!: string | null;
@@ -13,6 +14,8 @@ export class ProductAttributeEntity extends BaseEntity {
     manufactureDate!: Date | null;
     expireDate!: Date | null;
     orderId!: string | null;
+    product!: ProductEntity;
+    amountBought!: number;
 }
 
 export class ProductAttributeSearchEntity extends BaseEntity {
@@ -29,6 +32,8 @@ export class ProductAttributeSearchEntity extends BaseEntity {
     manufactureDate!: Date | null;
     expireDate!: Date | null;
     orderId!: string | null;
+    product!: ProductEntity;
+    amountBought!: number;
 }
 
 export enum FilterPriceType {

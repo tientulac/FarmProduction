@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="product-list">
+        <div class="row">
+            <div class="col-md-12">
+                <input nz-input [(ngModel)]="keyword" type="text" placeholder="Tìm kiếm theo mã sản phẩm"
+                    (keyup)="getListProduct()" />
+            </div>
+            <br>
+            <br>
+            <div class="col-md-3 col-sm-6" *ngFor="let p of Entities">
+                <div class="white-box">
+                    <div class="wishlist-icon">
+                        <a href="javascript:void(0);"><img
+                                src="https://static-00.iconduck.com/assets.00/shopping-cart-icon-512x462-yrde1eu0.png" /></a>
+                    </div>
+                    <div class="product-img">
+                        <img src="{{URL_Upload}}/{{p.product.productImages[0].image ?? ''}}">
+                    </div>
+                    <div class="product-bottom">
+                        <div class="product-name">{{p.code}}</div>
+                        <div class="price">
+                            - Giá tiền: {{p.price | number}} VNĐ<br>
+                            - Số lương kho: {{p.amount}}, Màu sắc: {{p.color}}<br>
+                            - Giá trị: {{p.value}} {{p.unit}}<br>
+                            - Ngày sản xuất: {{p.manufactureDate | date: 'dd/MM/yyyy'}}<br>
+                            - Ngày hết hạn: {{p.expireDate | date: 'dd/MM/yyyy'}}<br>
+                        </div>
+                        <a href="#" class="blue-btn">Mô tả sản phẩm</a>
+                        &nbsp;
+                        <a class="blue-btn" (click)="addToCart(p)"><img style="width: 15px; height: 15px;"
+                                src="https://static-00.iconduck.com/assets.00/shopping-cart-icon-512x462-yrde1eu0.png" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -37,7 +37,8 @@ export class HeaderComponent extends BaseComponent<CategoryEntity>{
     this.URL = 'userSite/category';
     this.URL_Upload = appConfig.URL_UPLOAD;
     this.title.setTitle('Danh mục');
-
+    this.checkLogin();
+    this.getCountCart();
     this.getList();
   }
 
@@ -46,5 +47,11 @@ export class HeaderComponent extends BaseComponent<CategoryEntity>{
       return 'nav-item nav-link active';
     }
     return 'nav-item nav-link';
+  }
+
+  logout() {
+    localStorage.clear();
+    this.checkLogin();
+    window.location.href = '/';
   }
 }

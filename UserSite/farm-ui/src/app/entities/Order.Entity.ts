@@ -1,5 +1,6 @@
 
 import { BaseEntity } from "./Base.Entity";
+import { ProductAttributeEntity } from "./ProductAttribute.Entity";
 import { UserAccountEntity } from "./UserAccount.Entity";
 
 export class OrderEntity extends BaseEntity {
@@ -23,6 +24,7 @@ export class OrderEntity extends BaseEntity {
     toDate!: Date | null;
     userAccount!: UserAccountEntity | null;
     address!: string | null;
+    listItem!: ProductAttributeEntity[];
 }
 
 export class OrderEntitySearch extends BaseEntity {
@@ -46,4 +48,5 @@ export class OrderEntitySearch extends BaseEntity {
     userName!: string | null;
     userAccount!: UserAccountEntity | null;
     address!: string | null;
+    listItem!: ProductAttributeEntity[];
 }

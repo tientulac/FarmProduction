@@ -7,4 +7,5 @@ export class BaseEntity {
     deletedAt!: Date | null;
     deletedById!: any | null;
     isSoftDeleted!: any | null;
+    searchString!: any | null
 }

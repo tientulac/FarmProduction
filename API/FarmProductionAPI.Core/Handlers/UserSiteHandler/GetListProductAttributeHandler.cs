@@ -5,6 +5,7 @@ using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Models;
 using FarmProductionAPI.Domain.Response;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.UserSiteHandler
@@ -31,7 +32,7 @@ namespace FarmProductionAPI.Core.Handlers.UserSiteHandler
         {
             try
             {
-                var atts = _repository.GetAllUserSite().AsQueryable();
+                var atts = _repository.GetAllUserSite().Include(x => x.Product).ThenInclude(x => x.ProductImages).AsQueryable();
                 if (request.ProductId.HasValue)
                 {
                     atts = atts.Where(x => x.ProductId == request.ProductId);

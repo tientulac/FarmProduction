@@ -7,6 +7,8 @@ import { ReponseAPI } from 'src/app/entities/ResponseAPI';
 import { BaseService } from 'src/app/services/base.service';
 import { UploadImageService } from 'src/app/services/upload-image.service';
 import * as _ from 'lodash';
+import { UserAccountEntity } from 'src/app/entities/UserAccount.Entity';
+import { ProductAttributeEntity } from 'src/app/entities/ProductAttribute.Entity';
 
 @Component({
   selector: 'app-base',
@@ -48,6 +50,12 @@ export class BaseComponent<T> {
   id_city: any = null;
   id_district: any = null;
   id_ward: any = null;
+  keyword: any;
+  isLogin: boolean = false;
+  userInfo = new UserAccountEntity();
+  count_cart: any = 0;
+  listCartItem: any = [];
+  totalPrice: any = 0;
 
   GROUP_BUTTON = {
     EXCEL: false,
@@ -62,7 +70,7 @@ export class BaseComponent<T> {
     public modal: NzModalService,
     public title: Title,
     public uploadImageService: UploadImageService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
   ) {
   }
 
@@ -213,20 +221,68 @@ export class BaseComponent<T> {
 
   getPaymentShipper() {
     this.baseService.getShipPayment({
-      "service_id": 100039,
-      // "insurance_value": this.totalPrice,
-      "coupon": null,
-      "from_district_id": 1542,
+      "service_type_id": 5,
+      "from_district_id": 1442,
       "to_district_id": parseInt(this.id_district),
       "to_ward_code": this.id_ward,
       "height": 5,
       "length": 5,
       "weight": 100,
-      "width": 5
+      "width": 5,
+      "insurance_value": 0,
+      "coupon": null,
+      "items": [
+        {
+          "name": "TEST1",
+          "quantity": 1,
+          "height": 5,
+          "length": 5,
+          "weight": 100,
+          "width": 5
+        }
+      ]
     }).subscribe(
       (res: any) => {
-        this.feeShip = res.data.total;
+        if (res.code != 200) {
+          this.toastr.warning(res.message);
+        }
+        else {
+          this.feeShip = res.data.total;
+        }
       }
     );
+  }
+
+  checkLogin() {
+    this.isLogin = false;
+    this.userInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo')))) ?? {};
+    if (this.userInfo.id) {
+      this.isLogin = true;
+    }
+  }
+
+  getCountCart() {
+    this.listCartItem = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('listCartItem')))) ?? [];
+    this.count_cart = this.listCartItem?.length > 0 ? this.listCartItem.map((p: ProductAttributeEntity) => p.amountBought).reduce((a: any, c: any) => { return a + c }) : 0;
+  }
+
+  setCartItem() {
+    localStorage.setItem('listCartItem', JSON.stringify(this.listCartItem));
+  }
+
+  addItemToCart(p: ProductAttributeEntity) {
+    p.amountBought = 1;
+    var cItem = this.listCartItem.filter((x: ProductAttributeEntity) => x.id == p.id)[0];
+    if (cItem) {
+      this.listCartItem.forEach((x: ProductAttributeEntity) => {
+        if (x.id == cItem.id) {
+          x.amountBought += 1;
+        }
+      });
+    }
+    else {
+      this.listCartItem.push(p);
+    }
+    this.setCartItem();
   }
 }

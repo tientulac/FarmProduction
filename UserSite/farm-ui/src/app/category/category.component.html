@@ -1,1 +1,33 @@
-<p>category works!</p>
+<div class="container">
+    <div class="product-list">
+        <div class="row">
+            <div class="col-md-12">
+                <input nz-input [(ngModel)]="keyword" type="text" placeholder="Tìm kiếm theo tên hoặc mã sản phẩm"
+                    (keyup)="getListProduct()" />
+            </div>
+            <br>
+            <br>
+            <div class="col-md-3 col-sm-6" *ngFor="let p of Entities">
+                <div class="white-box">
+                    <div class="wishlist-icon">
+                        <a href="javascript:void(0);"><img
+                                src="https://static.thenounproject.com/png/635650-200.png" /></a>
+                    </div>
+                    <div class="product-img">
+                        <img src="{{URL_Upload}}/{{p.image ?? ''}}">
+                    </div>
+                    <div class="product-bottom">
+                        <div class="product-name">{{p.name}}</div>
+                        <div class="price">
+                            - Danh mục: {{p.category?.name}}<br>
+                            - Thương hiệu: {{p.brand?.name}}<br>
+                            - Nhà sản xuất: {{p.producer?.name}}
+                        </div>
+                        <a href="#" class="blue-btn">Chi tiết</a>&nbsp;
+                        <a routerLink="../../product/{{p.id}}" class="blue-btn">Danh sách sản phẩm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

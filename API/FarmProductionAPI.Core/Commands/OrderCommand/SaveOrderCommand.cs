@@ -25,5 +25,6 @@ namespace FarmProductionAPI.Core.Commands.OrderCommand
         public string? ProvinceToId { get; set; }
         public string? FromAddress { get; set; }
         public string? ToAddress { get; set; }
+        public List<ProductAttributeDTO>? ListItem { get; set; }
     }
 }

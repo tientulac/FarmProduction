@@ -1,4 +1,6 @@
-﻿using FarmProductionAPI.Core.Queries.UserSite;
+﻿using FarmProductionAPI.Core.Commands.UserSiteCommand;
+using FarmProductionAPI.Core.Queries.OrderQuery;
+using FarmProductionAPI.Core.Queries.UserSite;
 using FarmProductionAPI.Core.Queries.UserSiteQuery;
 using FarmProductionAPI.Domain.Dtos;
 using FarmProductionAPI.Domain.Response;
@@ -35,11 +37,11 @@ namespace FarmProductionAPI.Controllers.UserSite
             return result;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("product")]
-        public async Task<ResponseResultAPI<List<ProductDTO>>> GetProduct(CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<ProductDTO>>> GetProduct([FromBody] GetListProductUserSiteQuery command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetListProductQuery(), cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
             return result;
         }
 
@@ -56,6 +58,22 @@ namespace FarmProductionAPI.Controllers.UserSite
         public async Task<ResponseResultAPI<AttributeDTO>> GetAttribute([FromQuery] GetListAttributeQuery command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
+            return result;
+        }
+
+        [HttpPost]
+        [Route("order")]
+        public async Task<ResponseResultAPI<List<OrderDTO>>> GetByRequest([FromBody] GetListOrderUserSiteQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return result;
+        }
+
+        [HttpGet]
+        [Route("cancle-order")]
+        public async Task<ResponseResultAPI<OrderDTO>> CancleOrder([FromQuery] CancleOrderCommand query, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
             return result;
         }
     }

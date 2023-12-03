@@ -10,13 +10,17 @@ import { Title } from '@angular/platform-browser';
 import { UploadImageService } from '../services/upload-image.service';
 import { ToastrService } from 'ngx-toastr';
 import { BrandEntity, BrandEntitySearch } from '../entities/Brand.Entity';
+import { ProductEntity, ProductEntitySearch } from '../entities/Product.Entity';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent extends BaseComponent<BrandEntity>{
+export class CategoryComponent extends BaseComponent<ProductEntity>{
+
+  id_category: any;
+  product_search = new ProductEntitySearch();
 
   constructor(
     public brandService: BaseService<BrandEntity>,
@@ -25,19 +29,28 @@ export class CategoryComponent extends BaseComponent<BrandEntity>{
     @Inject(AppConfig) private readonly appConfig: AppConfiguration,
   ) {
     super(
-      AppInjector.get(BaseService<BrandEntity>),
+      AppInjector.get(BaseService<ProductEntity>),
       AppInjector.get(NzModalService),
       AppInjector.get(Title),
       AppInjector.get(UploadImageService),
       AppInjector.get(ToastrService),
     );
-    this.Entity = new BrandEntity();
-    this.EntitySearch = new BrandEntitySearch();
-    this.Entities = new Array<BrandEntity>();;
-    this.URL = 'userSite/product/category/:id';
+    this.Entity = new ProductEntity();
+    this.Entities = new Array<ProductEntity>();;
+    this.URL = 'userSite/product';
     this.URL_Upload = appConfig.URL_UPLOAD;
     this.title.setTitle('Danh sách sản phẩm');
-    alert(this.route.snapshot.paramMap.get('id'))
-    this.getList();
+    this.id_category = this.route.snapshot.paramMap.get('id');
+    this.getListProduct();
+  }
+
+  getListProduct() {
+    this.product_search.categoryId = this.id_category;
+    this.product_search.searchString = this.keyword;
+    this.baseService.getByRequest(this.URL, this.product_search).subscribe(
+      (res) => {
+        this.Entities = res.data;
+      }
+    );
   }
 }

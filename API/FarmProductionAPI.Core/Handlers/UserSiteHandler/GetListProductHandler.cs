@@ -12,7 +12,7 @@ using Serilog;
 
 namespace FarmProductionAPI.Core.Handlers.UserSiteHandler
 {
-    public class GetListProductHandler : IRequestHandler<GetListProductQuery, ResponseResultAPI<List<ProductDTO>>>
+    public class GetListProductHandler : IRequestHandler<GetListProductUserSiteQuery, ResponseResultAPI<List<ProductDTO>>>
     {
         private readonly IMapper _mapper;
 
@@ -30,11 +30,13 @@ namespace FarmProductionAPI.Core.Handlers.UserSiteHandler
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseResultAPI<List<ProductDTO>>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseResultAPI<List<ProductDTO>>> Handle(GetListProductUserSiteQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var products = _repository.GetAllUserSite().AsQueryable().Where(x =>
+                    request == null || (string.IsNullOrEmpty(request.SearchString) || x.Code.ToLower().Contains(request.SearchString.ToLower())) &&
+                    (string.IsNullOrEmpty(request.SearchString) || x.Name.ToLower().Contains(request.SearchString.ToLower())) &&
                     (request.BrandId == null || x.BrandId == request.BrandId) &&
                     (request.CategoryId == null || x.CategoryId == request.CategoryId))
                     .Include(x => x.Brand)

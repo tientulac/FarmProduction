@@ -1,0 +1,261 @@
+<div class="container">
+    <div class="product-list">
+        <div class="row">
+            <nz-tabset>
+                <nz-tab nzTitle="Thông tin cá nhân">
+                    <section class="content-header">
+                        <div class="row mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <button nz-button [nzType]="'primary'" class="group-btn" (click)="updateInfo()">
+                                    <span><i class="fas fa-plus"></i> &nbsp;Cập nhật thông tin</span>
+                                </button>&nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                <button nz-button [nzType]="'primary'" class="group-btn" (click)="isChangePass = true">
+                                    Đổi mật khẩu
+                                </button>
+                            </div>
+                        </div>
+                        <div nz-row [nzGutter]="24">
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-label [nzSm]="6" [nzXs]="24">Email</nz-form-label>
+                                <input nz-input placeholder="Nhập email" [(ngModel)]="userInfo.email" type="text" />
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-label [nzSm]="6" [nzXs]="24">Số điện thoại</nz-form-label>
+                                <input nz-input placeholder="Nhập sđt" [(ngModel)]="userInfo.phone" type="text" />
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-label [nzSm]="6" [nzXs]="24">Họ tên</nz-form-label>
+                                <input nz-input placeholder="Nhập họ tên" [(ngModel)]="userInfo.fullName" type="text" />
+                            </div>
+                            <div nz-col [nzSpan]="12">
+                                <nz-form-label [nzSm]="6" [nzXs]="24">Địa chỉ</nz-form-label>
+                                <input nz-input placeholder="Nhập địa chỉ" [(ngModel)]="userInfo.address" type="text" />
+                            </div>
+                        </div>
+                    </section>
+                </nz-tab>
+                <nz-tab nzTitle="Giỏ hàng ({{count_cart}})">
+                    <section class="content-header">
+                        <div class="row mb-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <button nz-button [nzType]="'primary'" class="group-btn" (click)="openConfirmModal()">
+                                    <span><i class="fas fa-plus"></i> &nbsp;Xác nhận đặt hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    <nz-table #basicTable [nzData]="listCartItem">
+                        <thead>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Đơn vị tính</th>
+                                <th>Giá trị</th>
+                                <th>Màu sắc</th>
+                                <th>Giá tiền</th>
+                                <th>Số lượng đã mua</th>
+                                <th>Số lượng trong kho</th>
+                                <th>Ngày sản xuất</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of basicTable.data">
+                                <td>{{data.code}}</td>
+                                <td>{{data.unit}}</td>
+                                <td>{{data.value}}</td>
+                                <td><input type="color" value="{{data.color}}" disabled="true"></td>
+                                <td>{{data.price | number}}</td>
+                                <td *ngIf="!isEdit">{{data.amountBought | number}}</td>
+                                <td *ngIf="isEdit"><input type="number" min="0" style="width: 50px;"
+                                        [(ngModel)]="data.amountBought">
+                                </td>
+                                <td>{{data.amount | number}}</td>
+                                <td>{{data.manufactureDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{data.expireDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <a><span nz-icon nzType="edit" nzTheme="outline"
+                                            (click)="isEdit = !isEdit"></span></a>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a><span nz-icon nzType="delete" nzTheme="outline"
+                                            (click)="deleteOrderItem(data)"></span></a>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a *ngIf="isEdit"><span nz-icon nzType="check" nzTheme="outline"
+                                            (click)="updateOderItem(data)"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </nz-tab>
+                <nz-tab nzTitle="Đơn hàng ({{listOrder?.length ?? 0}})">
+                    <nz-table #orderTable [nzData]="listOrder" [nzBordered]="true">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Địa chỉ giao hàng</th>
+                                <th>Loại hóa đơn</th>
+                                <th>Tài khoản</th>
+                                <th>Loại thanh toán</th>
+                                <th>Tổng tiền</th>
+                                <th>Phí ship</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày sửa</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of orderTable.data; let i =index"
+                                [class]="data.isSoftDeleted ? 'bg_deleted' : ''">
+                                <td>{{i+1}}</td>
+                                <td>{{data.code}}</td>
+                                <td>{{data.address}}</td>
+                                <td>{{renderName(listType, data.type)}}</td>
+                                <td>{{data.userAccount.userName}}</td>
+                                <td>{{renderName(listPaymentType, data.paymentType)}}</td>
+                                <td>{{data.total | number}}</td>
+                                <td>{{data.paymentShip | number}}</td>
+                                <td>{{renderName(listStatus, data.status)}}</td>
+                                <td>{{data.createdAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                                <td>{{data.updatedAt | date:'dd/MM/yy hh:mm:aa' ?? ''}}</td>
+                                <td *ngIf="!data.isSoftDeleted">
+                                    <a><span nz-icon nzType="delete" *ngIf="data.status == 0"
+                                            (click)="isDisplayDelete = true; id_record = data.id"
+                                            nzTheme="outline"></span></a>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a *ngIf="data.status == 0"><span nz-icon nzType="shopping"
+                                            (click)="openModal('DETAIL', data)" nzTheme="outline"></span></a>
+                                </td>
+                                <td *ngIf="data.isSoftDeleted"></td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+    </div>
+</div>
+
+<nz-modal *ngIf="isChangePass" [(nzVisible)]="isChangePass" nzTitle="Cập nhật" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="changePass()">
+    <ng-container *nzModalContent>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Mật khẩu mới</nz-form-label>
+                <input nz-input placeholder="Nhập mật khẩu" [(ngModel)]="Entity.oldHashPassword" type="password" />
+            </div>
+            <div nz-col [nzSpan]="24">
+                <nz-form-label [nzSm]="6" [nzXs]="24">Xác nhận mật khẩu</nz-form-label>
+                <input nz-input placeholder="Nhập sđt" [(ngModel)]="Entity.newHashPassword" type="password" />
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<nz-modal *ngIf="isInsert" [(nzVisible)]="isInsert" nzTitle="Xác nhận đặt hàng" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="createOrder()">
+    <ng-container *nzModalContent>
+        <div nz-col [nzSpan]="24">
+            Tổng tiền : {{totalPrice | number}} VNĐ <br>
+            Phí ship: {{feeShip | number}} VNĐ<br>
+            Thành tiền: {{totalPrice + feeShip | number}} VNĐ
+        </div>
+        <div nz-col [nzSpan]="24">
+            <nz-form-item>
+                <nz-form-label>Tỉnh</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn tỉnh" style="width: 100%;"
+                    [(ngModel)]="userOrder.provinceToId"
+                    (ngModelChange)="id_city = userOrder.provinceToId; getListDistrict()">
+                    <nz-option *ngFor="let option of cities" [nzLabel]="option.ProvinceName"
+                        [nzValue]="option.ProvinceID + ''"></nz-option>
+                </nz-select>
+            </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24">
+            <nz-form-item>
+                <nz-form-label>Huyện</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn huyện" style="width: 100%;"
+                    [(ngModel)]="userOrder.districtToId"
+                    (ngModelChange)="id_district = userOrder.districtToId; getListWard()">
+                    <nz-option *ngFor="let option of districts" [nzLabel]="option.DistrictName"
+                        [nzValue]="option.DistrictID + ''"></nz-option>
+                </nz-select>
+            </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24">
+            <nz-form-item>
+                <nz-form-label>Xã</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn xã" [(ngModel)]="userOrder.wardToId"
+                    style="width: 100%;" (ngModelChange)="id_ward = userOrder.wardToId; getPaymentShipper()">
+                    <nz-option *ngFor="let option of wards" [nzLabel]="option.WardName"
+                        [nzValue]="option.WardCode"></nz-option>
+                </nz-select>
+            </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+            <nz-form-item>
+                <nz-form-label>Loại thanh toán</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nz-input nzPlaceHolder="Chọn loại" style="width: 100%;"
+                    [(ngModel)]="userOrder.paymentType">
+                    <nz-option *ngFor="let option of listPaymentType" [nzLabel]="option.name"
+                        [nzValue]="option.id"></nz-option>
+                </nz-select>
+                <img src="https://vinacheck.vn/media/2019/05/ma-qr-code_vinacheck.vm_001.jpg"
+                    style="width: 100px; height: 100px;">
+            </nz-form-item>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<nz-modal *ngIf="isDisplayDetail" [(nzVisible)]="isDisplayDetail" [nzTitle]="'Chi tiết'" (nzOnCancel)="handleCancel()"
+    [nzWidth]="1200">
+    <ng-container *nzModalContent>
+        <nz-table #detailTable [nzData]="orderItemEntities">
+            <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Đơn vị tính</th>
+                    <th>Giá trị</th>
+                    <th>Màu sắc</th>
+                    <th>Giá tiền</th>
+                    <th>Số lượng đã mua</th>
+                    <th>Số lượng trong kho</th>
+                    <th>Ngày sản xuất</th>
+                    <th>Ngày hết hạn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of detailTable.data">
+                    <td>{{data?.productAttribute?.code}}</td>
+                    <td>{{data?.productAttribute?.unit}}</td>
+                    <td>{{data?.productAttribute?.value}}</td>
+                    <td><input type="color" value="{{data?.productAttribute?.color}}" disabled="true"></td>
+                    <td>{{data?.productAttribute?.price | number}}</td>
+                    <td>{{data?.countBought | number}}</td>
+                    <td>{{data?.productAttribute?.amount | number}}</td>
+                    <td>{{data?.productAttribute?.manufactureDate | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{data?.productAttribute?.expireDate | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Đóng</button>
+    </div>
+</nz-modal>
+
+<nz-modal *ngIf="isDisplayDelete" [(nzVisible)]="isDisplayDelete" [nzTitle]="'Hủy đơn hàng'"
+    (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <h5 class="text-center">Bạn có chắc muốn hủy hóa đơn này ?</h5>
+        <i class="trash-icon fa fa-trash" aria-hidden="true"></i>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Đóng</button>
+        <button nz-button nzType="primary" (click)="cancleOrder()">Xác nhận</button>
+    </div>
+</nz-modal>

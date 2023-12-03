@@ -21,7 +21,7 @@ export class BaseService<T> {
     }
 
     getByRequest(url: string, request: any | null): Observable<ReponseAPI<T[]>> {
-        return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url + '/get-by-request', request).pipe(map((res) => { return res; }));
+        return this.http.post<ReponseAPI<T[]>>(this.appConfig.API + url, request).pipe(map((res) => { return res; }));
     }
 
     getAll(url: string): Observable<ReponseAPI<T[]>> {
